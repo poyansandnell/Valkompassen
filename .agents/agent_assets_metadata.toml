@@ -12,3 +12,9 @@ id = "TnrWchoF7MDxQ9W0-Pysi"
 uri = "file://attached_assets/qr_valkompass_video.png"
 type = "image"
 title = "QR-kod – Valkompass-videon på mobilen"
+
+[[outputs]]
+id = "ee51jv84NJswjxSJnorrb"
+uri = "file://attached_assets/qr_valkompass_app.png"
+type = "image"
+title = "QR-kod – Valkompassen på mobilen"
