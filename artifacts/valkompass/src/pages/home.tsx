@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Layout } from '@/components/layout';
-import { useGetStats } from '@workspace/api-client-react';
-import { ArrowRight, MapPin, Building, Flag, ShieldCheck, Lock, Share2 } from 'lucide-react';
+import { useGetStats, useGetQuiz, QuizPayloadLevel } from '@workspace/api-client-react';
+import { ArrowRight, MapPin, Building, Flag, ShieldCheck, Lock, Share2, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useStoredQuiz, useAppStore } from '@/hooks/use-local-answers';
+import { calculateMatches } from '@/lib/matching';
 
 function SplashIntro() {
   const [visible, setVisible] = useState(true);
@@ -54,16 +56,161 @@ function SplashIntro() {
   );
 }
 
+function LevelCard({ 
+  level, 
+  title, 
+  description, 
+  icon: Icon 
+}: { 
+  level: QuizPayloadLevel; 
+  title: string; 
+  description: string; 
+  icon: any;
+}) {
+  const [, setLocation] = useLocation();
+  const { municipalityId } = useAppStore();
+  const { isCompleted, currentQuestionIndex, answers } = useStoredQuiz(level);
+
+  const needsMunicipality = level !== 'riksdag';
+  const shouldFetchQuiz = isCompleted && (!needsMunicipality || municipalityId);
+
+  // We only need the quiz data if we are completed, to calculate matches.
+  // Actually, we also might need it to show progress "X of Y"?
+  // But we only fetch if we know municipalityId for region/kommun.
+  // If we don't have it, we just fetch it when they go to level-intro.
+  
+  // Always try to fetch if we have municipality or if it's riksdag, 
+  // so we know total questions for the progress bar.
+  const { data: quizPayload } = useGetQuiz(level,
+    needsMunicipality ? { municipalityId: municipalityId || undefined } : undefined,
+    { 
+      query: { 
+        queryKey: ['quiz', level, needsMunicipality ? municipalityId : undefined],
+        enabled: !needsMunicipality || !!municipalityId,
+        staleTime: Infinity 
+      } 
+    }
+  );
+
+  const topMatch = useMemo(() => {
+    if (!isCompleted || !quizPayload) return null;
+    const userAnswersArray = Object.values(answers);
+    const matches = calculateMatches(quizPayload.parties, userAnswersArray, quizPayload.questions);
+    return matches.sort((a, b) => b.matchPercent - a.matchPercent)[0];
+  }, [isCompleted, quizPayload, answers]);
+
+  const totalQuestions = quizPayload?.questions.length || 0;
+  const answeredCount = Object.keys(answers).length;
+  
+  const isStarted = answeredCount > 0 || currentQuestionIndex > 0;
+
+  return (
+    <Card 
+      className="relative group overflow-hidden border-2 hover:border-primary transition-colors cursor-pointer h-full flex flex-col" 
+      onClick={() => setLocation(`/val/${level}`)}
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+      <CardHeader className="flex-1">
+        <div className="flex items-start justify-between mb-2">
+          <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+            <Icon className="w-6 h-6" />
+          </div>
+          {isCompleted && (
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-green-700 bg-green-100 dark:bg-green-900/30 dark:text-green-400 px-2.5 py-1 rounded-full border border-green-200 dark:border-green-800">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              Klar
+            </div>
+          )}
+        </div>
+        <CardTitle className="text-2xl">{title}</CardTitle>
+        <CardDescription className="text-base leading-relaxed">{description}</CardDescription>
+        
+        {/* Progress or Result display */}
+        <div className="pt-4 mt-auto">
+          {isCompleted ? (
+            topMatch ? (
+              <div className="flex items-center gap-4 bg-muted/50 p-3 rounded-lg border">
+                <div className="relative w-12 h-12 flex-shrink-0 flex items-center justify-center">
+                  <svg className="w-12 h-12 transform -rotate-90" viewBox="0 0 100 100">
+                    <circle
+                      cx="50" cy="50" r="40"
+                      fill="transparent"
+                      stroke="currentColor"
+                      strokeWidth="8"
+                      className="text-slate-200 dark:text-slate-800"
+                    />
+                    <circle
+                      cx="50" cy="50" r="40"
+                      fill="transparent"
+                      stroke={topMatch.partyColor || 'currentColor'}
+                      strokeWidth="8"
+                      strokeDasharray={`${(topMatch.matchPercent / 100) * 251.2} 251.2`}
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <span className="absolute text-xs font-bold">{Math.round(topMatch.matchPercent)}%</span>
+                </div>
+                <div>
+                  <div className="text-xs text-muted-foreground uppercase font-semibold tracking-wider mb-0.5">Högst matchning</div>
+                  <div className="font-bold text-sm" style={{ color: topMatch.partyColor }}>
+                    {topMatch.partyName}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="text-sm font-medium text-muted-foreground">
+                Laddar resultat...
+              </div>
+            )
+          ) : isStarted ? (
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs font-medium text-muted-foreground">
+                <span>{answeredCount} {totalQuestions > 0 ? `av ${totalQuestions}` : ''} frågor besvarade</span>
+                <span>Påbörjad</span>
+              </div>
+              <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-primary transition-all"
+                  style={{ width: totalQuestions > 0 ? `${(answeredCount / totalQuestions) * 100}%` : '5%' }}
+                />
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </CardHeader>
+      <CardContent>
+        <Button className="w-full group-hover:bg-primary group-hover:text-primary-foreground" variant="outline">
+          {isCompleted ? 'Visa resultat' : isStarted ? 'Fortsätt' : 'Starta Valkompass'} <ArrowRight className="w-4 h-4 ml-2" />
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function Home() {
   const [, setLocation] = useLocation();
   const { data: stats } = useGetStats({ query: { queryKey: ['stats'] } });
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(() => {
+    try {
+      return sessionStorage.getItem('vk-splash-seen') !== '1';
+    } catch {
+      return true;
+    }
+  });
 
   useEffect(() => {
+    if (!showSplash) return;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const timer = setTimeout(() => setShowSplash(false), prefersReducedMotion ? 500 : 1500);
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+      try {
+        sessionStorage.setItem('vk-splash-seen', '1');
+      } catch {
+        // ignore
+      }
+    }, prefersReducedMotion ? 500 : 1200);
     return () => clearTimeout(timer);
-  }, []);
+  }, [showSplash]);
 
   return (
     <>
@@ -89,56 +236,26 @@ export default function Home() {
           <div className="container max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               
-              {/* Riksdag */}
-              <Card className="relative group overflow-hidden border-2 hover:border-primary transition-colors cursor-pointer" onClick={() => setLocation('/val/riksdag')}>
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 text-primary">
-                    <Flag className="w-6 h-6" />
-                  </div>
-                  <CardTitle className="text-2xl">Riksdag</CardTitle>
-                  <CardDescription className="text-base">Sveriges riksdag och regering. Frågor om lagar, skatter, försvar och nationell politik.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button className="w-full mt-4 group-hover:bg-primary group-hover:text-primary-foreground" variant="outline">
-                    Starta Valkompass <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Region */}
-              <Card className="relative group overflow-hidden border-2 hover:border-primary transition-colors cursor-pointer" onClick={() => setLocation('/val/region')}>
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 text-primary">
-                    <MapPin className="w-6 h-6" />
-                  </div>
-                  <CardTitle className="text-2xl">Region</CardTitle>
-                  <CardDescription className="text-base">Din region. Sjukvård, kollektivtrafik, regional utveckling och kultur.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button className="w-full mt-4 group-hover:bg-primary group-hover:text-primary-foreground" variant="outline">
-                    Starta Valkompass <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Kommun */}
-              <Card className="relative group overflow-hidden border-2 hover:border-primary transition-colors cursor-pointer" onClick={() => setLocation('/val/kommun')}>
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 text-primary">
-                    <Building className="w-6 h-6" />
-                  </div>
-                  <CardTitle className="text-2xl">Kommun</CardTitle>
-                  <CardDescription className="text-base">Din hemkommun. Skola, omsorg, bostäder, vägar och lokal miljö.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button className="w-full mt-4 group-hover:bg-primary group-hover:text-primary-foreground" variant="outline">
-                    Starta Valkompass <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </CardContent>
-              </Card>
+              <LevelCard 
+                level="riksdag"
+                title="Riksdag"
+                description="Sveriges riksdag och regering. Frågor om lagar, skatter, försvar och nationell politik."
+                icon={Flag}
+              />
+              
+              <LevelCard 
+                level="region"
+                title="Region"
+                description="Din region. Sjukvård, kollektivtrafik, regional utveckling och kultur."
+                icon={MapPin}
+              />
+              
+              <LevelCard 
+                level="kommun"
+                title="Kommun"
+                description="Din hemkommun. Skola, omsorg, bostäder, vägar och lokal miljö."
+                icon={Building}
+              />
 
             </div>
 
