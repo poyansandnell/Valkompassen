@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { UserAnswer, QuizPayloadLevel } from '@workspace/api-client-react';
 
 interface QuizState {
@@ -26,21 +26,24 @@ export function useStoredQuiz(level: QuizPayloadLevel) {
     }
   });
 
-  // Persist synchronously inside the updater. Persisting in a useEffect loses
-  // the final update when a state change is immediately followed by navigation
-  // (the component unmounts before the effect runs), which dropped the last
-  // answer and the completed flag at the end of the quiz.
+  // Persist synchronously and OUTSIDE React's state queue. Both useEffect and
+  // setState-updater persistence lose the final update when a state change is
+  // immediately followed by navigation: React may unmount the component before
+  // the effect (or even the queued updater) runs, dropping the last answer and
+  // the completed flag at the end of the quiz. So we mirror state in a ref,
+  // compute the next value eagerly, write localStorage right away, then update
+  // React state for rendering.
+  const stateRef = useRef(state);
   const update = useCallback(
     (updater: (prev: QuizState) => QuizState) => {
-      setState((prev) => {
-        const next = updater(prev);
-        try {
-          localStorage.setItem(key, JSON.stringify(next));
-        } catch {
-          // ignore storage errors
-        }
-        return next;
-      });
+      const next = updater(stateRef.current);
+      stateRef.current = next;
+      try {
+        localStorage.setItem(key, JSON.stringify(next));
+      } catch {
+        // ignore storage errors
+      }
+      setState(next);
     },
     [key],
   );
@@ -102,18 +105,18 @@ export function useAppStore() {
     }
   });
 
-  // Same synchronous persistence as useStoredQuiz (see comment above).
+  // Same ref-based synchronous persistence as useStoredQuiz (see comment above).
+  const stateRef = useRef(state);
   const update = useCallback(
     (updater: (prev: { municipalityId: string | null; resultTokens: Record<string, { editToken: string; deleteToken: string }> }) => { municipalityId: string | null; resultTokens: Record<string, { editToken: string; deleteToken: string }> }) => {
-      setState((prev) => {
-        const next = updater(prev);
-        try {
-          localStorage.setItem(key, JSON.stringify(next));
-        } catch {
-          // ignore storage errors
-        }
-        return next;
-      });
+      const next = updater(stateRef.current);
+      stateRef.current = next;
+      try {
+        localStorage.setItem(key, JSON.stringify(next));
+      } catch {
+        // ignore storage errors
+      }
+      setState(next);
     },
     [],
   );
