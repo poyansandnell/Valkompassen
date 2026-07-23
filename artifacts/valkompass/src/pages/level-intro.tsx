@@ -2,7 +2,8 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { Link, useLocation, useParams } from 'wouter';
 import { Layout } from '@/components/layout';
 import { Button } from '@/components/ui/button';
-import { useListMunicipalities, QuizPayloadLevel } from '@workspace/api-client-react';
+import { useListMunicipalities, QuizPayloadLevel, getQuiz } from '@workspace/api-client-react';
+import { useQueryClient } from '@tanstack/react-query';
 import { useAppStore, useStoredQuiz } from '@/hooks/use-local-answers';
 import { MapPin, Search, ArrowRight, ShieldAlert, Loader2, CheckCircle2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -24,6 +25,19 @@ export default function LevelIntro() {
   const hasRequestedGeo = useRef(false);
 
   const needsMunicipality = validLevel === 'region' || validLevel === 'kommun';
+
+  // Prefetch the quiz data as soon as we can (riksdag: immediately; region/
+  // kommun: once a municipality is chosen) so the quiz page opens instantly.
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    if (needsMunicipality && !municipalityId) return;
+    queryClient.prefetchQuery({
+      queryKey: ['quiz', validLevel, needsMunicipality ? municipalityId : undefined],
+      queryFn: () =>
+        getQuiz(validLevel, needsMunicipality ? { municipalityId: municipalityId! } : undefined),
+      staleTime: 5 * 60 * 1000,
+    });
+  }, [queryClient, validLevel, needsMunicipality, municipalityId]);
 
   const selectedMunicipality = useMemo(() => {
     if (!municipalityId || !municipalities) return null;

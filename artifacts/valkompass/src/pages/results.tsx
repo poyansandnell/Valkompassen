@@ -224,7 +224,13 @@ export default function Results() {
 
   const { data: quizPayload, isLoading } = useGetQuiz(level, 
     level !== 'riksdag' ? { municipalityId: municipalityId || undefined } : undefined,
-    { query: { queryKey: ['quiz', level, municipalityId], enabled: !missingMunicipality } }
+    { query: {
+      // Same key convention as quiz/home/level-intro (riksdag uses undefined)
+      // so the prefetched/cached quiz data is reused here too.
+      queryKey: ['quiz', level, level !== 'riksdag' ? municipalityId : undefined],
+      enabled: !missingMunicipality,
+      staleTime: 5 * 60 * 1000,
+    } }
   );
 
   const [filterInAssembly, setFilterInAssembly] = useState(false);

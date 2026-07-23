@@ -116,7 +116,13 @@ export default function Quiz() {
 
   const { data: quizPayload, isLoading, error } = useGetQuiz(validLevel, 
     needsMunicipality ? { municipalityId: municipalityId || undefined } : undefined,
-    { query: { queryKey: ['quiz', validLevel, municipalityId], enabled: !missingMunicipality } }
+    { query: {
+      // Key must match the prefetch in level-intro and the home card
+      // (riksdag uses `undefined`, not `null`) so the cached data is reused.
+      queryKey: ['quiz', validLevel, needsMunicipality ? municipalityId : undefined],
+      enabled: !missingMunicipality,
+      staleTime: 5 * 60 * 1000,
+    } }
   );
 
   const { answers, currentQuestionIndex, setAnswer, setWeight, setCurrentIndex, setCompleted, setTotalQuestions, isCompleted, reset } = useStoredQuiz(validLevel);
