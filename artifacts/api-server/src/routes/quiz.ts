@@ -54,6 +54,10 @@ router.get("/quiz/:level", async (req, res): Promise<void> => {
   res.json(
     GetQuizResponse.parse({
       level: ctx.level,
+      // In areas without seeded local participation we fall back to the
+      // national parties and do not know fullmäktige membership — the
+      // clients hide the "sitter redan i fullmäktige" filter then.
+      hasAssemblyData: parties.some((p) => p.inAssembly),
       areaName: ctx.areaName,
       regionName: ctx.regionName,
       electionName: ctx.electionName,

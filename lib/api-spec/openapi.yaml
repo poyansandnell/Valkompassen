@@ -504,8 +504,11 @@ components:
                 $ref: "#/components/schemas/PartyAnswer"
     QuizPayload:
       type: object
-      required: [level, areaName, electionName, questions, parties]
+      required: [level, areaName, electionName, questions, parties, hasAssemblyData]
       properties:
+        hasAssemblyData:
+          type: boolean
+          description: True when local assembly membership (fullmäktige) is known for this area; when false the inAssembly filter should be hidden.
         level:
           type: string
           enum: [riksdag, region, kommun]

@@ -341,6 +341,7 @@ export default function Results() {
               Baserat på dina svar i valkompassen för {quizPayload.areaName}. <br className="hidden sm:block" />
               Era svar ligger närmast varandra.
             </p>
+            {quizPayload.hasAssemblyData !== false && (
             <div className="flex flex-col items-center justify-center pt-2 gap-2">
               <div className="flex items-center gap-3 bg-muted/30 px-4 py-2.5 rounded-full border">
                 <Switch id="assembly-filter" checked={filterInAssembly} onCheckedChange={setFilterInAssembly} />
@@ -352,6 +353,7 @@ export default function Results() {
                 <EyeOff className="w-3.5 h-3.5" /> {hiddenCount} {hiddenCount === 1 ? 'parti dolt' : 'partier dolda'} av filtret
               </div>
             </div>
+            )}
           </div>
         </section>
 

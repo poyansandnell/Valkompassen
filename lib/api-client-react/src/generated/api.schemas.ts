@@ -103,6 +103,8 @@ export const QuizPayloadLevel = {
 } as const;
 
 export interface QuizPayload {
+  /** True when local assembly membership (fullmäktige) is known for this area; when false the inAssembly filter should be hidden. */
+  hasAssemblyData: boolean;
   level: QuizPayloadLevel;
   areaName: string;
   /** @nullable */

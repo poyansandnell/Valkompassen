@@ -147,6 +147,7 @@ export default function ResultsScreen() {
           </Text>
         </Card>
 
+        {quiz.hasAssemblyData !== false && (
         <View style={[styles.filterRow, { borderColor: c.border }]}>
           <Text style={{ flex: 1, color: c.foreground, fontSize: 13, fontFamily: 'Inter_500Medium' }}>
             Visa endast partier som redan sitter i {assemblyName}
@@ -158,6 +159,7 @@ export default function ResultsScreen() {
             trackColor={{ true: c.primary }}
           />
         </View>
+        )}
         {onlyInAssembly && hiddenCount > 0 && (
           <Text style={[styles.hiddenNote, { color: c.mutedForeground }]}>
             {hiddenCount} partier döljs av filtret.

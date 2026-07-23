@@ -52,6 +52,7 @@ export const GetQuizQueryParams = zod.object({
 })
 
 export const GetQuizResponse = zod.object({
+  "hasAssemblyData": zod.boolean().describe('True when local assembly membership (fullmäktige) is known for this area; when false the inAssembly filter should be hidden.'),
   "level": zod.enum(['riksdag', 'region', 'kommun']),
   "areaName": zod.string(),
   "regionName": zod.string().nullish(),
