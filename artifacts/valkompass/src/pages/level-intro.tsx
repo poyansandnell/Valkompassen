@@ -76,8 +76,13 @@ export default function LevelIntro() {
             setGeoloading(false);
             return;
           }
-          muniName = muniName.replace(/ kommun$/i, '').trim();
-          const matched = municipalities.find(m => m.name.toLowerCase() === muniName.toLowerCase());
+          // Nominatim answers e.g. "Katrineholms kommun" — strip " kommun"
+          // and handle the genitive "s" ("Katrineholms" -> "Katrineholm").
+          const stripped = muniName.replace(/s? kommun$/i, '').trim().toLowerCase();
+          const matched = municipalities.find(m => {
+            const n = m.name.toLowerCase();
+            return n === stripped || `${n}s` === stripped || n === `${stripped}s`;
+          });
           if (matched) {
             setGeoSuggestion({ id: matched.id, name: matched.name });
           }
@@ -88,7 +93,9 @@ export default function LevelIntro() {
         }
       },
       () => setGeoloading(false), // Silent fail on denial
-      { timeout: 10000 }
+      // maximumAge: reuse a cached position (up to 10 min old) so the
+      // suggestion appears quickly instead of waiting for a fresh GPS fix.
+      { timeout: 10000, maximumAge: 10 * 60 * 1000 }
     );
   }, [needsMunicipality, municipalities, municipalityId]);
 
