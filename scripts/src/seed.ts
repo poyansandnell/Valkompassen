@@ -216,6 +216,24 @@ const NATIONAL_PARTIES: PartySeed[] = [
 
 const LOCAL_PARTIES: PartySeed[] = [
   {
+    id: "medborgerlig-samling",
+    name: "Medborgerlig Samling",
+    abbreviation: "MED",
+    color: "#1B3A5C",
+    description:
+      "Testdata: exempel på ett parti utanför riksdagen som ställer upp i riksdagsvalet. Behandlas exakt som alla andra partier.",
+    website: "https://www.medborgerligsamling.se",
+  },
+  {
+    id: "katrineholms-val",
+    name: "Katrineholms Väl",
+    abbreviation: "KV",
+    color: "#B45309",
+    description:
+      "Testdata: exempel på ett lokalt parti som ställer upp i kommunvalet i Katrineholm men ännu inte lämnat svar.",
+    website: null,
+  },
+  {
     id: "katrineholm-framat",
     name: "Katrineholm FRAMÅT",
     abbreviation: "KF",
@@ -437,6 +455,12 @@ async function main() {
       municipalityId: "katrineholm",
     });
   }
+  participation.push({ partyId: "medborgerlig-samling", level: "riksdag" });
+  participation.push({
+    partyId: "katrineholms-val",
+    level: "kommun",
+    municipalityId: "katrineholm",
+  });
   participation.push({
     partyId: "sormlandslistan",
     level: "region",
@@ -510,6 +534,12 @@ async function main() {
       justification: TEST_JUSTIFICATION,
       sources: [TEST_SOURCE],
     });
+  }
+  // Medborgerlig Samling: partial answers — appears under
+  // "Fler partier som ställer upp" (not qualified) with some positions.
+  const riksdagQuestions = questionRows.filter((q) => q.id!.startsWith("rd-"));
+  for (const q of riksdagQuestions.slice(0, 12)) {
+    answerFor("medborgerlig-samling", q.id!, "editorial");
   }
   // Sörmlandslistan: intentionally sparse answers, so it appears under
   // "Fler partier som ställer upp" (not qualified).

@@ -2,11 +2,192 @@ import { useMemo, useEffect, useState } from 'react';
 import { Link, useLocation, useSearch } from 'wouter';
 import { Layout } from '@/components/layout';
 import { Button } from '@/components/ui/button';
-import { useGetQuiz, QuizPayloadLevel, useRecordCompletion } from '@workspace/api-client-react';
+import { useGetQuiz, QuizPayloadLevel, useRecordCompletion, QuizParty } from '@workspace/api-client-react';
 import { useStoredQuiz, useAppStore } from '@/hooks/use-local-answers';
 import { calculateMatches, calculateTopicAgreements } from '@/lib/matching';
-import { AlertCircle, ArrowRight, RefreshCcw, Share2, Globe, Users, ChevronRight, BarChart3, Fingerprint } from 'lucide-react';
+import { AlertCircle, RefreshCcw, Share2, Globe, Users, ChevronRight, Fingerprint, Search, ChevronDown, ChevronUp } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Input } from '@/components/ui/input';
+
+function Counter({ value, duration = 800, delay = 0 }: { value: number, duration?: number, delay?: number }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setCount(value);
+      return;
+    }
+
+    let frameId: number;
+    let startTime: number | null = null;
+
+    const tick = (now: number) => {
+      if (!startTime) startTime = now;
+      const elapsed = now - startTime;
+      const progress = Math.min(1, Math.max(0, elapsed / duration));
+      
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(easeOut * value));
+      
+      if (progress < 1) {
+        frameId = requestAnimationFrame(tick);
+      } else {
+        setCount(value);
+      }
+    };
+
+    const delayTimer = setTimeout(() => {
+      frameId = requestAnimationFrame(tick);
+    }, delay);
+
+    return () => {
+      clearTimeout(delayTimer);
+      if (frameId) cancelAnimationFrame(frameId);
+    };
+  }, [value, duration, delay]);
+
+  return <>{count}</>;
+}
+
+function HorizontalBar({ percent, color, delay = 0 }: { percent: number, color?: string, delay?: number }) {
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setWidth(percent);
+      return;
+    } else {
+      const t = setTimeout(() => setWidth(percent), delay);
+      return () => clearTimeout(t);
+    }
+  }, [percent, delay]);
+
+  return (
+    <div className="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full mt-3 overflow-hidden">
+      <div 
+        className="h-full rounded-full ease-out"
+        style={{ 
+          width: `${width}%`, 
+          backgroundColor: color || 'hsl(var(--primary))',
+          transitionProperty: 'width',
+          transitionDuration: width === 0 ? '0ms' : '800ms'
+        }}
+      />
+    </div>
+  );
+}
+
+function CircularProgress({ percent, color, delay = 0 }: { percent: number, color?: string, delay?: number }) {
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setValue(percent);
+      return;
+    } else {
+      const t = setTimeout(() => setValue(percent), delay);
+      return () => clearTimeout(t);
+    }
+  }, [percent, delay]);
+
+  const offset = 364.4 - (364.4 * value) / 100;
+
+  return (
+    <svg className="w-full h-full transform -rotate-90 absolute inset-0">
+      <circle cx="64" cy="64" r="58" fill="none" stroke="currentColor" strokeWidth="12" className="text-slate-100 dark:text-slate-800" />
+      <circle 
+        cx="64" cy="64" r="58" fill="none" 
+        stroke={color || 'currentColor'} 
+        strokeWidth="12" 
+        strokeDasharray="364.4" 
+        strokeDashoffset={offset} 
+        className="ease-out text-primary"
+        style={{ 
+          transitionProperty: 'stroke-dashoffset',
+          transitionDuration: value === 0 ? '0ms' : '800ms' 
+        }}
+      />
+    </svg>
+  );
+}
+
+function UnqualifiedParties({ parties, level, municipalityId }: { parties: QuizParty[], level: string, municipalityId: string | null }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState('');
+
+  const sortedParties = useMemo(() => {
+    return [...parties].sort((a, b) => a.name.localeCompare(b.name, 'sv'));
+  }, [parties]);
+
+  const filteredParties = useMemo(() => {
+    if (!search) return sortedParties;
+    const lSearch = search.toLowerCase();
+    return sortedParties.filter(p => p.name.toLowerCase().includes(lSearch) || p.abbreviation.toLowerCase().includes(lSearch));
+  }, [sortedParties, search]);
+
+  if (parties.length === 0) return null;
+
+  return (
+    <div className="container max-w-3xl mx-auto px-4 mt-16 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-500" style={{ animationFillMode: 'both' }}>
+      <Collapsible open={isOpen} onOpenChange={setIsOpen} className="border bg-white dark:bg-card rounded-xl shadow-sm overflow-hidden">
+        <CollapsibleTrigger className="flex items-center justify-between w-full p-4 md:p-6 text-left hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+          <div>
+            <h3 className="text-xl font-bold">Fler partier som ställer upp ({parties.length})</h3>
+            <p className="text-muted-foreground text-sm mt-1">
+              Dessa partier ställer upp i valet men har ännu inte tillräckligt många verifierade svar för att få en rättvis matchningspoäng i kompassen (kräver 90% besvarade frågor).
+            </p>
+          </div>
+          {isOpen ? <ChevronUp className="w-6 h-6 text-muted-foreground shrink-0 ml-4" /> : <ChevronDown className="w-6 h-6 text-muted-foreground shrink-0 ml-4" />}
+        </CollapsibleTrigger>
+        
+        <CollapsibleContent className="border-t">
+          <div className="p-4 md:p-6 space-y-4">
+            {parties.length > 8 && (
+              <div className="relative mb-6">
+                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input 
+                  placeholder="Sök parti..." 
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="pl-9 bg-slate-50 dark:bg-slate-900"
+                />
+              </div>
+            )}
+
+            <div className="grid sm:grid-cols-2 gap-3">
+              {filteredParties.map(p => (
+                <Link key={p.slug} href={`/partier/${level}/${p.slug}?municipalityId=${municipalityId || ''}`} className="block">
+                  <div className="border bg-slate-50 dark:bg-slate-900 rounded-lg p-3 sm:p-4 flex items-center justify-between gap-4 hover:border-primary/50 transition-colors group cursor-pointer h-full">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-10 h-10 rounded-full font-bold flex items-center justify-center text-white text-xs shrink-0 shadow-sm" style={{ backgroundColor: p.color || 'hsl(var(--primary))' }}>
+                        {p.abbreviation}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-semibold text-foreground group-hover:text-primary transition-colors truncate">{p.name}</div>
+                        <div className="text-xs text-muted-foreground">{p.answeredCount} av {p.totalQuestions} frågor besvarade</div>
+                      </div>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-muted-foreground shrink-0 group-hover:text-primary" />
+                  </div>
+                </Link>
+              ))}
+              
+              {filteredParties.length === 0 && (
+                <div className="col-span-full text-center p-4 text-muted-foreground">
+                  Inga partier matchade din sökning.
+                </div>
+              )}
+            </div>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
+  );
+}
 
 export default function Results() {
   const searchString = useSearch();
@@ -17,7 +198,6 @@ export default function Results() {
   const { municipalityId } = useAppStore();
   const { answers, reset } = useStoredQuiz(level);
 
-  // Trigger record completion ONCE when viewing results
   const recordCompletion = useRecordCompletion();
   const [recorded, setRecorded] = useState(false);
 
@@ -25,7 +205,7 @@ export default function Results() {
     if (level && !recorded && Object.keys(answers).length > 0) {
       recordCompletion.mutate({ data: { level } }, {
         onSuccess: () => setRecorded(true),
-        onError: () => {} // Fire and forget
+        onError: () => {}
       });
     }
   }, [level, recorded, answers, recordCompletion]);
@@ -40,14 +220,8 @@ export default function Results() {
     const userAnswersArray = Object.values(answers);
     const matches = calculateMatches(quizPayload.parties, userAnswersArray, quizPayload.questions);
     
-    const bestParty = matches[0];
-    const topicAgreements = bestParty 
-      ? calculateTopicAgreements(quizPayload.parties.find(p => p.slug === bestParty.partySlug)!, userAnswersArray, quizPayload.questions)
-      : [];
-
     return {
       matches,
-      topicAgreements,
       userAnswersArray,
       parties: quizPayload.parties
     };
@@ -115,7 +289,6 @@ export default function Results() {
       }
     } else {
       navigator.clipboard.writeText(window.location.origin);
-      // could show toast here
     }
   };
 
@@ -124,7 +297,7 @@ export default function Results() {
       <div className="bg-slate-50 dark:bg-background pb-24">
         
         {/* Results Header */}
-        <section className="bg-white dark:bg-card border-b pt-12 pb-16 px-4 text-center relative overflow-hidden">
+        <section className="bg-white dark:bg-card border-b pt-12 pb-16 px-4 text-center relative overflow-hidden animate-in fade-in duration-700">
           <div className="absolute inset-0 pointer-events-none opacity-20 dark:opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 50% -20%, var(--primary) 0%, transparent 70%)' }}></div>
           <div className="container max-w-3xl mx-auto relative z-10 space-y-6">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Dina närmaste partier</h1>
@@ -138,8 +311,8 @@ export default function Results() {
         {/* Top Result Card */}
         <div className="container max-w-3xl mx-auto px-4 -mt-8 relative z-20">
           {bestParty ? (
-            <Card className="shadow-lg border-2 border-primary/20 overflow-hidden">
-              <div className="h-3 w-full" style={{ backgroundColor: bestParty.partyColor || 'var(--primary)' }} />
+            <Card className="shadow-lg border-2 border-primary/20 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700" style={{ animationFillMode: 'both' }}>
+              <div className="h-3 w-full" style={{ backgroundColor: bestParty.partyColor || 'hsl(var(--primary))' }} />
               <CardContent className="p-6 md:p-8 flex flex-col md:flex-row items-center gap-8">
                 <div className="flex-1 text-center md:text-left space-y-2">
                   <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-primary/10 text-primary mb-2">
@@ -153,11 +326,10 @@ export default function Results() {
                 
                 <div className="shrink-0 flex flex-col items-center justify-center">
                   <div className="relative w-32 h-32 flex items-center justify-center">
-                    <svg className="w-full h-full transform -rotate-90 absolute inset-0">
-                      <circle cx="64" cy="64" r="58" fill="none" stroke="currentColor" strokeWidth="12" className="text-slate-100 dark:text-slate-800" />
-                      <circle cx="64" cy="64" r="58" fill="none" stroke={bestParty.partyColor || 'currentColor'} strokeWidth="12" strokeDasharray="364.4" strokeDashoffset={364.4 - (364.4 * bestParty.matchPercent) / 100} className="transition-all duration-1000 ease-out text-primary" />
-                    </svg>
-                    <span className="text-4xl font-bold tabular-nums">{bestParty.matchPercent}%</span>
+                    <CircularProgress percent={bestParty.matchPercent} color={bestParty.partyColor} delay={200} />
+                    <span className="text-4xl font-bold tabular-nums">
+                      <Counter value={bestParty.matchPercent} delay={200} />%
+                    </span>
                   </div>
                 </div>
               </CardContent>
@@ -181,50 +353,47 @@ export default function Results() {
 
         {/* Full List */}
         <div className="container max-w-3xl mx-auto px-4 mt-12 space-y-6">
-          <h3 className="text-2xl font-bold">Hela listan</h3>
+          {qualifiedMatches.length > 1 && (
+            <h3 className="text-2xl font-bold animate-in fade-in slide-in-from-bottom-2 duration-500 delay-200" style={{ animationFillMode: 'both' }}>
+              Hela listan
+            </h3>
+          )}
           
           <div className="space-y-4">
-            {qualifiedMatches.slice(1).map((match, i) => (
-              <Link key={match.partySlug} href={`/partier/${level}/${match.partySlug}?municipalityId=${municipalityId || ''}`}>
-                <div className="bg-white dark:bg-card border rounded-xl p-4 flex items-center gap-4 hover:border-primary/50 transition-colors cursor-pointer group">
-                  <div className="w-12 h-12 rounded-full font-bold flex items-center justify-center text-white text-sm shrink-0" style={{ backgroundColor: match.partyColor || 'var(--primary)' }}>
-                    {match.partyAbbreviation}
+            {qualifiedMatches.slice(1).map((match, i) => {
+              const delay = 300 + (i * 80);
+              return (
+                <Link key={match.partySlug} href={`/partier/${level}/${match.partySlug}?municipalityId=${municipalityId || ''}`} className="block">
+                  <div 
+                    className="bg-white dark:bg-card border rounded-xl p-4 sm:p-5 flex items-center gap-4 hover:border-primary/50 transition-colors cursor-pointer group shadow-sm animate-in fade-in slide-in-from-bottom-4 duration-500"
+                    style={{ animationFillMode: 'both', animationDelay: `${delay}ms` }}
+                  >
+                    <div className="w-12 h-12 rounded-full font-bold flex items-center justify-center text-white text-sm shrink-0 shadow-sm" style={{ backgroundColor: match.partyColor || 'hsl(var(--primary))' }}>
+                      {match.partyAbbreviation}
+                    </div>
+                    <div className="flex-1 min-w-0 pr-4 border-r">
+                      <div className="flex justify-between items-center mb-1">
+                        <h4 className="font-semibold text-lg truncate group-hover:text-primary transition-colors pr-4">{match.partyName}</h4>
+                        <div className="text-2xl font-bold tabular-nums shrink-0">
+                          <Counter value={match.matchPercent} delay={delay + 100} />%
+                        </div>
+                      </div>
+                      <p className="text-sm text-muted-foreground truncate">{match.basedOnQuestions} besvarade gemensamma frågor</p>
+                      <HorizontalBar percent={match.matchPercent} color={match.partyColor} delay={delay + 100} />
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-muted-foreground shrink-0 group-hover:text-primary transition-colors" />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-lg truncate group-hover:text-primary transition-colors">{match.partyName}</h4>
-                    <p className="text-sm text-muted-foreground truncate">{match.basedOnQuestions} besvarade gemensamma frågor</p>
-                  </div>
-                  <div className="shrink-0 text-right">
-                    <div className="text-2xl font-bold tabular-nums">{match.matchPercent}%</div>
-                  </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         </div>
 
-        {/* Non-qualified parties */}
-        {nonQualifiedParties.length > 0 && (
-          <div className="container max-w-3xl mx-auto px-4 mt-16 space-y-6">
-            <h3 className="text-xl font-bold">Fler partier som ställer upp</h3>
-            <p className="text-muted-foreground text-sm">
-              Dessa partier ställer upp i valet men har ännu inte tillräckligt många verifierade svar för att få en rättvis matchningspoäng i kompassen (kräver 90% besvarade frågor).
-            </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              {nonQualifiedParties.map(p => (
-                <Link key={p.slug} href={`/partier/${level}/${p.slug}?municipalityId=${municipalityId || ''}`}>
-                  <div className="border bg-white dark:bg-card rounded-lg p-4 text-center hover:border-primary/50 transition-colors">
-                    <div className="font-semibold text-foreground mb-1">{p.name}</div>
-                    <div className="text-xs text-muted-foreground">{p.answeredCount} av {p.totalQuestions} svar</div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Non-qualified parties section */}
+        <UnqualifiedParties parties={nonQualifiedParties} level={level} municipalityId={municipalityId} />
 
         {/* Action Cards */}
-        <div className="container max-w-3xl mx-auto px-4 mt-16 grid sm:grid-cols-2 gap-6">
+        <div className="container max-w-3xl mx-auto px-4 mt-16 grid sm:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-700" style={{ animationFillMode: 'both' }}>
           <Card className="hover:border-primary/50 transition-colors cursor-pointer" onClick={() => setLocation(`/publicera?level=${level}`)}>
             <CardHeader>
               <Globe className="w-8 h-8 text-primary mb-2" />
@@ -243,7 +412,7 @@ export default function Results() {
         </div>
 
         {/* Footer Actions */}
-        <div className="container max-w-3xl mx-auto px-4 mt-16 flex flex-col items-center justify-center border-t pt-12 text-center">
+        <div className="container max-w-3xl mx-auto px-4 mt-16 flex flex-col items-center justify-center border-t pt-12 text-center animate-in fade-in duration-500 delay-1000" style={{ animationFillMode: 'both' }}>
           <p className="text-muted-foreground mb-6">
             Kom ihåg: Valkompass är ett verktyg för att jämföra partiernas svar innan du bestämmer dig. Den är inte ett direktiv om vad du ska rösta på.
           </p>
