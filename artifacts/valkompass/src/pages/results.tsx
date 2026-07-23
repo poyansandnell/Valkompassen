@@ -140,7 +140,7 @@ function UnqualifiedParties({ parties, level, municipalityId }: { parties: QuizP
           <div>
             <h3 className="text-xl font-bold">Fler partier som ställer upp ({parties.length})</h3>
             <p className="text-muted-foreground text-sm mt-1">
-              Dessa partier ställer upp i valet men har ännu inte tillräckligt många verifierade svar för att få en rättvis matchningspoäng i kompassen (kräver 90% besvarade frågor).
+              Dessa partier ställer upp i valet men har ännu inte tillräckligt många verifierade svar för att få en rättvis matchningspoäng i kompassen (kräver 75% besvarade frågor).
             </p>
           </div>
           {isOpen ? <ChevronUp className="w-6 h-6 text-muted-foreground shrink-0 ml-4" /> : <ChevronDown className="w-6 h-6 text-muted-foreground shrink-0 ml-4" />}

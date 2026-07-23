@@ -222,7 +222,7 @@ export function serializeParty(
     description: party.description ?? null,
     website: party.website ?? null,
     isQualified:
-      totalQuestions > 0 && answeredCount >= Math.ceil(totalQuestions * 0.9),
+      totalQuestions > 0 && answeredCount >= Math.ceil(totalQuestions * 0.75),
     answeredCount,
     totalQuestions,
     isTestData: party.isTestData,

@@ -263,14 +263,14 @@ export default function HowItWorks() {
           <div className="space-y-4 text-muted-foreground">
             <p className="text-lg">
               Ett parti räknas som <strong className="text-foreground">kvalificerat</strong> när det har besvarat 
-              minst 90% av frågorna i valkompassen med verifierade svar.
+              minst 75% av frågorna i valkompassen med verifierade svar.
             </p>
             <p>
               Endast kvalificerade partier visas i den huvudsakliga topplistan på resultatsidan. Detta är ett kvalitetskrav 
               för att säkerställa att matchningen är rättvisande och byggd på tillräckligt underlag.
             </p>
             <p>
-              Partier som ställer upp i valet men ännu inte nått 90%-tröskeln visas längre ner på resultatsidan 
+              Partier som ställer upp i valet men ännu inte nått 75%-tröskeln visas längre ner på resultatsidan 
               under rubriken "Fler partier som ställer upp", med information om hur många frågor de besvarat.
             </p>
             <p>
@@ -371,7 +371,7 @@ export default function HowItWorks() {
               <CardContent className="text-muted-foreground">
                 <p>
                   Vissa partier har inte ännu lämnat svar på alla frågor, eller så har de inte någon offentligt fastställd 
-                  ståndpunkt i vissa frågor. Vi arbetar löpande med att komplettera svaren. Partier som inte nått 90% 
+                  ståndpunkt i vissa frågor. Vi arbetar löpande med att komplettera svaren. Partier som inte nått 75% 
                   kvalificerar sig inte för huvudlistan men visas ändå separat.
                 </p>
               </CardContent>
