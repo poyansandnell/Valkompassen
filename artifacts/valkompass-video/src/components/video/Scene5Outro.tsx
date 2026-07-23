@@ -17,7 +17,8 @@ export const Scene5Outro = () => {
 
   return (
     <motion.div
-      className="absolute inset-0 flex flex-col items-center justify-center bg-[var(--color-primary)] text-white"
+      className="absolute inset-0 flex flex-col items-center justify-center text-white"
+      style={{ background: 'linear-gradient(160deg, #6d28d9 0%, #7c3aed 55%, #8b5cf6 100%)' }}
       initial={{ clipPath: "circle(0% at 50% 50%)" }}
       animate={{ clipPath: "circle(150% at 50% 50%)" }}
       exit={{ opacity: 0, scale: 0.9 }}
@@ -32,7 +33,7 @@ export const Scene5Outro = () => {
           animate={phase >= 1 ? { scale: 1, rotate: 0, borderRadius: "24px" } : { scale: 0, rotate: -45, borderRadius: "50%" }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
-          <Flag className="w-16 h-16 text-[var(--color-primary)]" strokeWidth={3} />
+          <Flag className="w-16 h-16 text-[#6d28d9]" strokeWidth={3} />
         </motion.div>
 
         {/* Logo Text */}
@@ -53,7 +54,7 @@ export const Scene5Outro = () => {
             initial={{ y: "100%", opacity: 0 }}
             animate={phase >= 3 ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="text-4xl font-medium tracking-wide text-blue-200"
+            className="text-4xl font-medium tracking-wide text-purple-200"
           >
             Din röst. Ditt val.
           </motion.p>
@@ -62,13 +63,13 @@ export const Scene5Outro = () => {
 
       {/* Decorative floating rings in background */}
       <motion.div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-blue-400/30 rounded-full"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-purple-300/30 rounded-full"
         initial={{ scale: 0, opacity: 0 }}
         animate={phase >= 1 ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
         transition={{ duration: 2, ease: "easeOut" }}
       />
       <motion.div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] border border-blue-400/20 rounded-full"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] border border-purple-300/20 rounded-full"
         initial={{ scale: 0, opacity: 0 }}
         animate={phase >= 2 ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
         transition={{ duration: 2.5, ease: "easeOut" }}
