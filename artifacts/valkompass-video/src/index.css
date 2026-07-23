@@ -1,27 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
 @import 'tailwindcss';
 
-/* REPLACE THESE -- define your own palette and fonts for each video */
 :root {
-  --color-primary: #000000;
-  --color-secondary: #6b7280;
-  --color-accent: #3b82f6;
+  --color-primary: #0056b3; /* Trustworthy blue */
+  --color-secondary: #0f2942; /* Dark navy */
+  --color-accent: #10b981; /* Green */
 
-  --color-bg-light: #ffffff;
-  --color-bg-dark: #0f172a;
-  --color-bg-muted: #f8fafc;
+  --color-bg-light: #f1f5f9; /* Slate 100 */
+  --color-bg-dark: #ffffff; /* White cards */
+  --color-bg-muted: #e2e8f0; /* Slate 200 */
 
-  --color-text-primary: #111827;
-  --color-text-secondary: #6b7280;
-  --color-text-muted: #9ca3af;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
   --color-text-inverse: #ffffff;
 
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
 
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
 }
 
 @theme inline {
@@ -40,11 +39,22 @@
   --color-error: var(--color-error);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
-  --font-mono: var(--font-mono);
 }
 
 body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+}
+
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  z-index: 50;
 }
