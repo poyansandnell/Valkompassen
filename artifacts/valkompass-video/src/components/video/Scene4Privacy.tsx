@@ -33,7 +33,7 @@ export const Scene4Privacy = () => {
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
           <motion.div 
-            className="w-24 h-24 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-white mb-6 shadow-2xl shadow-blue-500/30"
+            className="w-24 h-24 bg-[#059669] rounded-full flex items-center justify-center text-white mb-6 shadow-2xl shadow-emerald-500/30"
             animate={phase >= 1 ? { scale: [0, 1.2, 1] } : { scale: 0 }}
             transition={{ duration: 0.6 }}
           >
@@ -52,7 +52,9 @@ export const Scene4Privacy = () => {
             transition={{ delay: 0.2 }}
             className="text-3xl text-[var(--color-text-secondary)] mt-4"
           >
-            Svaren stannar på din enhet.
+            Svaren stannar på din enhet
+            <br />
+            <span className="text-2xl">(om du inte själv väljer att dela ditt resultat med vänner).</span>
           </motion.p>
         </motion.div>
 
@@ -82,7 +84,7 @@ export const Scene4Privacy = () => {
             animate={phase >= 4 ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
             className="text-3xl font-bold text-[var(--color-secondary)]"
           >
-            Tar cirka <span className="text-[var(--color-primary)]">5 minuter</span> per nivå.
+            Tar cirka <span className="text-[#059669]">5 minuter</span> per nivå.
           </motion.p>
         </motion.div>
 

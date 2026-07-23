@@ -43,7 +43,7 @@ export const Scene1Levels = () => {
             >
               Tre nivåer.
               <br />
-              <span className="text-[var(--color-primary)]">Ett val.</span>
+              <span className="text-[#0d9488]">Ett val.</span>
             </motion.h2>
           </motion.div>
           

@@ -41,7 +41,7 @@ export const Scene3Match = () => {
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="text-7xl font-extrabold text-[var(--color-secondary)] leading-tight"
             >
-              Högst sakpolitisk <span className="text-[var(--color-primary)]">matchning.</span>
+              Högst sakpolitisk <span className="text-[#7c3aed]">matchning.</span>
             </motion.h2>
           </motion.div>
           

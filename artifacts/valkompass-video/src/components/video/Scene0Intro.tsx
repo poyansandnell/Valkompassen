@@ -20,7 +20,7 @@ export const Scene0Intro = () => {
     exit: { y: -100, opacity: 0, rotateX: 90 },
   };
 
-  const text = "VALKOMPASS 2026".split("");
+  const text = "VALKOMPASS".split("");
 
   return (
     <motion.div

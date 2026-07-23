@@ -38,7 +38,7 @@ export const Scene2Scale = () => {
           transition={{ type: "spring", damping: 25, stiffness: 200, delay: 0.2 }}
           className="text-6xl font-extrabold text-[var(--color-secondary)]"
         >
-          Ta ställning till <span className="text-[var(--color-primary)]">förslagen</span>
+          Ta ställning till <span className="text-[#d97706]">förslagen</span>
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
