@@ -4,7 +4,7 @@ import { Layout } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import { useGetQuiz, QuizPayloadLevel, QuizQuestion, UserAnswer } from '@workspace/api-client-react';
 import { useStoredQuiz, useAppStore } from '@/hooks/use-local-answers';
-import { ChevronLeft, Flag, HelpCircle, AlertCircle, Info, ChevronDown, ChevronUp, X } from 'lucide-react';
+import { ChevronLeft, Flag, AlertCircle, Info, ChevronDown } from 'lucide-react';
 import { WEIGHTS, calculateMatches } from '@/lib/matching';
 import {
   Collapsible,
@@ -28,7 +28,9 @@ const ANSWER_OPTIONS = [
   { value: -2, label: 'Tar helt avstånd', color: 'bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600', textColor: 'text-white' },
 ];
 
-function LiveMatchBars({ parties, userAnswers, questions, collapsed, onToggle }: any) {
+function LiveMatchBars({ parties, userAnswers, questions }: any) {
+  const [expanded, setExpanded] = useState(false);
+  
   const matches = useMemo(() => {
     if (!parties || !userAnswers || !questions) return [];
     const userAnswersArray = Object.values(userAnswers) as UserAnswer[];
@@ -37,38 +39,53 @@ function LiveMatchBars({ parties, userAnswers, questions, collapsed, onToggle }:
     return computed.sort((a, b) => a.partyName.localeCompare(b.partyName, 'sv'));
   }, [parties, userAnswers, questions]);
 
-  if (matches.length === 0) return null;
+  if (matches.length === 0) return <div className="w-10" />;
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const transitionDuration = prefersReducedMotion ? '0ms' : '500ms';
 
   return (
-    <div className={`fixed top-20 right-4 z-30 bg-card border shadow-lg rounded-xl overflow-hidden transition-all ${collapsed ? 'w-12' : 'w-64'} max-w-[calc(100vw-2rem)]`}>
-      <button 
-        onClick={onToggle} 
-        className="w-full p-3 flex items-center justify-between hover:bg-muted/50 transition-colors border-b"
-        aria-label={collapsed ? 'Visa live-matchning' : 'Dölj live-matchning'}
+    <div 
+      className="relative flex items-center justify-end z-50"
+      onMouseEnter={() => setExpanded(true)}
+      onMouseLeave={() => setExpanded(false)}
+    >
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="h-9 px-3 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center gap-1 border border-slate-200 dark:border-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all hover:bg-slate-200 dark:hover:bg-slate-700"
+        aria-label="Live-matchning"
       >
-        <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-          {collapsed ? 'Live' : 'Live-matchning'}
-        </span>
-        {collapsed ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+        <div className="flex items-end h-5 gap-[3px]">
+          {matches.map(match => {
+            // Calculate a height between 4px and 20px
+            const h = Math.max(4, (match.matchPercent / 100) * 20);
+            return (
+              <div
+                key={match.partySlug}
+                className="w-1.5 rounded-full transition-all ease-out"
+                style={{
+                  height: `${h}px`,
+                  backgroundColor: match.partyColor || 'hsl(var(--primary))',
+                  transitionDuration
+                }}
+              />
+            );
+          })}
+        </div>
       </button>
-      
-      {!collapsed && (
-        <div className="p-3 space-y-2 max-h-[60vh] overflow-y-auto">
-          {matches.map((match) => (
-            <div key={match.partySlug} className="space-y-1">
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-medium truncate">{match.partyAbbreviation}</span>
-                <span className="tabular-nums font-bold text-primary ml-2">{match.matchPercent}%</span>
-              </div>
-              <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                <div 
-                  className="h-full rounded-full transition-all duration-700 ease-out"
-                  style={{ 
-                    width: `${match.matchPercent}%`, 
+
+      {expanded && (
+        <div className="absolute top-full right-0 mt-2 w-32 bg-white dark:bg-card border border-slate-200 dark:border-slate-700 shadow-xl rounded-xl p-2.5 flex flex-col gap-2 animate-in fade-in slide-in-from-top-2 duration-200">
+          {matches.map(match => (
+            <div key={match.partySlug} className="flex items-center gap-2">
+              <span className="text-[10px] font-bold w-6 shrink-0 text-right uppercase tracking-wider">{match.partyAbbreviation}</span>
+              <div className="flex-1 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all ease-out"
+                  style={{
+                    width: `${match.matchPercent}%`,
                     backgroundColor: match.partyColor || 'hsl(var(--primary))',
-                    transitionDuration: prefersReducedMotion ? '0ms' : '700ms'
+                    transitionDuration
                   }}
                 />
               </div>
@@ -93,8 +110,6 @@ export default function Quiz() {
   );
 
   const { answers, currentQuestionIndex, setAnswer, setWeight, setCurrentIndex } = useStoredQuiz(validLevel);
-
-  const [liveCollapsed, setLiveCollapsed] = useState(false);
 
   const questions = quizPayload?.questions || [];
   const currentQ = questions[currentQuestionIndex];
@@ -148,20 +163,20 @@ export default function Quiz() {
   return (
     <div className="min-h-[100dvh] flex flex-col bg-slate-50 dark:bg-background">
       {/* Top Header & Progress */}
-      <header className="bg-white dark:bg-card border-b sticky top-0 z-10">
-        <div className="container max-w-3xl mx-auto h-16 flex items-center justify-between px-4">
+      <header className="bg-white dark:bg-card border-b sticky top-0 z-40">
+        <div className="container max-w-3xl mx-auto h-16 flex items-center justify-between px-4 relative">
           <button 
             onClick={handleBack} 
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
           
-          <div className="flex flex-col items-center">
-            <span className="text-xs font-semibold text-muted-foreground tracking-wider uppercase mb-1">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none">
+            <span className="text-[10px] sm:text-xs font-semibold text-muted-foreground tracking-wider uppercase mb-1">
               Fråga {currentQuestionIndex + 1} av {questions.length}
             </span>
-            <div className="w-32 sm:w-48 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+            <div className="w-24 sm:w-48 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
               <div 
                 className="h-full bg-primary transition-all duration-300 ease-out"
                 style={{ width: `${progressPercent}%` }}
@@ -169,23 +184,20 @@ export default function Quiz() {
             </div>
           </div>
           
-          <div className="w-10" />
+          <div className="flex items-center justify-end min-w-[3rem]">
+            {quizPayload && (
+              <LiveMatchBars 
+                parties={quizPayload.parties} 
+                userAnswers={answers} 
+                questions={questions} 
+              />
+            )}
+          </div>
         </div>
       </header>
 
-      {/* Live Match Bars */}
-      {quizPayload && (
-        <LiveMatchBars 
-          parties={quizPayload.parties} 
-          userAnswers={answers} 
-          questions={questions} 
-          collapsed={liveCollapsed}
-          onToggle={() => setLiveCollapsed(!liveCollapsed)}
-        />
-      )}
-
       {/* Main Content */}
-      <main className="flex-1 container max-w-3xl mx-auto px-4 py-8 md:py-16 flex flex-col">
+      <main className="flex-1 container max-w-3xl mx-auto px-4 py-8 md:py-16 flex flex-col relative z-0">
         
         {/* Category Label */}
         <div className="flex justify-center mb-6">
