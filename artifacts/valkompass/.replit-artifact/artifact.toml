@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Valkompass"
+version = "1.0.0"
+id = "artifacts/valkompass"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26109
+
+[services.development]
+run = "pnpm --filter @workspace/valkompass run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/valkompass", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/valkompass/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26109"
+BASE_PATH = "/"

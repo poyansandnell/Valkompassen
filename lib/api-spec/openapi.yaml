@@ -3,20 +3,24 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Valkompass API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
-    description: Health operations
+  - name: geo
+  - name: quiz
+  - name: parties
+  - name: results
+  - name: challenges
+  - name: stats
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +28,382 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /municipalities:
+    get:
+      operationId: listMunicipalities
+      tags: [geo]
+      summary: List all municipalities with their regions
+      responses:
+        "200":
+          description: Municipalities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Municipality"
+  /regions:
+    get:
+      operationId: listRegions
+      tags: [geo]
+      summary: List all regions
+      responses:
+        "200":
+          description: Regions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Region"
+  /quiz/{level}:
+    get:
+      operationId: getQuiz
+      tags: [quiz]
+      summary: Full quiz payload (questions + parties + party answers) for one election level
+      parameters:
+        - name: level
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [riksdag, region, kommun]
+        - name: municipalityId
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Quiz payload
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuizPayload"
+        "400":
+          description: municipalityId required for region/kommun
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+  /parties:
+    get:
+      operationId: listParties
+      tags: [parties]
+      summary: List parties for an election level (alphabetical)
+      parameters:
+        - name: level
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [riksdag, region, kommun]
+        - name: municipalityId
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Parties
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Party"
+  /parties/{slug}:
+    get:
+      operationId: getPartyProfile
+      tags: [parties]
+      summary: Public party profile with all published answers
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: level
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [riksdag, region, kommun]
+        - name: municipalityId
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Party profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PartyProfile"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+  /result-pages:
+    post:
+      operationId: createResultPage
+      tags: [results]
+      summary: Publish a voluntary public result page (no login)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResultPageInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResultPageCreated"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+  /result-pages/{slug}:
+    get:
+      operationId: getResultPage
+      tags: [results]
+      summary: Get a public result page
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Result page
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicResultPage"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+    patch:
+      operationId: updateResultPage
+      tags: [results]
+      summary: Update a result page using the private edit token
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResultPageUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicResultPage"
+        "403":
+          description: Invalid token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+    delete:
+      operationId: deleteResultPage
+      tags: [results]
+      summary: Permanently delete a result page using the private delete token
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+        "403":
+          description: Invalid token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+  /result-pages/{slug}/report:
+    post:
+      operationId: reportResultPage
+      tags: [results]
+      summary: Report a public result page
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResultPageReport"
+      responses:
+        "201":
+          description: Report received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+  /challenges:
+    post:
+      operationId: createChallenge
+      tags: [challenges]
+      summary: Create a friend challenge link after completing the quiz
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChallengeInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChallengeCreated"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+  /challenges/{code}:
+    get:
+      operationId: getChallenge
+      tags: [challenges]
+      summary: Get challenge metadata (never reveals the sender's answers before completion)
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Challenge
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Challenge"
+        "404":
+          description: Not found or expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+  /challenges/{code}/complete:
+    post:
+      operationId: completeChallenge
+      tags: [challenges]
+      summary: Submit the friend's answers and get an aggregated comparison
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChallengeCompletion"
+      responses:
+        "200":
+          description: Comparison
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChallengeComparison"
+        "404":
+          description: Not found or expired
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+  /stats/completions:
+    post:
+      operationId: recordCompletion
+      tags: [stats]
+      summary: Record an anonymous completed quiz (aggregate counter only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompletionEvent"
+      responses:
+        "201":
+          description: Recorded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiMessage"
+  /stats:
+    get:
+      operationId: getStats
+      tags: [stats]
+      summary: Anonymous aggregated statistics
+      responses:
+        "200":
+          description: Stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteStats"
 components:
   schemas:
     HealthStatus:
@@ -31,6 +411,308 @@ components:
       properties:
         status:
           type: string
-      required:
-        - status
-
+      required: [status]
+    ApiMessage:
+      type: object
+      properties:
+        message:
+          type: string
+      required: [message]
+    Region:
+      type: object
+      required: [id, name, slug]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        slug: { type: string }
+    Municipality:
+      type: object
+      required: [id, name, slug, regionId, regionName]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        slug: { type: string }
+        regionId: { type: string }
+        regionName: { type: string }
+    QuestionSource:
+      type: object
+      required: [title, url]
+      properties:
+        title: { type: string }
+        url: { type: string }
+        date: { type: ["string", "null"] }
+    QuizQuestion:
+      type: object
+      required: [id, text, category, orderIndex]
+      properties:
+        id: { type: string }
+        text: { type: string }
+        category: { type: string }
+        orderIndex: { type: integer }
+        explanation: { type: ["string", "null"] }
+        moreInfo: { type: ["string", "null"] }
+        sources:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuestionSource"
+    PartyAnswer:
+      type: object
+      required: [questionId, value, answerOrigin]
+      properties:
+        questionId: { type: string }
+        value:
+          type: ["integer", "null"]
+          description: "-2..2, null = no established position"
+        answerOrigin:
+          type: string
+          enum: [party, editorial, none]
+        justification: { type: ["string", "null"] }
+        sources:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuestionSource"
+    Party:
+      type: object
+      required: [id, name, slug, abbreviation, color, isQualified, answeredCount, totalQuestions, isTestData]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        slug: { type: string }
+        abbreviation: { type: string }
+        color: { type: string }
+        description: { type: ["string", "null"] }
+        website: { type: ["string", "null"] }
+        isQualified:
+          type: boolean
+          description: True when >= 90% of questions have verified answers
+        answeredCount: { type: integer }
+        totalQuestions: { type: integer }
+        isTestData: { type: boolean }
+        answersUpdatedAt: { type: ["string", "null"] }
+    QuizParty:
+      allOf:
+        - $ref: "#/components/schemas/Party"
+        - type: object
+          required: [answers]
+          properties:
+            answers:
+              type: array
+              items:
+                $ref: "#/components/schemas/PartyAnswer"
+    QuizPayload:
+      type: object
+      required: [level, areaName, electionName, questions, parties]
+      properties:
+        level:
+          type: string
+          enum: [riksdag, region, kommun]
+        areaName: { type: string }
+        regionName: { type: ["string", "null"] }
+        electionName: { type: string }
+        questions:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuizQuestion"
+        parties:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuizParty"
+    PartyProfile:
+      type: object
+      required: [party, questions, answers]
+      properties:
+        party:
+          $ref: "#/components/schemas/Party"
+        questions:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuizQuestion"
+        answers:
+          type: array
+          items:
+            $ref: "#/components/schemas/PartyAnswer"
+    PartyMatchSummary:
+      type: object
+      required: [partyName, partyAbbreviation, partySlug, partyColor, matchPercent, basedOnQuestions, totalQuestions]
+      properties:
+        partyName: { type: string }
+        partyAbbreviation: { type: string }
+        partySlug: { type: string }
+        partyColor: { type: string }
+        matchPercent: { type: number }
+        basedOnQuestions: { type: integer }
+        totalQuestions: { type: integer }
+    TopicAgreement:
+      type: object
+      required: [category, agreementPercent]
+      properties:
+        category: { type: string }
+        agreementPercent: { type: number }
+    ResultPageInput:
+      type: object
+      required: [level, areaName, topMatches, confirmPublic]
+      properties:
+        level:
+          type: string
+          enum: [riksdag, region, kommun]
+        areaName: { type: string }
+        displayName: { type: ["string", "null"] }
+        locality: { type: ["string", "null"] }
+        comment: { type: ["string", "null"] }
+        showBestParty: { type: boolean, default: false }
+        showFullList: { type: boolean, default: false }
+        showTopics: { type: boolean, default: false }
+        isIndexable: { type: boolean, default: false }
+        confirmPublic:
+          type: boolean
+          description: User must confirm the page becomes public
+        topMatches:
+          type: array
+          items:
+            $ref: "#/components/schemas/PartyMatchSummary"
+        topicAgreements:
+          type: array
+          items:
+            $ref: "#/components/schemas/TopicAgreement"
+    ResultPageUpdate:
+      type: object
+      required: [editToken]
+      properties:
+        editToken: { type: string }
+        displayName: { type: ["string", "null"] }
+        locality: { type: ["string", "null"] }
+        comment: { type: ["string", "null"] }
+        showBestParty: { type: boolean }
+        showFullList: { type: boolean }
+        showTopics: { type: boolean }
+        isIndexable: { type: boolean }
+        isPublished: { type: boolean }
+    ResultPageCreated:
+      type: object
+      required: [publicSlug, editToken, deleteToken]
+      properties:
+        publicSlug: { type: string }
+        editToken: { type: string }
+        deleteToken: { type: string }
+    PublicResultPage:
+      type: object
+      required: [publicSlug, level, areaName, createdAt, isIndexable, isPublished, topMatches]
+      properties:
+        publicSlug: { type: string }
+        level:
+          type: string
+          enum: [riksdag, region, kommun]
+        areaName: { type: string }
+        displayName: { type: ["string", "null"] }
+        locality: { type: ["string", "null"] }
+        comment: { type: ["string", "null"] }
+        showBestParty: { type: boolean }
+        showFullList: { type: boolean }
+        showTopics: { type: boolean }
+        isIndexable: { type: boolean }
+        isPublished: { type: boolean }
+        createdAt: { type: string }
+        topMatches:
+          type: array
+          items:
+            $ref: "#/components/schemas/PartyMatchSummary"
+        topicAgreements:
+          type: array
+          items:
+            $ref: "#/components/schemas/TopicAgreement"
+    ResultPageReport:
+      type: object
+      required: [reason]
+      properties:
+        reason:
+          type: string
+          enum: [personuppgifter, hot, trakasserier, falsk_identitet, olagligt, spam, annat]
+        details: { type: ["string", "null"] }
+    UserAnswer:
+      type: object
+      required: [questionId, value, weight]
+      properties:
+        questionId: { type: string }
+        value:
+          type: ["integer", "null"]
+          description: "-2..2, null = skipped"
+        weight:
+          type: number
+          description: "0.75 | 1 | 1.5 | 2.25"
+    ChallengeInput:
+      type: object
+      required: [level, areaName, answers]
+      properties:
+        level:
+          type: string
+          enum: [riksdag, region, kommun]
+        areaName: { type: string }
+        municipalityId: { type: ["string", "null"] }
+        senderName: { type: ["string", "null"] }
+        answers:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserAnswer"
+    ChallengeCreated:
+      type: object
+      required: [code, expiresAt]
+      properties:
+        code: { type: string }
+        expiresAt: { type: string }
+    Challenge:
+      type: object
+      required: [code, level, areaName, questionCount, isCompleted]
+      properties:
+        code: { type: string }
+        level:
+          type: string
+          enum: [riksdag, region, kommun]
+        areaName: { type: string }
+        municipalityId: { type: ["string", "null"] }
+        senderName: { type: ["string", "null"] }
+        questionCount: { type: integer }
+        isCompleted: { type: boolean }
+    ChallengeCompletion:
+      type: object
+      required: [answers]
+      properties:
+        answers:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserAnswer"
+    ChallengeComparison:
+      type: object
+      required: [similarityPercent, basedOnQuestions, mostAgreedTopics, mostDisagreedTopics]
+      properties:
+        similarityPercent: { type: number }
+        basedOnQuestions: { type: integer }
+        senderName: { type: ["string", "null"] }
+        mostAgreedTopics:
+          type: array
+          items:
+            $ref: "#/components/schemas/TopicAgreement"
+        mostDisagreedTopics:
+          type: array
+          items:
+            $ref: "#/components/schemas/TopicAgreement"
+    CompletionEvent:
+      type: object
+      required: [level]
+      properties:
+        level:
+          type: string
+          enum: [riksdag, region, kommun]
+    SiteStats:
+      type: object
+      required: [totalCompletions, completionsByLevel, resultPagesCreated, challengesCreated]
+      properties:
+        totalCompletions: { type: integer }
+        completionsByLevel:
+          type: object
+          required: [riksdag, region, kommun]
+          properties:
+            riksdag: { type: integer }
+            region: { type: integer }
+            kommun: { type: integer }
+        resultPagesCreated: { type: integer }
+        challengesCreated: { type: integer }

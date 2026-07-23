@@ -1,0 +1,1692 @@
+Här är en komplett instruktion du kan klistra in direkt i Replit Agent.
+
+BYGG EN KOMPLETT APP: VALKOMPASS
+
+Bygg en komplett, produktionsklar och mycket snabb app som heter Valkompass.
+
+Appen ska vara en helt oberoende svensk valkompass för:
+
+* riksdagsval
+* regionval
+* kommunval
+
+Den ska fungera som:
+
+* riktig iOS-app
+* riktig Android-app
+* snabb webbapp
+* publik SEO-optimerad hemsida
+* administrationssystem
+* portal där partier kan lämna sina svar
+
+Appen ska vara extremt enkel att förstå och använda. En användare ska kunna öppna appen, välja val, svara på frågor och få sitt resultat utan konto, inloggning eller registrering.
+
+Bygg en riktig fungerande produkt. Skapa inte bara en design, mockup eller demonstrationsversion.
+
+⸻
+
+1. Produktidé
+
+Valkompass ska hjälpa väljare att jämföra sina politiska åsikter med de partier som faktiskt går att rösta på där användaren bor.
+
+Användaren ska först välja:
+
+1. Riksdag
+2. Region
+3. Kommun
+
+Vid region och kommun ska användaren välja sin kommun genom:
+
+* sökning
+* lista
+* frivillig platsidentifiering
+
+Platsåtkomst får aldrig vara obligatorisk.
+
+Utifrån användarens kommun ska appen automatiskt förstå:
+
+* vilken kommun användaren tillhör
+* vilken region användaren tillhör
+* vilka partier som ställer upp i respektive val
+
+Appen ska vara helt oberoende.
+
+Appen får aldrig säga:
+
+* rösta på detta parti
+* detta parti är bäst
+* detta är rätt parti för dig
+
+Använd istället formuleringar som:
+
+* högst sakpolitisk matchning
+* era svar ligger närmast varandra
+* jämför partiernas svar innan du bestämmer dig
+
+⸻
+
+2. Produktnamn och profil
+
+Appnamn:
+
+Valkompass
+
+Underrubrik:
+
+Oberoende jämförelse inför valet
+
+Webbplatsens titel:
+
+Valkompass – jämför partier i riksdag, region och kommun
+
+Bundle-ID för iOS:
+
+se.valkompass.app
+
+Package name för Android:
+
+se.valkompass.app
+
+Visa tydligt i appen:
+
+Valkompass är en oberoende tjänst och är inte en del av Valmyndigheten, något politiskt parti eller någon mediekoncern.
+
+Använd inte:
+
+* Valmyndighetens logotyp
+* riksvapnet
+* grafik som ser ut att komma från en myndighet
+* ett specifikt partis färg som huvudfärg
+
+Designen ska vara:
+
+* modern
+* lugn
+* trovärdig
+* neutral
+* tydlig
+* mycket snabb
+* lätt att förstå även för ovana användare
+
+Föreslagen design:
+
+* vit eller mycket ljus bakgrund
+* mörk marinblå text
+* klar neutral blå accentfärg
+* stora knappar
+* rundade kort
+* tydliga rubriker
+* tydlig progressindikator
+* stöd för mörkt läge
+* mycket god kontrast
+
+Använd partiernas färger endast diskret på respektive partis resultatsida.
+
+⸻
+
+3. Teknisk arkitektur
+
+Bygg projektet som ett pnpm-monorepo med Turborepo.
+
+Projektstruktur:
+
+apps/
+  mobile/
+  web/
+  admin/
+  api/
+packages/
+  ui/
+  database/
+  matching-engine/
+  election-data/
+  validation/
+  localization/
+  analytics/
+  config/
+  privacy/
+
+Mobilapp
+
+Använd:
+
+* Expo
+* React Native
+* Expo Router
+* TypeScript med strict mode
+* TanStack Query
+* Zustand
+* React Native Reanimated
+* React Native Gesture Handler
+* Expo Secure Store
+* EAS Build
+* EAS Submit
+
+Mobilappen ska vara en riktig native-app för iOS och Android.
+
+Webb
+
+Använd:
+
+* Next.js
+* App Router
+* TypeScript
+* server-side rendering
+* statisk generering där det passar
+* SEO-metadata
+* sitemap.xml
+* robots.txt
+* Open Graph
+* strukturerad data
+* canonical URLs
+
+Backend
+
+Använd:
+
+* Supabase
+* PostgreSQL
+* Supabase Auth för administratörer och partiföreträdare
+* Supabase Storage
+* Row Level Security
+* databas-migrationsfiler
+* Zod för validering
+* Drizzle ORM eller Supabase TypeScript-klient
+
+Vanliga användare ska inte använda Supabase Auth och ska inte behöva ett konto.
+
+⸻
+
+4. Extremt enkelt användarflöde
+
+Appen ska kunna användas med så få steg som möjligt.
+
+Startskärm
+
+Visa logotypen Valkompass.
+
+Rubrik:
+
+Vad vill du jämföra?
+
+Visa tre stora val:
+
+* Riksdag
+* Region
+* Kommun
+
+Under knapparna:
+
+* Så fungerar det
+* Oberoende metod
+* Integritet
+* Källor
+
+Ingen registrering.
+
+Ingen inloggning.
+
+Ingen introduktion som användaren måste klicka sig igenom.
+
+Val av plats
+
+Om användaren väljer region eller kommun:
+
+Visa:
+
+Välj din kommun
+
+Användaren ska kunna:
+
+* skriva kommunens namn
+* välja från lista
+* använda sin plats frivilligt
+
+När kommunen är vald ska appen automatiskt visa rätt region.
+
+Spara det valda området lokalt på enheten så att användaren inte behöver välja igen nästa gång.
+
+Innan frågorna
+
+Visa en kort introduktion:
+
+Du får ta ställning till ett antal politiska förslag. Det tar cirka fem minuter. Dina svar sparas som standard bara på din enhet.
+
+Knapp:
+
+Starta Valkompass
+
+⸻
+
+5. Frågeflöde
+
+Visa en fråga i taget.
+
+Exempel:
+
+Kommunen bör erbjuda kostnadsfri kollektivtrafik för barn och ungdomar.
+
+Svarsalternativ:
+
+* Instämmer helt
+* Instämmer delvis
+* Varken eller
+* Tar delvis avstånd
+* Tar helt avstånd
+* Hoppa över
+
+Efter att användaren svarat ska nästa fråga visas direkt.
+
+Frågebytet ska kännas omedelbart utan laddning.
+
+Visa:
+
+* fråga 8 av 25
+* progressindikator
+* tillbaka-knapp
+* kort neutral förklaring
+* knapp för att läsa mer
+* källor där det behövs
+
+Användaren ska kunna markera frågan som extra viktig.
+
+Visa en enkel knapp:
+
+Viktig fråga
+
+När användaren trycker på den öppnas:
+
+* Lite viktig
+* Ganska viktig
+* Mycket viktig
+* Avgörande
+
+Användaren ska inte behöva vikta frågorna om den inte vill.
+
+⸻
+
+6. Frågor per valnivå
+
+Riksdag
+
+Skapa cirka 30 frågor.
+
+Ämnen:
+
+* ekonomi och skatt
+* jobb
+* företagande
+* sjukvård
+* skola
+* kriminalitet
+* migration
+* integration
+* energi
+* kärnkraft
+* vindkraft
+* klimat
+* försvar
+* NATO
+* pensioner
+* bostäder
+* landsbygd
+* EU
+* välfärd
+* personlig integritet
+
+Region
+
+Skapa cirka 25 frågor per region.
+
+Ämnen:
+
+* vårdköer
+* vårdcentraler
+* sjukhus
+* förlossningsvård
+* ambulanssjukvård
+* psykiatri
+* tandvård
+* kollektivtrafik
+* biljettpriser
+* regional utveckling
+* kultur
+* folkhälsa
+
+Kommun
+
+Skapa cirka 25 frågor per kommun.
+
+Ämnen:
+
+* skola
+* äldreomsorg
+* trygghet
+* socialtjänst
+* bostäder
+* kommunalskatt
+* parkering
+* centrumutveckling
+* landsbygd
+* kransorter
+* vindkraft
+* trafik
+* fartgupp
+* näringsliv
+* upphandlingar
+* föreningsliv
+* kultur
+* fritid
+* kommunal organisation
+* transparens
+* demokrati
+
+Kommunfrågorna ska kunna vara olika i varje kommun.
+
+Använd inte exakt samma generiska frågor över hela Sverige.
+
+⸻
+
+7. Partier som ska finnas med
+
+Riksdag
+
+Visa alltid:
+
+* samtliga partier som sitter i riksdagen
+* andra partier som officiellt ställer upp i riksdagsvalet och uppfyller appens publiceringskrav
+
+Ett parti utanför riksdagen ska kunna visas med fullständig matchning när:
+
+* partiet officiellt ställer upp i valet
+* minst 90 procent av frågorna är besvarade
+* svaren har verifierats
+* partiet har fått möjlighet att kontrollera sin profil
+* samma regler används som för alla andra partier
+
+Partier som ställer upp men inte har tillräckliga svar ska visas under:
+
+Fler partier som ställer upp
+
+Visa:
+
+Partiet ställer upp i valet men har ännu inte tillräckligt många verifierade svar för att få en rättvis matchningspoäng.
+
+Region
+
+Visa samtliga partier som ställer upp i den valda regionen.
+
+Det ska även omfatta:
+
+* regionala partier
+* partier utan mandat
+* nya partier
+* lokala listor
+
+Kommun
+
+Visa samtliga partier som ställer upp i den valda kommunen.
+
+Ett nytt lokalt parti ska behandlas på exakt samma sätt som ett etablerat parti.
+
+Partier ska inte prioriteras utifrån:
+
+* antal mandat
+* storlek
+* opinionsmätningar
+* betalning
+* annonser
+* relation till appens ägare
+
+Före resultatet ska partier visas alfabetiskt eller i slumpmässigt roterad ordning.
+
+I slutresultatet ska partier sorteras efter användarens matchningspoäng.
+
+⸻
+
+8. Hur partiernas svar samlas in
+
+Skapa tre typer av partisvar.
+
+Alternativ 1: Partiet svarar självt
+
+Varje parti ska kunna bjudas in till en säker portal.
+
+Partiet ska kunna:
+
+* logga in via e-postlänk
+* besvara frågorna
+* skriva en kort motivering
+* bifoga källor
+* spara utkast
+* skicka in svar
+* godkänna publicering
+* begära rättelse
+
+Visa på det publicerade svaret:
+
+Svar lämnat av partiet
+
+Alternativ 2: Redaktionellt verifierat svar
+
+Om ett parti inte svarar ska administratören kunna lägga in ett svar utifrån offentliga källor.
+
+Tillåtna källor:
+
+* partiprogram
+* valmanifest
+* officiell budget
+* motion
+* officiell webbplats
+* beslut i kommunfullmäktige
+* beslut i regionfullmäktige
+* offentligt uttalande av behörig företrädare
+
+Visa då:
+
+Bedömt från offentliga källor
+
+Visa alltid länkar och datum.
+
+Alternativ 3: Ingen säker ståndpunkt
+
+Om det saknas tillräckligt underlag ska appen visa:
+
+Partiets ståndpunkt är inte fastställd
+
+Gissa aldrig.
+
+AI får aldrig hitta på ett partis ståndpunkt.
+
+AI får endast hjälpa administratören med att:
+
+* hitta dokument
+* sammanfatta dokument
+* föreslå frågor
+* identifiera motsägelser
+* sortera källmaterial
+
+All publicering ska godkännas av en människa.
+
+⸻
+
+9. Matchningsalgoritm
+
+Skapa matchningsmotorn som ett separat paket.
+
+Koda svaren:
+
+Instämmer helt = 2
+Instämmer delvis = 1
+Varken eller = 0
+Tar delvis avstånd = -1
+Tar helt avstånd = -2
+
+Likhet per fråga:
+
+likhet = 1 - abs(användarsvar - partisvar) / 4
+
+Vikter:
+
+Lite viktig = 0.75
+Ganska viktig = 1
+Mycket viktig = 1.5
+Avgörande = 2.25
+
+Totalpoäng:
+
+summa(likhet * vikt) / summa(vikter)
+
+Visa resultatet som procent mellan 0 och 100.
+
+Frågor som användaren hoppat över ska inte påverka resultatet.
+
+Frågor där partiet saknar svar ska inte räknas med.
+
+Visa alltid hur många frågor resultatet bygger på.
+
+Exempel:
+
+Matchningen bygger på 27 av 30 frågor.
+
+Ingen dold bonus får användas.
+
+Ingen hänsyn får tas till:
+
+* partiets storlek
+* antal mandat
+* opinionsläge
+* betalning
+* popularitet
+
+Samma algoritm ska användas på:
+
+* webb
+* iOS
+* Android
+* backend
+
+Skapa automatiska tester.
+
+⸻
+
+10. Resultatsidan
+
+När testet är klart ska användaren direkt få en snygg och tydlig resultatvy.
+
+Rubrik:
+
+Dina närmaste partier
+
+Visa en stapel eller procent för varje parti.
+
+Varje resultatkort ska visa:
+
+* partinamn
+* matchning i procent
+* täckningsgrad
+* största samsyn
+* största skillnad
+* knapp för full jämförelse
+
+Exempel:
+
+Katrineholm FRAMÅT
+82 % matchning
+Baserat på 24 av 25 frågor
+
+Visa inte bara ett parti.
+
+Visa alla kvalificerade partier sorterade efter matchning.
+
+Lägg till:
+
+* Jämför partier
+* Se svar fråga för fråga
+* Filtrera per ämne
+* Visa viktigaste frågorna
+* Läs partiernas motiveringar
+* Öppna källor
+* Gör om testet
+
+Användaren ska kunna jämföra upp till tre partier sida vid sida.
+
+⸻
+
+11. Delning och viral spridning
+
+Det ska vara enkelt och attraktivt att dela resultatet.
+
+Efter resultatet ska en tydlig knapp visas:
+
+Dela mitt resultat
+
+Användaren ska kunna välja mellan:
+
+* dela bild
+* dela länk
+* publicera en egen resultatsida
+* kopiera länk
+* Instagram Stories
+* Facebook
+* X
+* LinkedIn
+* meddelanden
+* e-post
+
+Skapa en snygg resultatbild.
+
+Exempel:
+
+Min högsta matchning i Valkompass blev 82 %
+Gör Valkompass du också
+valkompass.se
+
+Användaren ska själv välja om partinamnet ska visas på delningsbilden.
+
+Standardläget ska inte visa vilket parti personen matchade bäst med.
+
+⸻
+
+12. Personliga publika resultatsidor
+
+Användaren ska frivilligt kunna skapa en publik resultatsida efter avslutad valkompass.
+
+Visa knappen:
+
+Publicera mitt resultat
+
+Förklara tydligt:
+
+Du kan skapa en offentlig sida med ditt resultat. Du väljer själv vad som ska synas. Sidan kan tas bort när som helst med en privat borttagningslänk.
+
+Ingen inloggning ska behövas.
+
+När sidan skapas
+
+Skapa:
+
+* en publik unik URL
+* en hemlig administrerings- och borttagningslänk
+* en slumpmässig säker token
+* en delningsbild
+* Open Graph-metadata
+
+Exempel på publik adress:
+
+/resultat/anna-karlsson-x7p4m9
+
+Eller om inget namn anges:
+
+/resultat/x7p4m9q2
+
+Låt användaren frivilligt ange:
+
+* förnamn
+* visningsnamn
+* ort
+* profilbild
+* kort kommentar
+* om bästa partiet ska visas
+* om hela partilistan ska visas
+* om ämnesresultat ska visas
+* om svar fråga för fråga ska visas
+
+Alla fält ska vara frivilliga.
+
+Förvalt läge:
+
+* inget namn
+* ingen bild
+* ingen exakt plats
+* inga individuella svar
+* endast en sammanfattning av resultatet
+
+Användaren ska aktivt välja att visa känsligare information.
+
+Visa alltid en förhandsgranskning före publicering.
+
+Innehåll på resultatsidan
+
+Resultatsidan kan visa:
+
+* visningsnamn
+* vald valkompass
+* kommun eller region om användaren valt detta
+* datum
+* högsta matchning
+* topp tre partier
+* ämnen med störst samsyn
+* delningsbild
+* knapp för att göra samma valkompass
+
+Tydlig knapp:
+
+Gör din egen Valkompass
+
+Resultatsidan ska kunna delas i sociala medier.
+
+Borttagning
+
+Efter publicering ska användaren få:
+
+* publik länk
+* privat borttagningslänk
+* privat redigeringslänk
+
+Visa:
+
+Spara den privata länken. Den behövs om du vill ändra eller ta bort sidan.
+
+Spara även borttagningstoken lokalt på användarens enhet.
+
+En publicerad sida ska kunna:
+
+* redigeras
+* avpubliceras
+* raderas permanent
+
+Ingen inloggning ska krävas.
+
+Säkerhet och integritet
+
+En offentlig resultatsida får aldrig automatiskt visa:
+
+* e-postadress
+* telefonnummer
+* exakt GPS-position
+* fullständig bostadsadress
+* personnummer
+* enhetens identifierare
+* individuella politiska svar
+* IP-adress
+* osynliga personidentifierare
+
+Varning före publicering:
+
+Politiska åsikter kan vara känsliga personuppgifter. Publicera bara information som du vill ska vara offentlig.
+
+Användaren måste kryssa i:
+
+Jag förstår att sidan blir offentlig
+
+Skapa inga publika sidor automatiskt.
+
+⸻
+
+13. SEO för resultatsidor
+
+Publika resultatsidor ska kunna indexeras, men endast när användaren aktivt väljer detta.
+
+Visa ett separat val:
+
+Tillåt att sidan visas i sökmotorer
+
+Det ska vara avstängt som standard.
+
+Om användaren aktiverar det:
+
+* sidan får index, follow
+* sidan läggs till i en separat dynamisk sitemap
+* sidan får unik titel
+* sidan får unik metabeskrivning
+* sidan får canonical URL
+* sidan får Open Graph-bild
+
+Om användaren inte aktiverar det:
+
+* använd noindex, follow
+* sidan får fortfarande delas via direktlänk
+* sidan ska inte finnas i sitemap
+
+Undvik tusentals tunna eller nästan identiska sidor.
+
+För att en sida ska få indexeras ska den ha tillräckligt unikt innehåll, exempelvis minst två av följande:
+
+* frivillig kommentar
+* valt visningsnamn
+* vald ort
+* ämnesresultat
+* flera visade partimatchningar
+* egen rubrik
+
+Skapa inte automatiska texter som försöker lura Google.
+
+Massor av identiska, tunna resultatsidor kan skada webbplatsens sökrankning. Prioritera därför kvalitet framför ren mängd.
+
+Skapa separata sitemap-filer:
+
+/sitemap-static.xml
+/sitemap-parties.xml
+/sitemap-locations.xml
+/sitemap-results.xml
+
+Begränsa antal URL:er per sitemap enligt sökmotorernas riktlinjer.
+
+Skapa automatisk paginering för sitemap-filer när de blir stora.
+
+⸻
+
+14. Viral loop
+
+Bygg en tydlig viral loop:
+
+1. användaren genomför valkompassen
+2. användaren ser resultatet
+3. användaren delar bild eller resultatsida
+4. mottagaren öppnar länken
+5. mottagaren ser en tydlig knapp för att göra samma test
+6. mottagaren gör testet
+7. mottagaren delar sitt eget resultat
+
+På varje publik resultatsida ska det finnas:
+
+Hur nära tycker du och dina vänner?
+
+Knapp:
+
+Gör samma Valkompass
+
+Skapa även en jämförelsefunktion.
+
+En användare ska kunna dela en jämförelselänk med en vän.
+
+Exempel:
+
+/jamfor/x7p4m9
+
+Vännen gör samma valkompass och kan därefter se:
+
+* hur lika deras svar är
+* vilka ämnen de är mest överens om
+* vilka ämnen de skiljer sig mest inom
+
+Visa aldrig den första personens individuella svar utan tydligt tillstånd.
+
+Använd endast en sammanfattad jämförelse.
+
+⸻
+
+15. Utmaningar mellan vänner
+
+Lägg till:
+
+Utmana en vän
+
+Efter resultatet kan användaren skapa en utmaningslänk.
+
+Exempeltext:
+
+Jag har gjort Valkompass. Gör samma test och se hur lika vi tycker.
+
+När vännen öppnar länken:
+
+* visa inte avsändarens resultat direkt
+* låt vännen först göra testet
+* visa därefter jämförelsen
+* låt båda dela jämförelsen
+
+Ingen inloggning ska krävas.
+
+Utmaningslänkar ska kunna förfalla automatiskt efter exempelvis 90 dagar.
+
+⸻
+
+16. Statistik och topplistor
+
+Skapa endast anonym och aggregerad statistik.
+
+Visa exempelvis:
+
+* antal genomförda valkompasser
+* populäraste frågorna
+* frågor där användarna är mest splittrade
+* antal delade resultat
+* antal skapade utmaningar
+
+Visa aldrig offentligt hur enskilda personer har svarat.
+
+Skapa inte offentliga topplistor över politiska åsikter för små geografiska områden.
+
+Använd minsta gruppstorlek, exempelvis minst 100 svar, innan lokal statistik visas.
+
+Visa tydligt:
+
+Statistiken är anonym och visar inte hur enskilda personer har svarat.
+
+⸻
+
+17. Partiprofiler
+
+Skapa en publik sida för varje parti.
+
+Exempel:
+
+/riksdag/partier/socialdemokraterna
+/region/sormland/partier/partinamn
+/kommun/katrineholm/partier/katrineholm-framat
+
+Varje sida ska visa:
+
+* partinamn
+* partibeteckning
+* var partiet ställer upp
+* kort presentation
+* officiell webbplats
+* samtliga valkompassvar
+* motiveringar
+* källor
+* när svaren senast uppdaterades
+* om svaren kommer från partiet eller offentliga källor
+* rättelsehistorik
+
+Skapa även sidor för:
+
+/riksdag
+/region/sormland
+/kommun/katrineholm
+
+Dessa sidor ska innehålla:
+
+* vilka partier som ställer upp
+* vad valnivån ansvarar för
+* vanliga frågor
+* länk till valkompassen
+* relevanta sakområden
+
+Skapa unik och meningsfull text.
+
+Duplicera inte samma SEO-text för varje kommun.
+
+⸻
+
+18. Integritet
+
+Appen ska fungera utan konto.
+
+Vanliga användares svar ska som standard sparas lokalt på enheten.
+
+Samla inte in:
+
+* personnummer
+* fullständigt namn
+* exakt adress
+* kontaktlista
+* annonserings-ID
+* onödig platsdata
+* politiska svar kopplade till en identifierad person
+
+Visa:
+
+Dina svar sparas som standard bara på din enhet. Valkompass säljer eller delar aldrig dina individuella politiska svar med partier eller annonsörer.
+
+Om anonym statistik används ska användaren kunna välja detta separat.
+
+Samtycket ska inte vara förvalt.
+
+Skapa:
+
+* integritetspolicy
+* användarvillkor
+* cookiepolicy
+* metodbeskrivning
+* oberoendepolicy
+* rättelsepolicy
+* dataskyddssida
+* funktion för att radera lokala data
+* funktion för att radera en publicerad resultatsida
+
+Använd inte politiska annonsnätverk.
+
+Sälj aldrig individuella svar.
+
+Dela aldrig individuella svar med partier.
+
+⸻
+
+19. Databasmodell
+
+Skapa minst dessa tabeller:
+
+elections
+election_levels
+counties
+regions
+municipalities
+parties
+party_names
+party_election_participation
+party_profiles
+party_representatives
+question_sets
+questions
+question_versions
+question_categories
+party_answers
+party_answer_versions
+party_answer_sources
+sources
+source_snapshots
+editorial_reviews
+publication_approvals
+anonymous_sessions
+result_summaries
+public_result_pages
+public_result_page_settings
+public_result_tokens
+result_page_deletion_tokens
+friend_challenges
+friend_challenge_results
+aggregated_statistics
+import_jobs
+import_changes
+correction_requests
+audit_logs
+admin_users
+admin_roles
+party_portal_users
+translations
+content_pages
+
+Alla viktiga tabeller ska ha:
+
+* UUID
+* created_at
+* updated_at
+* status
+* created_by där det behövs
+
+Använd soft delete för redaktionellt material.
+
+Publika resultatsidor ska ha:
+
+* public_slug
+* edit_token_hash
+* delete_token_hash
+* is_indexable
+* expires_at
+* published_at
+* deleted_at
+* valda synlighetsinställningar
+
+Spara aldrig privata tokens i klartext.
+
+Hasha dem säkert.
+
+⸻
+
+20. Administrationssystem
+
+Bygg en komplett adminpanel.
+
+Dashboard
+
+Visa:
+
+* antal aktiva valkompasser
+* antal frågor
+* antal partier
+* partier som saknar svar
+* frågor som väntar på granskning
+* rättelsebegäranden
+* nya importer
+* skapade publika resultatsidor
+* rapporterade resultatsidor
+* tekniska fel
+
+Frågor
+
+Administratören ska kunna:
+
+* skapa fråga
+* redigera fråga
+* lägga till förklaring
+* lägga till kategori
+* lägga till källor
+* välja riksdag, region eller kommun
+* versionshantera
+* förhandsgranska
+* skicka till granskning
+* publicera
+* arkivera
+
+Partier
+
+Administratören ska kunna:
+
+* importera partier
+* skapa partiprofil
+* tilldela val
+* bjuda in företrädare
+* granska svar
+* publicera svar
+* hantera rättelser
+* se svarsfrekvens
+
+Publika resultatsidor
+
+Administratören ska kunna:
+
+* söka sidor
+* hantera rapporter
+* avpublicera olämpligt innehåll
+* radera innehåll som bryter mot villkoren
+* se varför en sida indexeras
+* stänga av indexering
+* se revisionslogg
+
+Administratören ska inte kunna ändra en användares politiska resultat.
+
+Moderering
+
+Låt användare rapportera publika resultatsidor.
+
+Rapporteringsorsaker:
+
+* personuppgifter
+* hot
+* trakasserier
+* falsk identitet
+* olagligt innehåll
+* spam
+* annat
+
+Skapa arbetsflöde:
+
+1. rapporterad
+2. under granskning
+3. ingen åtgärd
+4. avpublicerad
+5. raderad
+
+⸻
+
+21. Oberoende granskningsflöde
+
+Alla frågor och redaktionella partisvar ska följa:
+
+1. Utkast
+2. Källkontroll
+3. Neutralitetsgranskning
+4. Möjlighet för partiet att kommentera
+5. Godkänd
+6. Publicerad
+7. Arkiverad
+
+Minst två administratörer ska behöva godkänna större ändringar.
+
+Spara:
+
+* tidigare version
+* ny version
+* vem som ändrade
+* datum
+* anledning
+* vilka resultat som kan påverkas
+
+Visa en publik ändringslogg.
+
+⸻
+
+22. Partiernas portal
+
+Skapa en separat portal för partier.
+
+Inloggning endast för partiföreträdare.
+
+Använd magic link via e-post.
+
+Partiet ska kunna:
+
+* se tilldelade val
+* besvara frågor
+* skriva motivering
+* lägga till källor
+* spara utkast
+* skicka in
+* se granskningsstatus
+* se publicerat svar
+* begära rättelse
+
+En företrädare får endast hantera sitt eget parti.
+
+Alla svar ska granskas före publicering.
+
+⸻
+
+23. Prestanda
+
+Appen ska vara extremt snabb.
+
+Krav:
+
+* frågorna ska cachelagras lokalt
+* nästa fråga ska förladdas
+* inga nätverksanrop mellan varje fråga
+* resultatuträkning ska ske lokalt
+* små bilder
+* lazy loading
+* databasindex
+* minimal JavaScript på publika webbsidor
+* statisk generering där det är möjligt
+* CDN för publikt innehåll
+
+Mål:
+
+* 60 FPS i mobilappen
+* resultatberäkning under 100 ms
+* Lighthouse över 90
+* mycket god Core Web Vitals
+* snabb öppning även på långsam mobil
+* stöd för tillfälligt offline-läge
+
+⸻
+
+24. Tillgänglighet
+
+Implementera:
+
+* VoiceOver
+* TalkBack
+* tangentbordsnavigering
+* skärmläsarstöd
+* dynamisk textstorlek
+* tydlig fokusmarkering
+* hög kontrast
+* reducerade animationer
+* inga färger som enda informationsbärare
+* tydliga felmeddelanden
+* lätt svenska
+
+Följ WCAG 2.2 AA.
+
+⸻
+
+25. Språk
+
+Lansera med:
+
+* svenska
+* engelska
+
+Svenska ska vara standardspråk.
+
+All systemtext ska använda översättningsnycklar.
+
+Partiernas egna texter ska visas på originalspråk.
+
+Maskinöversättningar ska markeras tydligt.
+
+⸻
+
+26. Säkerhet
+
+Implementera:
+
+* Row Level Security
+* rollbaserad behörighet
+* tvåfaktorsautentisering för administratörer
+* rate limiting
+* säker tokenhantering
+* hashade redigerings- och borttagningstokens
+* Zod-validering
+* skydd mot XSS
+* skydd mot CSRF
+* Content Security Policy
+* säker filuppladdning
+* backup
+* revisionslogg
+* säkra sessionscookies
+* inga hemligheter i GitHub
+
+API-nycklar ska endast finnas i environment variables.
+
+⸻
+
+27. Tester
+
+Skapa:
+
+* unit tests
+* integrationstester
+* end-to-end-tester
+* tillgänglighetstester
+* säkerhetstester
+* tester av matchningsalgoritmen
+* tester av publika resultatsidor
+* tester av borttagningstokens
+* tester av vänutmaningar
+* tester av RLS
+* tester av partiportalen
+* tester av adminbehörigheter
+
+Använd:
+
+* Vitest
+* React Native Testing Library
+* Playwright
+* Maestro eller motsvarande
+
+Testa minst:
+
+1. användare gör riksdagskompass
+2. användare gör regionkompass
+3. användare gör kommunkompass
+4. lokalt parti utan mandat visas
+5. viktning fungerar
+6. hoppade frågor ignoreras
+7. identiska svar ger 100 procent
+8. motsatta svar ger 0 procent
+9. användaren delar en resultatbild
+10. användaren skapar en publik resultatsida
+11. användaren redigerar sidan med privat länk
+12. användaren raderar sidan
+13. noindex används som standard
+14. användaren aktiverar indexering
+15. sitemap uppdateras
+16. vänutmaning fungerar
+17. partiföreträdare ser endast sitt parti
+18. administratör kan inte ändra användarresultat
+19. rapportering fungerar
+20. alla TypeScript-kontroller går igenom
+
+⸻
+
+28. GitHub och CI/CD
+
+Skapa ett komplett GitHub-repository.
+
+Brancher:
+
+main
+feature/*
+fix/*
+
+Skapa GitHub Actions för:
+
+* installation
+* lint
+* typecheck
+* unit tests
+* integrationstester
+* webb-build
+* admin-build
+* Expo Doctor
+* migrationskontroll
+* säkerhetskontroll
+
+Repositoryt ska innehålla:
+
+* README.md
+* ARCHITECTURE.md
+* PRIVACY.md
+* SECURITY.md
+* METHOD.md
+* CONTRIBUTING.md
+* DEPLOYMENT.md
+* APP_STORE.md
+* GOOGLE_PLAY.md
+* .env.example
+* databas-migrationsfiler
+* seed-data
+* testdata
+* importguide
+* admin-guide
+* partiportal-guide
+
+README ska innehålla exakta kommandon.
+
+⸻
+
+29. iOS och Android
+
+Förbered iOS för:
+
+* TestFlight
+* App Store Connect
+* EAS Build
+* EAS Submit
+* appikon
+* splash screen
+* privacy manifest
+* versionshantering
+* supportsida
+* integritetspolicylänk
+* ITSAppUsesNonExemptEncryption
+
+Förbered Android för:
+
+* Google Play Console
+* Android App Bundle
+* intern testning
+* appikon
+* adaptive icon
+* splash screen
+* signering
+* versionshantering
+* Data Safety-formulär
+
+Skapa kompletta konfigurationsfiler.
+
+⸻
+
+30. Webb och domän
+
+Webbappen ska fungera på en egen domän.
+
+Förbered:
+
+* produktion
+* staging
+* HTTPS
+* CDN
+* automatiska deploymenter
+* preview-deployments
+* felövervakning
+* databasbackup
+* sitemap
+* robots.txt
+* SEO-metadata
+* Open Graph
+
+Föreslagna adresser:
+
+valkompass.se
+app.valkompass.se
+admin.valkompass.se
+
+Allmänheten ska använda huvuddomänen.
+
+⸻
+
+31. App Store-text
+
+Appnamn:
+
+Valkompass
+
+Underrubrik:
+
+Jämför partier inför valet
+
+Kort beskrivning:
+
+Gör en oberoende valkompass för riksdag, region eller kommun. Jämför dina svar med partiernas verifierade ståndpunkter – utan konto.
+
+Nyckelord:
+
+val, valkompass, politik, partier, riksdag, kommun, region, demokrati
+
+Skärmbilder:
+
+1. Välj riksdag, region eller kommun
+2. Svara på tydliga frågor
+3. Markera vad som är viktigt
+4. Se din sakpolitiska matchning
+5. Jämför partier fråga för fråga
+6. Dela resultatet med vänner
+
+⸻
+
+32. Startsida för webben
+
+Bygg en snygg publik startsida.
+
+Rubrik:
+
+Vilket parti tycker mest som du?
+
+Underrubrik:
+
+Gör en oberoende valkompass för riksdag, region eller kommun. Inget konto behövs.
+
+Huvudknapp:
+
+Starta Valkompass
+
+Sektioner:
+
+* Så fungerar det
+* Välj valnivå
+* Helt oberoende
+* Dina svar stannar hos dig
+* Jämför lokala och nationella partier
+* Dela resultatet
+* Utmana en vän
+* Metod och källor
+* Vanliga frågor
+
+Visa gärna ett anonymt räknarvärde:
+
+12 482 valkompasser genomförda
+
+Visa bara verklig statistik.
+
+Skapa aldrig falska användarsiffror.
+
+⸻
+
+33. Ingen inloggning för användare
+
+Detta är absolut.
+
+En vanlig användare ska aldrig behöva:
+
+* skapa konto
+* ange e-postadress
+* skapa lösenord
+* verifiera telefonnummer
+* logga in
+
+Allt ska fungera direkt.
+
+Endast följande ska logga in:
+
+* administratörer
+* redaktörer
+* partiföreträdare
+
+Vanliga användares inställningar och resultat sparas lokalt.
+
+När serverfunktioner behövs ska säkra anonyma tokens användas.
+
+⸻
+
+34. Exempelkommun
+
+Använd Katrineholm som första kompletta testkommun.
+
+Lägg in stöd för:
+
+* etablerade partier
+* lokala partier
+* partier utan mandat
+* Katrineholm FRAMÅT som exempel på nytt lokalt parti
+
+Använd inga påhittade politiska ståndpunkter i produktion.
+
+All testdata ska tydligt märkas som testdata.
+
+Ett nytt lokalt parti ska kunna:
+
+* visas i kommunvalet
+* få en egen profilsida
+* svara på frågor
+* få en rättvis matchningspoäng
+* visas i resultatet
+* bifoga motiveringar och källor
+
+⸻
+
+35. Absoluta oberoenderegler
+
+Dessa regler får inte brytas:
+
+* alla partier behandlas lika
+* ingen kan köpa bättre placering
+* ingen kan köpa bättre matchningspoäng
+* inget parti prioriteras i frågeflödet
+* partistorlek påverkar inte resultatet
+* mandat påverkar inte resultatet
+* opinionsmätningar påverkar inte resultatet
+* ägaren kan inte ändra användarens resultat
+* algoritmen ska vara offentligt beskriven
+* källor ska visas
+* ändringar ska versionshanteras
+* AI får inte hitta på partiers svar
+* individuella politiska svar får inte säljas
+* individuella politiska svar får inte lämnas till partier
+* publika resultatsidor ska alltid vara frivilliga
+* indexering av resultatsidor ska vara frivillig
+* användaren ska kunna radera sin sida
+
+⸻
+
+36. Leveranskrav
+
+Leverera en komplett fungerande produkt.
+
+Följande måste fungera:
+
+* val av riksdag
+* val av region
+* val av kommun
+* kommun- och regionsökning
+* frågeflöde
+* viktning
+* matchningsalgoritm
+* resultat
+* partikort
+* partiprofiler
+* jämförelse mellan partier
+* källor
+* delningsbild
+* delningslänk
+* publik resultatsida
+* privat redigeringslänk
+* privat borttagningslänk
+* frivillig sökmotorindexering
+* dynamiska sitemap-filer
+* vänutmaning
+* anonym jämförelse
+* adminpanel
+* partiportal
+* versionshistorik
+* rättelser
+* rapportering
+* svensk och engelsk text
+* iOS-build
+* Android-build
+* webb-build
+* GitHub Actions
+* databas-migrationsfiler
+* tester
+* dokumentation
+
+Skapa inga knappar som bara ser ut att fungera.
+
+Alla centrala funktioner ska vara riktigt implementerade.
+
+⸻
+
+37. Slutrapport från Replit
+
+När allt är klart ska Replit lämna en tydlig rapport med:
+
+1. GitHub-repositoryts URL
+2. senaste commit-hash
+3. fullständig projektstruktur
+4. vilka funktioner som implementerats
+5. vilka databastabeller som skapats
+6. migrationsstatus
+7. testresultat
+8. typecheck-resultat
+9. lint-resultat
+10. webb-build-resultat
+11. admin-build-resultat
+12. Expo Doctor-resultat
+13. exakta kommandon för lokal körning
+14. exakta kommandon för web-deployment
+15. exakta EAS-kommandon för iOS
+16. exakta EAS-kommandon för Android
+17. vilka environment variables som behövs
+18. vilka externa konton ägaren måste skapa
+19. eventuella kvarvarande begränsningar
+20. bekräftelse att inga hemligheter finns i GitHub
+
+Börja bygga direkt.
+
+Förenkla användarupplevelsen, men förenkla inte bort funktionerna.
+
+Prioritera:
+
+1. enkelhet
+2. snabbhet
+3. oberoende
+4. integritet
+5. korrekthet
+6. delbarhet
+7. sökbarhet
+8. stabil drift
+
+En viktig detalj är att personliga resultatsidor bör vara noindex som standard. Användaren kan frivilligt slå på Google-indexering. Då får ni både viral spridning och många undersidor utan att webbplatsen fylls med tunna, identiska sidor som kan försämra rankningen.

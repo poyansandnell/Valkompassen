@@ -1,45 +1,22 @@
-# [Project name]
+# Valkompass
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+## Overview
+Independent Swedish election compass (valkompass) for the 2026 elections: riksdag, region and kommun. No login for regular users. Swedish-only UI. Strictly politically neutral. All seeded political data is TEST DATA (parties flagged `isTestData`, justifications labelled "Testdata").
 
-## Run & Operate
+## Architecture
+pnpm monorepo:
+- `artifacts/valkompass` — React + Vite web app (wouter, TanStack Query). All matching is computed locally on the device in `src/lib/matching.ts`; user answers persist in localStorage only.
+- `artifacts/api-server` — Express 5 + pino. Routes in `src/routes/` (geo, quiz, parties, resultPages, challenges, stats). Server-side mirror of the matching engine in `src/lib/matching.ts` (used for challenge comparisons only).
+- `lib/api-spec/openapi.yaml` — API contract; codegen via `pnpm --filter @workspace/api-spec run codegen` (generates `@workspace/api-zod` + `@workspace/api-client-react`).
+- `lib/db` — Drizzle schema: regions, municipalities, parties, party_participation, questions, party_answers, result_pages (+reports), challenges, completion_events.
+- `scripts/src/seed.ts` — seed: 21 regions, 290 municipalities, 8 national parties + 2 local test parties (Katrineholm FRAMÅT, Sörmlandslistan), 100 test questions (riksdag 30, generic region 25, Katrineholm 25, generic kommun 20), deterministic test answers. Run: `pnpm --filter @workspace/scripts run seed`.
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
-
-## Stack
-
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
-
-## Where things live
-
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
-
-## Architecture decisions
-
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
-
-## Product
-
-_Describe the high-level user-facing capabilities of this app once they exist._
+## Key rules
+- Matching: `likhet = 1 - |user - party| / 4`, weights 0.75/1/1.5/2.25, weighted average → 0–100 %. Skipped questions and missing party positions excluded. No hidden bonuses ever.
+- Parties shown alphabetically before results; by match after. Party qualified when ≥90 % of questions answered.
+- Public result pages: edit/delete tokens stored only as SHA-256 hashes; plaintext returned once at creation. `noindex` by default. Challenges expire after ~90 days and never reveal the sender's individual answers.
+- Neutral wording everywhere: never "rösta på X" / "bästa partiet"; use "högst sakpolitisk matchning".
+- Question fallbacks: area-specific questions if seeded, otherwise generic level fallback (regionId/municipalityId null). Party fallback for unseeded areas: national parties.
 
 ## User preferences
-
-_Populate as you build — explicit user instructions worth remembering across sessions._
-
-## Gotchas
-
-_Populate as you build — sharp edges, "always run X before Y" rules._
-
-## Pointers
-
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+(none recorded yet)
