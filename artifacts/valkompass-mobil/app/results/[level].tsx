@@ -142,6 +142,8 @@ export default function ResultsScreen() {
           <Text style={[styles.neutralNote, { color: c.mutedForeground }]}>
             Listan visar din sakpolitiska matchning med partiernas svar – den är ingen
             rekommendation om hur du ska rösta.
+            {!hasTestData &&
+              ' Partiernas svar är redaktionellt bedömda utifrån deras officiella program.'}
           </Text>
         </Card>
 

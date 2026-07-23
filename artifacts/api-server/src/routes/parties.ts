@@ -46,7 +46,7 @@ router.get("/parties", async (req, res): Promise<void> => {
   res.json(
     ListPartiesResponse.parse(
       parties.map((p) =>
-        serializeParty(p, answersByParty.get(p.id) ?? [], questions.length),
+        serializeParty(p, answersByParty.get(p.id) ?? [], questions.length, ctx.level),
       ),
     ),
   );
@@ -96,6 +96,7 @@ router.get("/parties/:slug", async (req, res): Promise<void> => {
         { ...party, inAssembly: participation?.inAssembly ?? false },
         answers,
         questions.length,
+        ctx.level,
       ),
       questions: questions.map(serializeQuestion),
       answers: answers.map(serializeAnswer),

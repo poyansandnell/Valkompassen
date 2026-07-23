@@ -1,9 +1,10 @@
 /**
  * Seed script for Valkompass.
  *
- * All political positions inserted here are TEST DATA, clearly marked
- * (parties.is_test_data = true, justifications labelled "Testdata").
- * No real party positions are invented — see the product's independence rules.
+ * Riksdag answers are REAL editorial assessments sourced from the parties'
+ * official policy pages (see ./riksdagAnswers.ts) — origin "editorial",
+ * never presented as party-submitted. Region and kommun answers are still
+ * generated TEST DATA; the API flags parties as test data for those levels.
  */
 import { createHash } from "node:crypto";
 import {
@@ -204,14 +205,14 @@ type PartySeed = {
 };
 
 const NATIONAL_PARTIES: PartySeed[] = [
-  { id: "socialdemokraterna", name: "Socialdemokraterna", abbreviation: "S", color: "#E8112d", description: "Testdata: exempelprofil för ett riksdagsparti.", website: "https://www.socialdemokraterna.se" },
-  { id: "moderaterna", name: "Moderaterna", abbreviation: "M", color: "#52BDEC", description: "Testdata: exempelprofil för ett riksdagsparti.", website: "https://moderaterna.se" },
-  { id: "sverigedemokraterna", name: "Sverigedemokraterna", abbreviation: "SD", color: "#DDDD00", description: "Testdata: exempelprofil för ett riksdagsparti.", website: "https://sd.se" },
-  { id: "centerpartiet", name: "Centerpartiet", abbreviation: "C", color: "#009933", description: "Testdata: exempelprofil för ett riksdagsparti.", website: "https://www.centerpartiet.se" },
-  { id: "vansterpartiet", name: "Vänsterpartiet", abbreviation: "V", color: "#DA291C", description: "Testdata: exempelprofil för ett riksdagsparti.", website: "https://www.vansterpartiet.se" },
-  { id: "kristdemokraterna", name: "Kristdemokraterna", abbreviation: "KD", color: "#000077", description: "Testdata: exempelprofil för ett riksdagsparti.", website: "https://kristdemokraterna.se" },
-  { id: "liberalerna", name: "Liberalerna", abbreviation: "L", color: "#006AB3", description: "Testdata: exempelprofil för ett riksdagsparti.", website: "https://www.liberalerna.se" },
-  { id: "miljopartiet", name: "Miljöpartiet de gröna", abbreviation: "MP", color: "#83CF39", description: "Testdata: exempelprofil för ett riksdagsparti.", website: "https://www.mp.se" },
+  { id: "socialdemokraterna", name: "Socialdemokraterna", abbreviation: "S", color: "#E8112d", description: "Riksdagsparti. Svaren på riksdagsfrågorna är redaktionellt bedömda utifrån partiets officiella program.", website: "https://www.socialdemokraterna.se" },
+  { id: "moderaterna", name: "Moderaterna", abbreviation: "M", color: "#52BDEC", description: "Riksdagsparti. Svaren på riksdagsfrågorna är redaktionellt bedömda utifrån partiets officiella program.", website: "https://moderaterna.se" },
+  { id: "sverigedemokraterna", name: "Sverigedemokraterna", abbreviation: "SD", color: "#DDDD00", description: "Riksdagsparti. Svaren på riksdagsfrågorna är redaktionellt bedömda utifrån partiets officiella program.", website: "https://sd.se" },
+  { id: "centerpartiet", name: "Centerpartiet", abbreviation: "C", color: "#009933", description: "Riksdagsparti. Svaren på riksdagsfrågorna är redaktionellt bedömda utifrån partiets officiella program.", website: "https://www.centerpartiet.se" },
+  { id: "vansterpartiet", name: "Vänsterpartiet", abbreviation: "V", color: "#DA291C", description: "Riksdagsparti. Svaren på riksdagsfrågorna är redaktionellt bedömda utifrån partiets officiella program.", website: "https://www.vansterpartiet.se" },
+  { id: "kristdemokraterna", name: "Kristdemokraterna", abbreviation: "KD", color: "#000077", description: "Riksdagsparti. Svaren på riksdagsfrågorna är redaktionellt bedömda utifrån partiets officiella program.", website: "https://kristdemokraterna.se" },
+  { id: "liberalerna", name: "Liberalerna", abbreviation: "L", color: "#006AB3", description: "Riksdagsparti. Svaren på riksdagsfrågorna är redaktionellt bedömda utifrån partiets officiella program.", website: "https://www.liberalerna.se" },
+  { id: "miljopartiet", name: "Miljöpartiet de gröna", abbreviation: "MP", color: "#83CF39", description: "Riksdagsparti. Svaren på riksdagsfrågorna är redaktionellt bedömda utifrån partiets officiella program.", website: "https://www.mp.se" },
 ];
 
 const LOCAL_PARTIES: PartySeed[] = [
@@ -221,8 +222,8 @@ const LOCAL_PARTIES: PartySeed[] = [
     abbreviation: "MED",
     color: "#1B3A5C",
     description:
-      "Testdata: exempel på ett parti utanför riksdagen som ställer upp i riksdagsvalet. Behandlas exakt som alla andra partier.",
-    website: "https://www.medborgerligsamling.se",
+      "Parti utanför riksdagen som ställer upp i riksdagsvalet. Svaren är redaktionellt bedömda utifrån partiets officiella program och delvis ofullständiga.",
+    website: "https://www.med.se",
   },
   {
     id: "katrineholm-framat",
@@ -248,6 +249,12 @@ const LOCAL_PARTIES: PartySeed[] = [
 
 // [text, category, explanation]
 type QuestionSeed = [string, string, string];
+
+import {
+  EDITORIAL_JUSTIFICATION,
+  PARTY_SOURCES,
+  RIKSDAG_POSITIONS,
+} from "./riksdagAnswers";
 
 const RIKSDAG_QUESTIONS: QuestionSeed[] = [
   ["Statens inkomstskatt bör sänkas, även om det innebär mindre resurser till offentlig sektor.", "Ekonomi och skatt", "Frågan handlar om avvägningen mellan lägre skatt på arbete och finansiering av gemensam välfärd."],
@@ -426,7 +433,10 @@ async function main() {
       color: p.color,
       description: p.description,
       website: p.website,
-      isTestData: true,
+      // Riksdagsfrågornas svar är riktiga (redaktionellt bedömda). Region-
+      // och kommunsvaren är fortfarande testdata; det flaggas per fråga i
+      // quiz-payloaden i stället för per parti.
+      isTestData: !(p.id in RIKSDAG_POSITIONS),
     })),
   );
 
@@ -523,8 +533,24 @@ async function main() {
       sources: value == null ? [] : [TEST_SOURCE],
     });
   };
+  // Riksdagsfrågor: riktiga, redaktionellt bedömda positioner med källor.
+  const realAnswerFor = (partyId: string, questionId: string) => {
+    const idx = parseInt(questionId.replace("rd-", ""), 10) - 1;
+    const value = RIKSDAG_POSITIONS[partyId]?.[idx] ?? null;
+    answerRows.push({
+      partyId,
+      questionId,
+      value,
+      answerOrigin: value == null ? "none" : "editorial",
+      justification: value == null ? null : EDITORIAL_JUSTIFICATION,
+      sources: value == null ? [] : [PARTY_SOURCES[partyId]!],
+    });
+  };
   for (const p of NATIONAL_PARTIES) {
-    for (const q of questionRows) answerFor(p.id, q.id!, "editorial");
+    for (const q of questionRows) {
+      if (q.id!.startsWith("rd-")) realAnswerFor(p.id, q.id!);
+      else answerFor(p.id, q.id!, "editorial");
+    }
   }
   // Katrineholm FRAMÅT: answers "submitted by the party" (portal example),
   // covering the Katrineholm question set fully.
@@ -542,8 +568,8 @@ async function main() {
   // Medborgerlig Samling: partial answers — appears under
   // "Fler partier som ställer upp" (not qualified) with some positions.
   const riksdagQuestions = questionRows.filter((q) => q.id!.startsWith("rd-"));
-  for (const q of riksdagQuestions.slice(0, 12)) {
-    answerFor("medborgerlig-samling", q.id!, "editorial");
+  for (const q of riksdagQuestions) {
+    realAnswerFor("medborgerlig-samling", q.id!);
   }
   // Sörmlandslistan: intentionally sparse answers, so it appears under
   // "Fler partier som ställer upp" (not qualified).
