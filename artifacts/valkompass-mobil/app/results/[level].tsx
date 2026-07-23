@@ -165,10 +165,13 @@ export default function ResultsScreen() {
           onPress={() => router.dismissTo('/')}
           style={({ pressed }) => [styles.backBtn, { opacity: pressed ? 0.6 : 1 }]}
         >
-          <Feather name="x" size={22} color={c.foreground} />
+          <Feather name="arrow-left" size={20} color={c.foreground} />
+          <Text style={{ color: c.foreground, fontSize: 15, fontFamily: 'Inter_500Medium' }}>
+            Hem
+          </Text>
         </Pressable>
         <Text style={[styles.topTitle, { color: c.foreground }]}>Ditt resultat</Text>
-        <View style={{ width: 38 }} />
+        <View style={{ width: 64 }} />
       </View>
 
       <ScrollView
@@ -449,7 +452,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
-  backBtn: { padding: 8 },
+  backBtn: { padding: 8, flexDirection: 'row', alignItems: 'center', gap: 6 },
   topTitle: { fontSize: 17, fontFamily: 'Inter_600SemiBold' },
   areaText: { fontSize: 13, fontFamily: 'Inter_400Regular' },
   neutralNote: { fontSize: 13, fontFamily: 'Inter_400Regular', lineHeight: 19 },
