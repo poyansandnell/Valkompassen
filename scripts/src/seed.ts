@@ -3,10 +3,15 @@
  *
  * Riksdag answers are REAL editorial assessments sourced from the parties'
  * official policy pages (see ./riksdagAnswers.ts) — origin "editorial",
- * never presented as party-submitted. Region and kommun answers are still
- * generated TEST DATA; the API flags parties as test data for those levels.
+ * never presented as party-submitted. Region and kommun answers are also
+ * editorial (with riks-fallback where local positions are unpublished).
+ * Fullmäktige mandates for all regions/kommuner come from SCB via
+ * `pnpm run update-mandates` (writes ./data/mandates.json).
  */
 import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   db,
   pool,
@@ -27,6 +32,19 @@ function slugify(input: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
+
+// Mandatfördelning i region-/kommunfullmäktige från SCB (senaste valet).
+// Uppdateras efter varje val med `pnpm run update-mandates`.
+const MANDATES: {
+  electionYear: number;
+  region: Record<string, Record<string, number>>;
+  kommun: Record<string, Record<string, number>>;
+} = JSON.parse(
+  readFileSync(
+    join(dirname(fileURLToPath(import.meta.url)), "data", "mandates.json"),
+    "utf8",
+  ),
+);
 
 // ---------------------------------------------------------------- geography
 
@@ -438,37 +456,78 @@ async function main() {
     municipalityId?: string | null;
     inAssembly?: boolean;
   }[] = [];
+  // Riksdag: riksdagspartierna sitter i riksdagen.
   for (const p of NATIONAL_PARTIES) {
-    // TEST DATA: national parties hold seats in riksdag, regionfullmäktige
-    // (Sörmland) and kommunfullmäktige (Katrineholm).
     participation.push({ partyId: p.id, level: "riksdag", inAssembly: true });
-    participation.push({
-      partyId: p.id,
-      level: "region",
-      regionId: "sormland",
-      inAssembly: true,
-    });
-    participation.push({
-      partyId: p.id,
-      level: "kommun",
-      municipalityId: "katrineholm",
-      inAssembly: true,
-    });
   }
-  // TEST DATA: MED runs nationally but holds no riksdag seats.
+  // MED ställer upp nationellt men saknar riksdagsmandat.
   participation.push({
     partyId: "medborgerlig-samling",
     level: "riksdag",
     inAssembly: false,
   });
-  // TEST DATA: sits in regionfullmäktige.
+
+  // Region- och kommunfullmäktige: mandatdata från SCB (senaste valet),
+  // uppdateras med `pnpm run update-mandates` efter varje val.
+  const partyIdByAbbr = new Map(
+    NATIONAL_PARTIES.map((p) => [p.abbreviation, p.id]),
+  );
+  const seededRegions = new Set<string>();
+  const seededMunicipalities = new Set<string>();
+  const knownRegionIds = new Set(
+    REGIONS.map((r) =>
+      slugify(
+        r.name.replace(/^(Region |Västra Götalandsregionen)/, (m) =>
+          m === "Västra Götalandsregionen" ? "Västra Götaland" : "",
+        ),
+      ) || slugify(r.name),
+    ),
+  );
+  for (const [regionId, seats] of Object.entries(MANDATES.region)) {
+    if (!knownRegionIds.has(regionId)) {
+      console.log(`  hoppar över okänd region i mandatdata: ${regionId}`);
+      continue;
+    }
+    seededRegions.add(regionId);
+    for (const p of NATIONAL_PARTIES) {
+      participation.push({
+        partyId: p.id,
+        level: "region",
+        regionId,
+        inAssembly: ((seats as Record<string, number>)[p.abbreviation] ?? 0) > 0,
+      });
+    }
+  }
+  for (const [municipalityId, seats] of Object.entries(MANDATES.kommun)) {
+    // SCB:s tabeller innehåller även historiska kommuner (t.ex. Bara) —
+    // hoppa över allt som inte finns i dagens kommunlista.
+    if (!usedMunicipalitySlugs.has(municipalityId)) {
+      console.log(`  hoppar över okänd kommun i mandatdata: ${municipalityId}`);
+      continue;
+    }
+    seededMunicipalities.add(municipalityId);
+    for (const p of NATIONAL_PARTIES) {
+      participation.push({
+        partyId: p.id,
+        level: "kommun",
+        municipalityId,
+        inAssembly: ((seats as Record<string, number>)[p.abbreviation] ?? 0) > 0,
+      });
+    }
+  }
+  console.log(
+    `Mandatdata (valår ${MANDATES.electionYear}): ${seededRegions.size} regioner, ${seededMunicipalities.size} kommuner.`,
+  );
+
+  // Lokala partier (ingår i SCB:s "övriga" och läggs in manuellt):
+  // Sörmlandslistan sitter i regionfullmäktige i Sörmland.
   participation.push({
     partyId: "sormlandslistan",
     level: "region",
     regionId: "sormland",
     inAssembly: true,
   });
-  // TEST DATA: local party with seats in kommunfullmäktige.
+  // Katrineholm Framåt sitter i kommunfullmäktige i Katrineholm.
   participation.push({
     partyId: "katrineholm-framat",
     level: "kommun",

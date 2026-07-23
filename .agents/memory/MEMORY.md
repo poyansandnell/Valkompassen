@@ -5,3 +5,5 @@
 - [Neutrality wording policy](neutrality-wording.md) — describe the service as oberoende, never claim the people behind it are politically inactive.
 
 - [localStorage persistence race](localstorage-persistence-race.md) — persist client state synchronously in the setState updater, never via useEffect; effect-based writes drop the last update before navigation.
+
+- [Fullmäktige mandate pipeline](mandate-data-pipeline.md) — inAssembly for all kommuner/regions comes from SCB; refresh after each election with update-mandates + seed; local parties stay manual.
