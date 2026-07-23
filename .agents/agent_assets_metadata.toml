@@ -6,3 +6,9 @@ id = "FWguDAojIlLf94nnKvM8A"
 uri = "file://artifacts/valkompass-video/public/audio/bg_music.mp3"
 type = "audio"
 title = "background music"
+
+[[outputs]]
+id = "TnrWchoF7MDxQ9W0-Pysi"
+uri = "file://attached_assets/qr_valkompass_video.png"
+type = "image"
+title = "QR-kod – Valkompass-videon på mobilen"
