@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -18,7 +18,27 @@ export default function HomeScreen() {
   const c = useColors();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const { data } = useAnswers();
+  const { data, clearAll } = useAnswers();
+
+  const hasAnyState = Object.keys(data).length > 0;
+
+  const confirmClearAll = () => {
+    if (Platform.OS === 'web') {
+      // Alert.alert med knappar stöds inte på webben
+      if (window.confirm('Vill du rensa alla svar och resultat och börja om från början?')) {
+        clearAll();
+      }
+      return;
+    }
+    Alert.alert(
+      'Rensa allt?',
+      'Alla dina svar och resultat tas bort och du börjar om från början.',
+      [
+        { text: 'Avbryt', style: 'cancel' },
+        { text: 'Rensa allt', style: 'destructive', onPress: () => clearAll() },
+      ],
+    );
+  };
 
   const topInset = Platform.OS === 'web' ? 67 : insets.top;
   const bottomInset = Platform.OS === 'web' ? 34 : insets.bottom;
@@ -157,6 +177,19 @@ export default function HomeScreen() {
       <Text style={[styles.privacyNote, { color: c.mutedForeground }]}>
         Dina svar stannar på din enhet.
       </Text>
+
+      {hasAnyState && (
+        <Pressable
+          testID="clear-all"
+          onPress={confirmClearAll}
+          style={({ pressed }) => [styles.clearAllBtn, { opacity: pressed ? 0.6 : 1 }]}
+        >
+          <Feather name="trash-2" size={14} color={c.destructive} />
+          <Text style={[styles.clearAllText, { color: c.destructive }]}>
+            Rensa allt och börja om
+          </Text>
+        </Pressable>
+      )}
     </ScrollView>
   );
 }
@@ -216,4 +249,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 8,
   },
+  clearAllBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    alignSelf: 'center',
+    marginTop: 20,
+    padding: 8,
+  },
+  clearAllText: { fontSize: 13, fontFamily: 'Inter_500Medium' },
 });
