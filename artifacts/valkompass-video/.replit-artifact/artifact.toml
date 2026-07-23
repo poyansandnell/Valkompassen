@@ -1,0 +1,27 @@
+kind = "video"
+previewPath = "/valkompass-video/"
+title = "Valkompass – presentationsvideo"
+version = "1.0.0"
+id = "artifacts/valkompass-video"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/valkompass-video/" ]
+localPort = 25746
+
+[services.development]
+run = "pnpm --filter @workspace/valkompass-video run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/valkompass-video", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/valkompass-video/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25746"
+BASE_PATH = "/valkompass-video/"
