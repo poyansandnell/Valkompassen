@@ -263,6 +263,40 @@ const LOCAL_PARTIES: PartySeed[] = [
   },
 ];
 
+// Urvalskriterium riksdagsnivån: partier utanför riksdagen tas med om de fick
+// minst 0,1 % av rösterna i senaste riksdagsvalet (Valmyndighetens slutresultat
+// 2022: Nyans 0,44 %, AfS 0,26 %, MED 0,20 %, Piratpartiet 0,14 %).
+// De visas som "har inte lämnat svar" tills svar bedömts (MED har bedömda svar).
+const RIKSDAG_MINOR_PARTIES: PartySeed[] = [
+  {
+    id: "partiet-nyans",
+    name: "Partiet Nyans",
+    abbreviation: "NYANS",
+    color: "#2AA9B7",
+    description:
+      "Parti utanför riksdagen (0,44 % i riksdagsvalet 2022). Partiet har ännu inte lämnat eller fått bedömda svar i valkompassen.",
+    website: "https://partietnyans.se",
+  },
+  {
+    id: "alternativ-for-sverige",
+    name: "Alternativ för Sverige",
+    abbreviation: "AFS",
+    color: "#104E8B",
+    description:
+      "Parti utanför riksdagen (0,26 % i riksdagsvalet 2022). Partiet har ännu inte lämnat eller fått bedömda svar i valkompassen.",
+    website: "https://alternativforsverige.se",
+  },
+  {
+    id: "piratpartiet",
+    name: "Piratpartiet",
+    abbreviation: "PP",
+    color: "#572B85",
+    description:
+      "Parti utanför riksdagen (0,14 % i riksdagsvalet 2022). Partiet har ännu inte lämnat eller fått bedömda svar i valkompassen.",
+    website: "https://piratpartiet.se",
+  },
+];
+
 // Alla lokala partier med fullmäktigemandat 2022 (Valmyndighetens
 // mandatfördelningsfil) — visas i sin kommun/region som "har inte lämnat svar".
 const LOCAL_PARTY_DATA: {
@@ -449,7 +483,7 @@ async function main() {
   // Lokala partier från Valmyndighetens data — hoppa över id:n som redan
   // finns manuellt inlagda (t.ex. Medborgerlig Samling).
   const manualIds = new Set(
-    [...NATIONAL_PARTIES, ...LOCAL_PARTIES].map((p) => p.id),
+    [...NATIONAL_PARTIES, ...LOCAL_PARTIES, ...RIKSDAG_MINOR_PARTIES].map((p) => p.id),
   );
   const dataLocalParties: PartySeed[] = LOCAL_PARTY_DATA.parties
     .filter((p) => !manualIds.has(p.id))
@@ -462,7 +496,12 @@ async function main() {
         "Lokalt parti med mandat i fullmäktige. Partiet har ännu inte lämnat eller fått bedömda svar i valkompassen.",
       website: null,
     }));
-  const allParties = [...NATIONAL_PARTIES, ...LOCAL_PARTIES, ...dataLocalParties];
+  const allParties = [
+    ...NATIONAL_PARTIES,
+    ...LOCAL_PARTIES,
+    ...RIKSDAG_MINOR_PARTIES,
+    ...dataLocalParties,
+  ];
   await db.insert(partiesTable).values(
     allParties.map((p) => ({
       id: p.id,
@@ -496,6 +535,10 @@ async function main() {
     level: "riksdag",
     inAssembly: false,
   });
+  // Övriga partier över 0,1 %-gränsen i riksdagsvalet 2022.
+  for (const p of RIKSDAG_MINOR_PARTIES) {
+    participation.push({ partyId: p.id, level: "riksdag", inAssembly: false });
+  }
 
   // Region- och kommunfullmäktige: mandatdata från SCB (senaste valet),
   // uppdateras med `pnpm run update-mandates` efter varje val.
