@@ -1,0 +1,1784 @@
+{
+ "source": "Valmyndigheten, Mandatfördelning 2018–2022 (xlsx), slutligt valresultat 2022",
+ "electionYear": 2022,
+ "parties": [
+  {
+   "id": "framtid-i-ale",
+   "name": "FRAMTID I ALE",
+   "abbreviation": "FA"
+  },
+  {
+   "id": "alvesta-alternativet",
+   "name": "Alvesta Alternativet",
+   "abbreviation": "AA"
+  },
+  {
+   "id": "folkinitiativet-arjeplog",
+   "name": "Folkinitiativet Arjeplog",
+   "abbreviation": "FA"
+  },
+  {
+   "id": "arvikapartiet",
+   "name": "Arvikapartiet",
+   "abbreviation": "ARVI"
+  },
+  {
+   "id": "landsbygdspartiet-oberoende",
+   "name": "Landsbygdspartiet Oberoende",
+   "abbreviation": "LO"
+  },
+  {
+   "id": "bergspartiet",
+   "name": "Bergspartiet",
+   "abbreviation": "BERG"
+  },
+  {
+   "id": "aktiv-samling-bodenalternativet",
+   "name": "Aktiv samling - Bodenalternativet",
+   "abbreviation": "ASB"
+  },
+  {
+   "id": "sjukvardspartiet",
+   "name": "Sjukvårdspartiet",
+   "abbreviation": "SJUK"
+  },
+  {
+   "id": "folkets-rost",
+   "name": "Folkets Röst",
+   "abbreviation": "FR"
+  },
+  {
+   "id": "bollnaspartiet",
+   "name": "Bollnäspartiet",
+   "abbreviation": "BOLL"
+  },
+  {
+   "id": "sjukvardspartiet-bollnas",
+   "name": "Sjukvårdspartiet Bollnäs",
+   "abbreviation": "SB"
+  },
+  {
+   "id": "framtid-oland",
+   "name": "Framtid Öland",
+   "abbreviation": "FÖ"
+  },
+  {
+   "id": "tullingepartiet",
+   "name": "Tullingepartiet",
+   "abbreviation": "TULL"
+  },
+  {
+   "id": "partiet-nyans",
+   "name": "Partiet Nyans",
+   "abbreviation": "PN"
+  },
+  {
+   "id": "alternativet",
+   "name": "Alternativet",
+   "abbreviation": "ALTE"
+  },
+  {
+   "id": "jamtlands-val-bracke",
+   "name": "Jämtlands Väl Bräcke",
+   "abbreviation": "JVB"
+  },
+  {
+   "id": "bjarepartiet",
+   "name": "Bjärepartiet",
+   "abbreviation": "BJÄR"
+  },
+  {
+   "id": "hela-edas-lista",
+   "name": "Hela Edas Lista",
+   "abbreviation": "HEL"
+  },
+  {
+   "id": "sjukvardspartiet-i-varmland",
+   "name": "Sjukvårdspartiet i Värmland",
+   "abbreviation": "SV"
+  },
+  {
+   "id": "opartiet",
+   "name": "Öpartiet",
+   "abbreviation": "ÖPAR"
+  },
+  {
+   "id": "nystart-enkoping-ne",
+   "name": "Nystart Enköping (NE)",
+   "abbreviation": "NEN"
+  },
+  {
+   "id": "kommunens-basta",
+   "name": "Kommunens Bästa",
+   "abbreviation": "KB"
+  },
+  {
+   "id": "kommunal-samling",
+   "name": "Kommunal Samling",
+   "abbreviation": "KS"
+  },
+  {
+   "id": "westbopartiet",
+   "name": "Westbopartiet",
+   "abbreviation": "WEST"
+  },
+  {
+   "id": "medborgarpartiet-i-gislaved",
+   "name": "Medborgarpartiet i Gislaved",
+   "abbreviation": "MG"
+  },
+  {
+   "id": "feministiskt-initiativ",
+   "name": "Feministiskt initiativ",
+   "abbreviation": "FI"
+  },
+  {
+   "id": "demokraterna",
+   "name": "Demokraterna",
+   "abbreviation": "DEMO"
+  },
+  {
+   "id": "gotenes-framtid",
+   "name": "Götenes framtid",
+   "abbreviation": "GF"
+  },
+  {
+   "id": "habodemokraterna",
+   "name": "Habodemokraterna",
+   "abbreviation": "HABO"
+  },
+  {
+   "id": "oberoende-realister",
+   "name": "OBEROENDE REALISTER",
+   "abbreviation": "OR"
+  },
+  {
+   "id": "hjarta-for-halmstad",
+   "name": "Hjärta för Halmstad",
+   "abbreviation": "HH"
+  },
+  {
+   "id": "halmstads-lokala-parti",
+   "name": "Halmstads Lokala Parti",
+   "abbreviation": "HLP"
+  },
+  {
+   "id": "sans-o-balans",
+   "name": "Sans o Balans",
+   "abbreviation": "SOB"
+  },
+  {
+   "id": "kommunlistan",
+   "name": "Kommunlistan",
+   "abbreviation": "KOMM"
+  },
+  {
+   "id": "hoforspartiet",
+   "name": "Hoforspartiet",
+   "abbreviation": "HOFO"
+  },
+  {
+   "id": "drevvikenpartiet",
+   "name": "Drevvikenpartiet",
+   "abbreviation": "DREV"
+  },
+  {
+   "id": "huddingepartiet",
+   "name": "Huddingepartiet",
+   "abbreviation": "HUDD"
+  },
+  {
+   "id": "kommunens-val",
+   "name": "Kommunens Väl",
+   "abbreviation": "KV"
+  },
+  {
+   "id": "balstapartiet",
+   "name": "Bålstapartiet",
+   "abbreviation": "BÅLS"
+  },
+  {
+   "id": "grythyttelistan",
+   "name": "Grythyttelistan",
+   "abbreviation": "GRYT"
+  },
+  {
+   "id": "folkets-rost-vox-humana",
+   "name": "Folkets röst - VOX humana",
+   "abbreviation": "FRVH"
+  },
+  {
+   "id": "harjedalspartiet",
+   "name": "Härjedalspartiet",
+   "abbreviation": "HÄRJ"
+  },
+  {
+   "id": "kommunpartiet",
+   "name": "Kommunpartiet",
+   "abbreviation": "KOMM"
+  },
+  {
+   "id": "sportpartiet",
+   "name": "Sportpartiet",
+   "abbreviation": "SPOR"
+  },
+  {
+   "id": "folkets-val",
+   "name": "Folkets Väl",
+   "abbreviation": "FV"
+  },
+  {
+   "id": "sveriges-pensionarers-intresseparti",
+   "name": "Sveriges Pensionärers Intresseparti",
+   "abbreviation": "SPI"
+  },
+  {
+   "id": "medborgerlig-samling",
+   "name": "Medborgerlig Samling",
+   "abbreviation": "MS"
+  },
+  {
+   "id": "framtid-i-jokkmokks-kommun",
+   "name": "Framtid i Jokkmokks kommun",
+   "abbreviation": "FJK"
+  },
+  {
+   "id": "samernas-val",
+   "name": "Samernas Väl",
+   "abbreviation": "SV"
+  },
+  {
+   "id": "framtid-i-kalix",
+   "name": "Framtid i Kalix",
+   "abbreviation": "FK"
+  },
+  {
+   "id": "karlstadpartiet-livskvalitet",
+   "name": "Karlstadpartiet Livskvalitet",
+   "abbreviation": "KL"
+  },
+  {
+   "id": "s-melistu-samelistan-partipolitiskt-obunden",
+   "name": "Sámelistu/Samelistan Partipolitiskt obunden",
+   "abbreviation": "SPO"
+  },
+  {
+   "id": "var-framtid-klippan",
+   "name": "VÅR FRAMTID - KLIPPAN",
+   "abbreviation": "VFK"
+  },
+  {
+   "id": "knivsta-nu",
+   "name": "Knivsta.Nu",
+   "abbreviation": "KNIV"
+  },
+  {
+   "id": "jamtlands-val-krokom",
+   "name": "Jämtlands Väl Krokom",
+   "abbreviation": "JVK"
+  },
+  {
+   "id": "kungsbackaborna",
+   "name": "Kungsbackaborna",
+   "abbreviation": "KUNG"
+  },
+  {
+   "id": "utvecklingspartiet",
+   "name": "Utvecklingspartiet",
+   "abbreviation": "UTVE"
+  },
+  {
+   "id": "loddebygden",
+   "name": "Löddebygden",
+   "abbreviation": "LÖDD"
+  },
+  {
+   "id": "vanligt-folk-i-kopings-kommun",
+   "name": "Vanligt Folk i Köpings kommun",
+   "abbreviation": "VFKK"
+  },
+  {
+   "id": "laholmspartiet",
+   "name": "Laholmspartiet",
+   "abbreviation": "LAHO"
+  },
+  {
+   "id": "framtidspartiet-i-lekeberg",
+   "name": "Framtidspartiet i Lekeberg",
+   "abbreviation": "FL"
+  },
+  {
+   "id": "bygdepartiet",
+   "name": "Bygdepartiet",
+   "abbreviation": "BYGD"
+  },
+  {
+   "id": "lidingopartiet",
+   "name": "Lidingöpartiet",
+   "abbreviation": "LIDI"
+  },
+  {
+   "id": "edetlistan",
+   "name": "Edetlistan",
+   "abbreviation": "EDET"
+  },
+  {
+   "id": "linkopingslistan",
+   "name": "Linköpingslistan",
+   "abbreviation": "LINK"
+  },
+  {
+   "id": "ljusdalsbygdens-parti",
+   "name": "Ljusdalsbygdens parti",
+   "abbreviation": "LP"
+  },
+  {
+   "id": "fokus-bjarred",
+   "name": "Fokus Bjärred",
+   "abbreviation": "FB"
+  },
+  {
+   "id": "dalademokraterna",
+   "name": "Dalademokraterna",
+   "abbreviation": "DALA"
+  },
+  {
+   "id": "rattvisepartiet-socialisterna",
+   "name": "Rättvisepartiet Socialisterna",
+   "abbreviation": "RS"
+  },
+  {
+   "id": "fornyalund",
+   "name": "FörNyaLund",
+   "abbreviation": "FÖRN"
+  },
+  {
+   "id": "kommunistiska-partiet",
+   "name": "Kommunistiska Partiet",
+   "abbreviation": "KP"
+  },
+  {
+   "id": "lysekilspartiet",
+   "name": "Lysekilspartiet",
+   "abbreviation": "LYSE"
+  },
+  {
+   "id": "malalistan",
+   "name": "Malålistan",
+   "abbreviation": "MALÅ"
+  },
+  {
+   "id": "kommunpartiet-mellerud",
+   "name": "KommunPartiet Mellerud",
+   "abbreviation": "KM"
+  },
+  {
+   "id": "morapartiet",
+   "name": "Morapartiet",
+   "abbreviation": "MORA"
+  },
+  {
+   "id": "nackalistan",
+   "name": "Nackalistan",
+   "abbreviation": "NACK"
+  },
+  {
+   "id": "norapartiet",
+   "name": "Norapartiet",
+   "abbreviation": "NORA"
+  },
+  {
+   "id": "demokraterna-i-norberg",
+   "name": "Demokraterna i Norberg",
+   "abbreviation": "DN"
+  },
+  {
+   "id": "partiet-for-norbergs-framtid",
+   "name": "Partiet för Norbergs Framtid",
+   "abbreviation": "PNF"
+  },
+  {
+   "id": "nordanstigspartiet-se",
+   "name": "nordanstigspartiet.se",
+   "abbreviation": "NORD"
+  },
+  {
+   "id": "nykvarnspartiet",
+   "name": "Nykvarnspartiet",
+   "abbreviation": "NYKV"
+  },
+  {
+   "id": "pensionarspartiet-i-nynashamns-kommun",
+   "name": "Pensionärspartiet i Nynäshamns kommun",
+   "abbreviation": "PNK"
+  },
+  {
+   "id": "sorundanet-nynashamns-kommunparti",
+   "name": "Sorundanet Nynäshamns kommunparti",
+   "abbreviation": "SNK"
+  },
+  {
+   "id": "safe-solidaritet-arbete-fred-ekologi",
+   "name": "SAFE - Solidaritet Arbete Fred Ekologi",
+   "abbreviation": "SSAF"
+  },
+  {
+   "id": "folkviljan-orust",
+   "name": "Folkviljan Orust",
+   "abbreviation": "FO"
+  },
+  {
+   "id": "kustlandspartiet",
+   "name": "KUSTLANDSPARTIET",
+   "abbreviation": "KUST"
+  },
+  {
+   "id": "framtid-s",
+   "name": "Framtid S",
+   "abbreviation": "FS"
+  },
+  {
+   "id": "perstorps-framtid",
+   "name": "Perstorps Framtid",
+   "abbreviation": "PF"
+  },
+  {
+   "id": "vi-i-perstorp",
+   "name": "Vi i Perstorp",
+   "abbreviation": "VP"
+  },
+  {
+   "id": "skol-och-landsbygdspartiet",
+   "name": "Skol och Landsbygdspartiet",
+   "abbreviation": "SL"
+  },
+  {
+   "id": "allt-for-ragunda",
+   "name": "Allt för Ragunda",
+   "abbreviation": "AR"
+  },
+  {
+   "id": "ronnebypartiet",
+   "name": "Ronnebypartiet",
+   "abbreviation": "RONN"
+  },
+  {
+   "id": "salas-basta",
+   "name": "Salas bästa",
+   "abbreviation": "SB"
+  },
+  {
+   "id": "ronningepartiet",
+   "name": "Rönningepartiet",
+   "abbreviation": "RÖNN"
+  },
+  {
+   "id": "sigtunapartiet-samling-for-sigtuna",
+   "name": "Sigtunapartiet Samling för Sigtuna",
+   "abbreviation": "SSS"
+  },
+  {
+   "id": "osterlenpartiet",
+   "name": "Österlenpartiet",
+   "abbreviation": "ÖSTE"
+  },
+  {
+   "id": "klimatinitiativ-simrishamn",
+   "name": "Klimatinitiativ Simrishamn",
+   "abbreviation": "KS"
+  },
+  {
+   "id": "skovdepartiet",
+   "name": "Skövdepartiet",
+   "abbreviation": "SKÖV"
+  },
+  {
+   "id": "vastra-initiativet",
+   "name": "Västra Initiativet",
+   "abbreviation": "VI"
+  },
+  {
+   "id": "demokratiresan",
+   "name": "Demokratiresan",
+   "abbreviation": "DEMO"
+  },
+  {
+   "id": "stenungsundspartiet",
+   "name": "Stenungsundspartiet",
+   "abbreviation": "STEN"
+  },
+  {
+   "id": "strangnaspartiet",
+   "name": "Strängnäspartiet",
+   "abbreviation": "STRÄ"
+  },
+  {
+   "id": "rattvis-demokrati",
+   "name": "Rättvis Demokrati",
+   "abbreviation": "RD"
+  },
+  {
+   "id": "hela-sunne",
+   "name": "Hela Sunne",
+   "abbreviation": "HS"
+  },
+  {
+   "id": "barapartiet",
+   "name": "BARAPARTIET",
+   "abbreviation": "BARA"
+  },
+  {
+   "id": "alska-svedala",
+   "name": "Älska Svedala",
+   "abbreviation": "ÄS"
+  },
+  {
+   "id": "soderkopingsinitiativet",
+   "name": "Söderköpingsinitiativet",
+   "abbreviation": "SÖDE"
+  },
+  {
+   "id": "realistpartiet",
+   "name": "Realistpartiet",
+   "abbreviation": "REAL"
+  },
+  {
+   "id": "sol-partiet-solvesborg-och-lister",
+   "name": "SoL-partiet Sölvesborg och Lister",
+   "abbreviation": "SPSL"
+  },
+  {
+   "id": "vi-tidaholm",
+   "name": "Vi Tidaholm",
+   "abbreviation": "VT"
+  },
+  {
+   "id": "tierpslistan",
+   "name": "Tierpslistan",
+   "abbreviation": "TIER"
+  },
+  {
+   "id": "timrapartiet",
+   "name": "Timråpartiet",
+   "abbreviation": "TIMR"
+  },
+  {
+   "id": "tjornpartiet",
+   "name": "TJÖRNPARTIET",
+   "abbreviation": "TJÖR"
+  },
+  {
+   "id": "nordvarmlands-kommunparti",
+   "name": "Nordvärmlands kommunparti",
+   "abbreviation": "NK"
+  },
+  {
+   "id": "de-oberoende-i-torsby",
+   "name": "De Oberoende i Torsby",
+   "abbreviation": "OT"
+  },
+  {
+   "id": "vart-soderslatt",
+   "name": "Vårt Söderslätt",
+   "abbreviation": "VS"
+  },
+  {
+   "id": "uddevallapartiet",
+   "name": "Uddevallapartiet",
+   "abbreviation": "UDDE"
+  },
+  {
+   "id": "nya-ulricehamn",
+   "name": "Nya Ulricehamn",
+   "abbreviation": "NU"
+  },
+  {
+   "id": "demokratiska-sekulara-socialister-arbetarpartiet",
+   "name": "Demokratiska Sekulära Socialister Arbetarpartiet",
+   "abbreviation": "DSSA"
+  },
+  {
+   "id": "vasbys-basta",
+   "name": "Väsbys Bästa",
+   "abbreviation": "VB"
+  },
+  {
+   "id": "utvecklingspartiet-demokraterna",
+   "name": "Utvecklingspartiet demokraterna",
+   "abbreviation": "UD"
+  },
+  {
+   "id": "konsensus-for-vadstenas-basta",
+   "name": "Konsensus - För Vadstenas Bästa",
+   "abbreviation": "KVB"
+  },
+  {
+   "id": "empa-r-tiet",
+   "name": "EMPA(R)TIET",
+   "abbreviation": "ERT"
+  },
+  {
+   "id": "hela-vara-kommuns-basta",
+   "name": "Hela Vara kommuns bästa",
+   "abbreviation": "HVKB"
+  },
+  {
+   "id": "tjugofyrasju",
+   "name": "tjugofyrasju",
+   "abbreviation": "TJUG"
+  },
+  {
+   "id": "varbergspartiet",
+   "name": "Varbergspartiet",
+   "abbreviation": "VARB"
+  },
+  {
+   "id": "waxholmspartiet-borgerligt-alternativ",
+   "name": "Waxholmspartiet - borgerligt alternativ",
+   "abbreviation": "WBA"
+  },
+  {
+   "id": "vaxholmsdemokraterna",
+   "name": "Vaxholmsdemokraterna",
+   "abbreviation": "VAXH"
+  },
+  {
+   "id": "vetlanda-framatanda",
+   "name": "Vetlanda framåtanda",
+   "abbreviation": "VF"
+  },
+  {
+   "id": "politiskt-alternativ",
+   "name": "Politiskt Alternativ",
+   "abbreviation": "PA"
+  },
+  {
+   "id": "vingakerspartiet-vtl",
+   "name": "Vingåkerspartiet - VTL",
+   "abbreviation": "VV"
+  },
+  {
+   "id": "medborgarpartiet",
+   "name": "Medborgarpartiet",
+   "abbreviation": "MEDB"
+  },
+  {
+   "id": "skargardspartiet",
+   "name": "Skärgårdspartiet",
+   "abbreviation": "SKÄR"
+  },
+  {
+   "id": "socialisterna-valfardspartiet",
+   "name": "Socialisterna-Välfärdspartiet",
+   "abbreviation": "SV"
+  },
+  {
+   "id": "westerwikspartiet",
+   "name": "Westerwikspartiet",
+   "abbreviation": "WEST"
+  },
+  {
+   "id": "var-framtids-politiska-utskott",
+   "name": "Vår Framtids politiska utskott",
+   "abbreviation": "VFPU"
+  },
+  {
+   "id": "vastjamtlands-val",
+   "name": "Västjämtlands Väl",
+   "abbreviation": "VV"
+  },
+  {
+   "id": "aselepartiet",
+   "name": "Åselepartiet",
+   "abbreviation": "ÅSEL"
+  },
+  {
+   "id": "engelholmspartiet",
+   "name": "EngelholmsPartiet",
+   "abbreviation": "ENGE"
+  },
+  {
+   "id": "brobyggarpartiet",
+   "name": "Brobyggarpartiet",
+   "abbreviation": "BROB"
+  },
+  {
+   "id": "orebropartiet",
+   "name": "Örebropartiet",
+   "abbreviation": "ÖREB"
+  },
+  {
+   "id": "roslagspartiet",
+   "name": "Roslagspartiet",
+   "abbreviation": "ROSL"
+  },
+  {
+   "id": "lokalpartiet-boa",
+   "name": "Lokalpartiet BoA",
+   "abbreviation": "LB"
+  },
+  {
+   "id": "overtorneas-fria-alternativ",
+   "name": "Övertorneås Fria Alternativ",
+   "abbreviation": "ÖFA"
+  },
+  {
+   "id": "framtid-s-overtornea",
+   "name": "Framtid S Övertorneå",
+   "abbreviation": "FSÖ"
+  },
+  {
+   "id": "dalarnas-sjukvardsparti",
+   "name": "Dalarnas Sjukvårdsparti",
+   "abbreviation": "DS"
+  },
+  {
+   "id": "sjukvardspartiet-gavleborg",
+   "name": "Sjukvårdspartiet Gävleborg",
+   "abbreviation": "SG"
+  },
+  {
+   "id": "bevara-akutsjukhusen",
+   "name": "Bevara akutsjukhusen",
+   "abbreviation": "BA"
+  },
+  {
+   "id": "vard-for-pengarna",
+   "name": "Vård för Pengarna",
+   "abbreviation": "VP"
+  },
+  {
+   "id": "sjukvardspartiet-vasternorrland",
+   "name": "Sjukvårdspartiet - Västernorrland",
+   "abbreviation": "SV"
+  }
+ ],
+ "region": {
+  "dalarna": [
+   {
+    "partyId": "dalarnas-sjukvardsparti",
+    "seats": 5
+   }
+  ],
+  "gavleborg": [
+   {
+    "partyId": "sjukvardspartiet-gavleborg",
+    "seats": 4
+   }
+  ],
+  "jonkopings-lan": [
+   {
+    "partyId": "bevara-akutsjukhusen",
+    "seats": 8
+   }
+  ],
+  "norrbotten": [
+   {
+    "partyId": "sjukvardspartiet",
+    "seats": 6
+   }
+  ],
+  "sormland": [
+   {
+    "partyId": "vard-for-pengarna",
+    "seats": 10
+   }
+  ],
+  "varmland": [
+   {
+    "partyId": "sjukvardspartiet-i-varmland",
+    "seats": 3
+   }
+  ],
+  "vasternorrland": [
+   {
+    "partyId": "sjukvardspartiet-vasternorrland",
+    "seats": 14
+   }
+  ],
+  "orebro-lan": [
+   {
+    "partyId": "orebropartiet",
+    "seats": 3
+   }
+  ]
+ },
+ "kommun": {
+  "ale": [
+   {
+    "partyId": "framtid-i-ale",
+    "seats": 2
+   }
+  ],
+  "alvesta": [
+   {
+    "partyId": "alvesta-alternativet",
+    "seats": 6
+   }
+  ],
+  "arjeplog": [
+   {
+    "partyId": "folkinitiativet-arjeplog",
+    "seats": 6
+   }
+  ],
+  "arvika": [
+   {
+    "partyId": "arvikapartiet",
+    "seats": 3
+   }
+  ],
+  "askersund": [
+   {
+    "partyId": "landsbygdspartiet-oberoende",
+    "seats": 1
+   }
+  ],
+  "berg": [
+   {
+    "partyId": "bergspartiet",
+    "seats": 1
+   }
+  ],
+  "boden": [
+   {
+    "partyId": "aktiv-samling-bodenalternativet",
+    "seats": 3
+   },
+   {
+    "partyId": "sjukvardspartiet",
+    "seats": 1
+   }
+  ],
+  "bollebygd": [
+   {
+    "partyId": "folkets-rost",
+    "seats": 4
+   }
+  ],
+  "bollnas": [
+   {
+    "partyId": "bollnaspartiet",
+    "seats": 5
+   },
+   {
+    "partyId": "sjukvardspartiet-bollnas",
+    "seats": 1
+   }
+  ],
+  "borgholm": [
+   {
+    "partyId": "framtid-oland",
+    "seats": 3
+   }
+  ],
+  "botkyrka": [
+   {
+    "partyId": "tullingepartiet",
+    "seats": 9
+   },
+   {
+    "partyId": "partiet-nyans",
+    "seats": 2
+   }
+  ],
+  "bromolla": [
+   {
+    "partyId": "alternativet",
+    "seats": 3
+   }
+  ],
+  "bracke": [
+   {
+    "partyId": "jamtlands-val-bracke",
+    "seats": 2
+   }
+  ],
+  "bastad": [
+   {
+    "partyId": "bjarepartiet",
+    "seats": 5
+   }
+  ],
+  "eda": [
+   {
+    "partyId": "hela-edas-lista",
+    "seats": 3
+   },
+   {
+    "partyId": "sjukvardspartiet-i-varmland",
+    "seats": 1
+   }
+  ],
+  "ekero": [
+   {
+    "partyId": "opartiet",
+    "seats": 2
+   }
+  ],
+  "enkoping": [
+   {
+    "partyId": "nystart-enkoping-ne",
+    "seats": 6
+   }
+  ],
+  "forshaga": [
+   {
+    "partyId": "kommunens-basta",
+    "seats": 1
+   }
+  ],
+  "gagnef": [
+   {
+    "partyId": "kommunal-samling",
+    "seats": 3
+   }
+  ],
+  "gislaved": [
+   {
+    "partyId": "westbopartiet",
+    "seats": 5
+   },
+   {
+    "partyId": "medborgarpartiet-i-gislaved",
+    "seats": 9
+   }
+  ],
+  "gullspang": [
+   {
+    "partyId": "feministiskt-initiativ",
+    "seats": 1
+   }
+  ],
+  "gallivare": [
+   {
+    "partyId": "sjukvardspartiet",
+    "seats": 1
+   }
+  ],
+  "goteborg": [
+   {
+    "partyId": "demokraterna",
+    "seats": 5
+   }
+  ],
+  "gotene": [
+   {
+    "partyId": "gotenes-framtid",
+    "seats": 6
+   }
+  ],
+  "habo-jonkopings-lan": [
+   {
+    "partyId": "habodemokraterna",
+    "seats": 1
+   }
+  ],
+  "hagfors": [
+   {
+    "partyId": "oberoende-realister",
+    "seats": 15
+   }
+  ],
+  "halmstad": [
+   {
+    "partyId": "hjarta-for-halmstad",
+    "seats": 4
+   },
+   {
+    "partyId": "halmstads-lokala-parti",
+    "seats": 2
+   }
+  ],
+  "hammaro": [
+   {
+    "partyId": "sans-o-balans",
+    "seats": 1
+   }
+  ],
+  "haparanda": [
+   {
+    "partyId": "sjukvardspartiet",
+    "seats": 2
+   }
+  ],
+  "hedemora": [
+   {
+    "partyId": "kommunlistan",
+    "seats": 4
+   }
+  ],
+  "hofors": [
+   {
+    "partyId": "hoforspartiet",
+    "seats": 4
+   }
+  ],
+  "huddinge": [
+   {
+    "partyId": "drevvikenpartiet",
+    "seats": 3
+   },
+   {
+    "partyId": "huddingepartiet",
+    "seats": 2
+   }
+  ],
+  "hylte": [
+   {
+    "partyId": "kommunens-val",
+    "seats": 2
+   }
+  ],
+  "habo": [
+   {
+    "partyId": "balstapartiet",
+    "seats": 3
+   },
+   {
+    "partyId": "habodemokraterna",
+    "seats": 3
+   }
+  ],
+  "hallefors": [
+   {
+    "partyId": "grythyttelistan",
+    "seats": 2
+   }
+  ],
+  "harjedalen": [
+   {
+    "partyId": "folkets-rost-vox-humana",
+    "seats": 3
+   },
+   {
+    "partyId": "harjedalspartiet",
+    "seats": 2
+   }
+  ],
+  "harryda": [
+   {
+    "partyId": "kommunpartiet",
+    "seats": 1
+   },
+   {
+    "partyId": "sportpartiet",
+    "seats": 2
+   }
+  ],
+  "hassleholm": [
+   {
+    "partyId": "folkets-val",
+    "seats": 3
+   }
+  ],
+  "horby": [
+   {
+    "partyId": "sveriges-pensionarers-intresseparti",
+    "seats": 1
+   }
+  ],
+  "hoor": [
+   {
+    "partyId": "medborgerlig-samling",
+    "seats": 2
+   }
+  ],
+  "jokkmokk": [
+   {
+    "partyId": "framtid-i-jokkmokks-kommun",
+    "seats": 4
+   },
+   {
+    "partyId": "samernas-val",
+    "seats": 2
+   }
+  ],
+  "jarfalla": [
+   {
+    "partyId": "medborgerlig-samling",
+    "seats": 2
+   }
+  ],
+  "kalix": [
+   {
+    "partyId": "framtid-i-kalix",
+    "seats": 1
+   }
+  ],
+  "karlshamn": [
+   {
+    "partyId": "medborgerlig-samling",
+    "seats": 2
+   }
+  ],
+  "karlstad": [
+   {
+    "partyId": "karlstadpartiet-livskvalitet",
+    "seats": 2
+   }
+  ],
+  "kinda": [
+   {
+    "partyId": "landsbygdspartiet-oberoende",
+    "seats": 3
+   }
+  ],
+  "kiruna": [
+   {
+    "partyId": "feministiskt-initiativ",
+    "seats": 2
+   },
+   {
+    "partyId": "s-melistu-samelistan-partipolitiskt-obunden",
+    "seats": 2
+   },
+   {
+    "partyId": "sjukvardspartiet",
+    "seats": 2
+   }
+  ],
+  "klippan": [
+   {
+    "partyId": "var-framtid-klippan",
+    "seats": 2
+   }
+  ],
+  "knivsta": [
+   {
+    "partyId": "knivsta-nu",
+    "seats": 9
+   }
+  ],
+  "krokom": [
+   {
+    "partyId": "jamtlands-val-krokom",
+    "seats": 1
+   }
+  ],
+  "kungsbacka": [
+   {
+    "partyId": "kungsbackaborna",
+    "seats": 2
+   }
+  ],
+  "kungalv": [
+   {
+    "partyId": "utvecklingspartiet",
+    "seats": 4
+   }
+  ],
+  "kavlinge": [
+   {
+    "partyId": "loddebygden",
+    "seats": 3
+   }
+  ],
+  "koping": [
+   {
+    "partyId": "vanligt-folk-i-kopings-kommun",
+    "seats": 2
+   }
+  ],
+  "laholm": [
+   {
+    "partyId": "laholmspartiet",
+    "seats": 1
+   },
+   {
+    "partyId": "medborgerlig-samling",
+    "seats": 4
+   }
+  ],
+  "landskrona": [
+   {
+    "partyId": "partiet-nyans",
+    "seats": 1
+   }
+  ],
+  "lekeberg": [
+   {
+    "partyId": "framtidspartiet-i-lekeberg",
+    "seats": 2
+   }
+  ],
+  "leksand": [
+   {
+    "partyId": "bygdepartiet",
+    "seats": 8
+   }
+  ],
+  "lidingo": [
+   {
+    "partyId": "lidingopartiet",
+    "seats": 11
+   }
+  ],
+  "lilla-edet": [
+   {
+    "partyId": "edetlistan",
+    "seats": 1
+   }
+  ],
+  "lindesberg": [
+   {
+    "partyId": "landsbygdspartiet-oberoende",
+    "seats": 2
+   }
+  ],
+  "linkoping": [
+   {
+    "partyId": "linkopingslistan",
+    "seats": 7
+   }
+  ],
+  "ljungby": [
+   {
+    "partyId": "alternativet",
+    "seats": 1
+   }
+  ],
+  "ljusdal": [
+   {
+    "partyId": "ljusdalsbygdens-parti",
+    "seats": 4
+   }
+  ],
+  "lomma": [
+   {
+    "partyId": "fokus-bjarred",
+    "seats": 5
+   }
+  ],
+  "ludvika": [
+   {
+    "partyId": "dalademokraterna",
+    "seats": 1
+   }
+  ],
+  "lulea": [
+   {
+    "partyId": "rattvisepartiet-socialisterna",
+    "seats": 2
+   }
+  ],
+  "lund": [
+   {
+    "partyId": "fornyalund",
+    "seats": 4
+   }
+  ],
+  "lysekil": [
+   {
+    "partyId": "kommunistiska-partiet",
+    "seats": 2
+   },
+   {
+    "partyId": "lysekilspartiet",
+    "seats": 5
+   }
+  ],
+  "malung-salen": [
+   {
+    "partyId": "landsbygdspartiet-oberoende",
+    "seats": 4
+   }
+  ],
+  "mala": [
+   {
+    "partyId": "malalistan",
+    "seats": 4
+   }
+  ],
+  "mellerud": [
+   {
+    "partyId": "kommunpartiet-mellerud",
+    "seats": 2
+   }
+  ],
+  "mora": [
+   {
+    "partyId": "morapartiet",
+    "seats": 8
+   }
+  ],
+  "nacka": [
+   {
+    "partyId": "nackalistan",
+    "seats": 7
+   }
+  ],
+  "nora": [
+   {
+    "partyId": "landsbygdspartiet-oberoende",
+    "seats": 5
+   },
+   {
+    "partyId": "norapartiet",
+    "seats": 3
+   }
+  ],
+  "norberg": [
+   {
+    "partyId": "demokraterna-i-norberg",
+    "seats": 7
+   },
+   {
+    "partyId": "partiet-for-norbergs-framtid",
+    "seats": 2
+   }
+  ],
+  "nordanstig": [
+   {
+    "partyId": "nordanstigspartiet-se",
+    "seats": 3
+   }
+  ],
+  "nykvarn": [
+   {
+    "partyId": "nykvarnspartiet",
+    "seats": 5
+   }
+  ],
+  "nynashamn": [
+   {
+    "partyId": "pensionarspartiet-i-nynashamns-kommun",
+    "seats": 1
+   },
+   {
+    "partyId": "sorundanet-nynashamns-kommunparti",
+    "seats": 2
+   }
+  ],
+  "nassjo": [
+   {
+    "partyId": "safe-solidaritet-arbete-fred-ekologi",
+    "seats": 3
+   }
+  ],
+  "orust": [
+   {
+    "partyId": "folkviljan-orust",
+    "seats": 2
+   }
+  ],
+  "oskarshamn": [
+   {
+    "partyId": "kustlandspartiet",
+    "seats": 2
+   }
+  ],
+  "pajala": [
+   {
+    "partyId": "framtid-s",
+    "seats": 4
+   },
+   {
+    "partyId": "sjukvardspartiet",
+    "seats": 1
+   }
+  ],
+  "perstorp": [
+   {
+    "partyId": "perstorps-framtid",
+    "seats": 4
+   },
+   {
+    "partyId": "vi-i-perstorp",
+    "seats": 6
+   }
+  ],
+  "pitea": [
+   {
+    "partyId": "sjukvardspartiet",
+    "seats": 1
+   },
+   {
+    "partyId": "skol-och-landsbygdspartiet",
+    "seats": 2
+   }
+  ],
+  "ragunda": [
+   {
+    "partyId": "allt-for-ragunda",
+    "seats": 2
+   }
+  ],
+  "ronneby": [
+   {
+    "partyId": "ronnebypartiet",
+    "seats": 1
+   }
+  ],
+  "sala": [
+   {
+    "partyId": "salas-basta",
+    "seats": 4
+   }
+  ],
+  "salem": [
+   {
+    "partyId": "ronningepartiet",
+    "seats": 3
+   }
+  ],
+  "sigtuna": [
+   {
+    "partyId": "sigtunapartiet-samling-for-sigtuna",
+    "seats": 2
+   }
+  ],
+  "simrishamn": [
+   {
+    "partyId": "osterlenpartiet",
+    "seats": 1
+   },
+   {
+    "partyId": "klimatinitiativ-simrishamn",
+    "seats": 1
+   }
+  ],
+  "skurup": [
+   {
+    "partyId": "kommunens-val",
+    "seats": 1
+   }
+  ],
+  "skovde": [
+   {
+    "partyId": "skovdepartiet",
+    "seats": 9
+   }
+  ],
+  "solleftea": [
+   {
+    "partyId": "landsbygdspartiet-oberoende",
+    "seats": 1
+   },
+   {
+    "partyId": "vastra-initiativet",
+    "seats": 5
+   }
+  ],
+  "sotenas": [
+   {
+    "partyId": "demokratiresan",
+    "seats": 5
+   }
+  ],
+  "stenungsund": [
+   {
+    "partyId": "stenungsundspartiet",
+    "seats": 3
+   }
+  ],
+  "storuman": [
+   {
+    "partyId": "kommunlistan",
+    "seats": 1
+   }
+  ],
+  "strangnas": [
+   {
+    "partyId": "strangnaspartiet",
+    "seats": 3
+   }
+  ],
+  "stromstad": [
+   {
+    "partyId": "feministiskt-initiativ",
+    "seats": 2
+   }
+  ],
+  "stromsund": [
+   {
+    "partyId": "rattvis-demokrati",
+    "seats": 1
+   }
+  ],
+  "sunne": [
+   {
+    "partyId": "hela-sunne",
+    "seats": 3
+   }
+  ],
+  "svedala": [
+   {
+    "partyId": "barapartiet",
+    "seats": 2
+   },
+   {
+    "partyId": "alska-svedala",
+    "seats": 3
+   }
+  ],
+  "svenljunga": [
+   {
+    "partyId": "landsbygdspartiet-oberoende",
+    "seats": 4
+   }
+  ],
+  "saffle": [
+   {
+    "partyId": "sjukvardspartiet-i-varmland",
+    "seats": 2
+   }
+  ],
+  "soderkoping": [
+   {
+    "partyId": "soderkopingsinitiativet",
+    "seats": 2
+   }
+  ],
+  "sodertalje": [
+   {
+    "partyId": "realistpartiet",
+    "seats": 3
+   }
+  ],
+  "solvesborg": [
+   {
+    "partyId": "sol-partiet-solvesborg-och-lister",
+    "seats": 1
+   }
+  ],
+  "tidaholm": [
+   {
+    "partyId": "vi-tidaholm",
+    "seats": 6
+   }
+  ],
+  "tierp": [
+   {
+    "partyId": "tierpslistan",
+    "seats": 2
+   }
+  ],
+  "timra": [
+   {
+    "partyId": "timrapartiet",
+    "seats": 5
+   }
+  ],
+  "tjorn": [
+   {
+    "partyId": "tjornpartiet",
+    "seats": 5
+   }
+  ],
+  "torsby": [
+   {
+    "partyId": "nordvarmlands-kommunparti",
+    "seats": 1
+   },
+   {
+    "partyId": "de-oberoende-i-torsby",
+    "seats": 3
+   }
+  ],
+  "trelleborg": [
+   {
+    "partyId": "vart-soderslatt",
+    "seats": 9
+   }
+  ],
+  "uddevalla": [
+   {
+    "partyId": "uddevallapartiet",
+    "seats": 7
+   }
+  ],
+  "ulricehamn": [
+   {
+    "partyId": "nya-ulricehamn",
+    "seats": 8
+   }
+  ],
+  "umea": [
+   {
+    "partyId": "demokratiska-sekulara-socialister-arbetarpartiet",
+    "seats": 2
+   }
+  ],
+  "upplands-vasby": [
+   {
+    "partyId": "vasbys-basta",
+    "seats": 6
+   }
+  ],
+  "uppsala": [
+   {
+    "partyId": "utvecklingspartiet-demokraterna",
+    "seats": 2
+   }
+  ],
+  "uppvidinge": [
+   {
+    "partyId": "landsbygdspartiet-oberoende",
+    "seats": 2
+   }
+  ],
+  "vadstena": [
+   {
+    "partyId": "konsensus-for-vadstenas-basta",
+    "seats": 8
+   }
+  ],
+  "vaggeryd": [
+   {
+    "partyId": "empa-r-tiet",
+    "seats": 2
+   }
+  ],
+  "valdemarsvik": [
+   {
+    "partyId": "landsbygdspartiet-oberoende",
+    "seats": 5
+   }
+  ],
+  "vara": [
+   {
+    "partyId": "hela-vara-kommuns-basta",
+    "seats": 5
+   }
+  ],
+  "varberg": [
+   {
+    "partyId": "tjugofyrasju",
+    "seats": 2
+   },
+   {
+    "partyId": "varbergspartiet",
+    "seats": 2
+   }
+  ],
+  "vaxholm": [
+   {
+    "partyId": "waxholmspartiet-borgerligt-alternativ",
+    "seats": 6
+   },
+   {
+    "partyId": "vaxholmsdemokraterna",
+    "seats": 2
+   }
+  ],
+  "vetlanda": [
+   {
+    "partyId": "vetlanda-framatanda",
+    "seats": 11
+   }
+  ],
+  "vilhelmina": [
+   {
+    "partyId": "politiskt-alternativ",
+    "seats": 2
+   }
+  ],
+  "vingaker": [
+   {
+    "partyId": "vingakerspartiet-vtl",
+    "seats": 2
+   }
+  ],
+  "vanersborg": [
+   {
+    "partyId": "medborgarpartiet",
+    "seats": 3
+   }
+  ],
+  "varmdo": [
+   {
+    "partyId": "skargardspartiet",
+    "seats": 1
+   }
+  ],
+  "vastervik": [
+   {
+    "partyId": "socialisterna-valfardspartiet",
+    "seats": 2
+   },
+   {
+    "partyId": "westerwikspartiet",
+    "seats": 2
+   }
+  ],
+  "ange": [
+   {
+    "partyId": "var-framtids-politiska-utskott",
+    "seats": 6
+   }
+  ],
+  "are": [
+   {
+    "partyId": "vastjamtlands-val",
+    "seats": 8
+   }
+  ],
+  "asele": [
+   {
+    "partyId": "aselepartiet",
+    "seats": 5
+   }
+  ],
+  "alvdalen": [
+   {
+    "partyId": "kommunlistan",
+    "seats": 2
+   }
+  ],
+  "alvkarleby": [
+   {
+    "partyId": "kommunens-val",
+    "seats": 2
+   }
+  ],
+  "angelholm": [
+   {
+    "partyId": "engelholmspartiet",
+    "seats": 2
+   }
+  ],
+  "ockero": [
+   {
+    "partyId": "brobyggarpartiet",
+    "seats": 1
+   }
+  ],
+  "orebro": [
+   {
+    "partyId": "orebropartiet",
+    "seats": 5
+   }
+  ],
+  "osteraker": [
+   {
+    "partyId": "medborgerlig-samling",
+    "seats": 1
+   },
+   {
+    "partyId": "roslagspartiet",
+    "seats": 3
+   }
+  ],
+  "osthammar": [
+   {
+    "partyId": "lokalpartiet-boa",
+    "seats": 3
+   }
+  ],
+  "overtornea": [
+   {
+    "partyId": "sjukvardspartiet",
+    "seats": 4
+   },
+   {
+    "partyId": "overtorneas-fria-alternativ",
+    "seats": 1
+   },
+   {
+    "partyId": "framtid-s-overtornea",
+    "seats": 4
+   }
+  ]
+ }
+}

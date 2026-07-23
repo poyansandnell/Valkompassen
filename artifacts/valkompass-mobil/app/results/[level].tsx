@@ -55,8 +55,17 @@ export default function ResultsScreen() {
     () => (quiz ? computeMatches(quiz, levelState.answers) : []),
     [quiz, levelState.answers],
   );
-  const visibleMatches = onlyInAssembly ? matches.filter((m) => m.inAssembly) : matches;
-  const hiddenCount = matches.length - visibleMatches.length;
+  const qualifiedMatches = matches.filter((m) => m.isQualified);
+  const nonQualified = matches.filter((m) => !m.isQualified);
+  const visibleMatches = onlyInAssembly
+    ? qualifiedMatches.filter((m) => m.inAssembly)
+    : qualifiedMatches;
+  const visibleNonQualified = onlyInAssembly
+    ? nonQualified.filter((m) => m.inAssembly)
+    : nonQualified;
+  const hiddenCount =
+    qualifiedMatches.length - visibleMatches.length +
+    (nonQualified.length - visibleNonQualified.length);
   const answered = answeredCount(levelState.answers);
   const hasTestData = matches.some((m) => m.isTestData);
 
@@ -179,11 +188,6 @@ export default function ResultsScreen() {
                   <Text style={{ color: c.foreground, fontSize: 15, fontFamily: 'Inter_600SemiBold' }}>
                     {m.name}
                   </Text>
-                  {!m.isQualified && (
-                    <Text style={{ color: c.mutedForeground, fontSize: 11, fontFamily: 'Inter_400Regular' }}>
-                      Ofullständigt underlag ({m.basedOnQuestions} av {m.totalQuestions} frågor)
-                    </Text>
-                  )}
                 </View>
                 <Text style={{ color: c.foreground, fontSize: 18, fontFamily: 'Inter_700Bold' }}>
                   {m.matchPercent}%
@@ -195,6 +199,39 @@ export default function ResultsScreen() {
             </Card>
           ))}
         </View>
+
+        {visibleNonQualified.length > 0 && (
+          <View style={{ marginTop: 24 }}>
+            <Text style={{ color: c.foreground, fontSize: 15, fontFamily: 'Inter_600SemiBold' }}>
+              Övriga partier som ställer upp
+            </Text>
+            <Text style={{ color: c.mutedForeground, fontSize: 12, fontFamily: 'Inter_400Regular', marginTop: 4 }}>
+              Dessa partier har inte tillräckligt många bedömda svar för att få en rättvis
+              matchningspoäng ({'\u2265'}50% av frågorna krävs).
+            </Text>
+            <View style={{ gap: 10, marginTop: 12 }}>
+              {visibleNonQualified.map((m) => (
+                <Card key={m.partyId}>
+                  <View style={styles.matchRow}>
+                    <View style={[styles.partyDot, { backgroundColor: m.color || c.mutedForeground }]}>
+                      <Text style={styles.partyAbbr}>{m.abbreviation}</Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ color: c.foreground, fontSize: 15, fontFamily: 'Inter_600SemiBold' }}>
+                        {m.name}
+                      </Text>
+                      <Text style={{ color: c.mutedForeground, fontSize: 11, fontFamily: 'Inter_400Regular' }}>
+                        {m.basedOnQuestions === 0
+                          ? 'Har inte lämnat svar'
+                          : `Ofullständigt underlag (${m.basedOnQuestions} av ${m.totalQuestions} frågor)`}
+                      </Text>
+                    </View>
+                  </View>
+                </Card>
+              ))}
+            </View>
+          </View>
+        )}
 
         <View style={{ marginTop: 24, gap: 10 }}>
           <PrimaryButton

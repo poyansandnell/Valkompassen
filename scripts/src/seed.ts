@@ -263,6 +263,20 @@ const LOCAL_PARTIES: PartySeed[] = [
   },
 ];
 
+// Alla lokala partier med fullmäktigemandat 2022 (Valmyndighetens
+// mandatfördelningsfil) — visas i sin kommun/region som "har inte lämnat svar".
+const LOCAL_PARTY_DATA: {
+  electionYear: number;
+  parties: { id: string; name: string; abbreviation: string }[];
+  region: Record<string, { partyId: string; seats: number }[]>;
+  kommun: Record<string, { partyId: string; seats: number }[]>;
+} = JSON.parse(
+  readFileSync(
+    join(dirname(fileURLToPath(import.meta.url)), "data", "localParties.json"),
+    "utf8",
+  ),
+);
+
 // ---------------------------------------------------------------- questions
 
 // [text, category, explanation]
@@ -432,7 +446,23 @@ async function main() {
   }
 
   console.log("Seeding parties...");
-  const allParties = [...NATIONAL_PARTIES, ...LOCAL_PARTIES];
+  // Lokala partier från Valmyndighetens data — hoppa över id:n som redan
+  // finns manuellt inlagda (t.ex. Medborgerlig Samling).
+  const manualIds = new Set(
+    [...NATIONAL_PARTIES, ...LOCAL_PARTIES].map((p) => p.id),
+  );
+  const dataLocalParties: PartySeed[] = LOCAL_PARTY_DATA.parties
+    .filter((p) => !manualIds.has(p.id))
+    .map((p) => ({
+      id: p.id,
+      name: p.name,
+      abbreviation: p.abbreviation,
+      color: "#64748b",
+      description:
+        "Lokalt parti med mandat i fullmäktige. Partiet har ännu inte lämnat eller fått bedömda svar i valkompassen.",
+      website: null,
+    }));
+  const allParties = [...NATIONAL_PARTIES, ...LOCAL_PARTIES, ...dataLocalParties];
   await db.insert(partiesTable).values(
     allParties.map((p) => ({
       id: p.id,
@@ -534,6 +564,31 @@ async function main() {
     municipalityId: "katrineholm",
     inAssembly: true,
   });
+
+  // Alla lokala partier med fullmäktigemandat (Valmyndighetens data).
+  const manualParticipation = new Set(
+    participation.map((r) => `${r.partyId}|${r.level}|${r.regionId ?? ""}|${r.municipalityId ?? ""}`),
+  );
+  let localRows = 0;
+  for (const [regionId, list] of Object.entries(LOCAL_PARTY_DATA.region)) {
+    if (!knownRegionIds.has(regionId)) continue;
+    for (const { partyId } of list) {
+      if (manualParticipation.has(`${partyId}|region|${regionId}|`)) continue;
+      participation.push({ partyId, level: "region", regionId, inAssembly: true });
+      localRows++;
+    }
+  }
+  for (const [municipalityId, list] of Object.entries(LOCAL_PARTY_DATA.kommun)) {
+    if (!usedMunicipalitySlugs.has(municipalityId)) continue;
+    for (const { partyId } of list) {
+      if (manualParticipation.has(`${partyId}|kommun||${municipalityId}`)) continue;
+      participation.push({ partyId, level: "kommun", municipalityId, inAssembly: true });
+      localRows++;
+    }
+  }
+  console.log(
+    `Lokala partier från Valmyndigheten: ${dataLocalParties.length} partier, ${localRows} fullmäktigeplatser.`,
+  );
   await db.insert(partyParticipationTable).values(participation);
 
   console.log("Seeding questions...");
