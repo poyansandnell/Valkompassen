@@ -61,7 +61,7 @@ router.get("/quiz/:level", async (req, res): Promise<void> => {
       parties: parties.map((p) => {
         const partyAnswers = answersByParty.get(p.id) ?? [];
         return {
-          ...serializeParty(p, partyAnswers, questions.length, ctx.level),
+          ...serializeParty(p, partyAnswers, questions.length),
           answers: partyAnswers.map(serializeAnswer),
         };
       }),

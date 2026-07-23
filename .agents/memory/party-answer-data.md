@@ -5,7 +5,8 @@ description: How real vs. test party answers are handled across election levels 
 
 # Party answer data
 
-- Riksdag answers are REAL editorial assessments (scale -2..2) sourced from each party's official policy pages; matrix lives in `scripts/src/riksdagAnswers.ts` (RIKSDAG_POSITIONS + PARTY_SOURCES). answerOrigin "editorial", parties `isTestData=false`.
-- Region (Sörmland) and kommun (Katrineholm) answers are still generated test data. The quiz API overrides `isTestData=true` per party for non-riksdag levels, so the TESTDATA badge shows only there.
-- **Why:** the user wants the riksdag test fully real; local positions aren't publicly documented enough to assess. Parties can later submit real answers (origin "party"), then the level override should be revisited.
-- **How to apply:** when updating party positions, edit `riksdagAnswers.ts` and re-run `pnpm --filter @workspace/scripts run seed`. Never present editorial assessments as party-submitted; results screens must note "redaktionellt bedömda".
+- ALL levels now use real editorial assessments (scale -2..2); no test data remains, all parties `isTestData=false`.
+- Riksdag matrix: `scripts/src/riksdagAnswers.ts` (sources = party policy pages). Region/kommun matrices: `scripts/src/localAnswers.ts` — riksdag parties' local branches get riks-fallback assessments with a justification saying the local branch hasn't published local positions.
+- Katrineholm FRAMÅT (user's party): real local positions from katrineholmframat.se, nulls where the program is silent → 20/25 answered, so NOT qualified (<90%). Sörmlandslistan: no answers at all (nothing published).
+- **Why:** user wanted riks-fallback for local branches, clearly labelled so it reads as "party hasn't stated local positions", never as an app bug. Live scraping in-app was rejected (slow, unreliable, unreviewable).
+- **How to apply:** update matrices, re-run `pnpm --filter @workspace/scripts run seed` (it asserts matrix length = question count). Never present editorial assessments as party-submitted; parties can replace them via portal (origin "party").

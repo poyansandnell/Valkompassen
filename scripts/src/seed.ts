@@ -231,8 +231,8 @@ const LOCAL_PARTIES: PartySeed[] = [
     abbreviation: "KF",
     color: "#EA580C",
     description:
-      "Testdata: exempel på ett nytt lokalt parti som ställer upp i kommunvalet i Katrineholm. Behandlas exakt som alla andra partier.",
-    website: null,
+      "Lokalt parti i Katrineholm. Svaren är redaktionellt bedömda utifrån partiets publicerade program.",
+    website: "https://www.katrineholmframat.se",
   },
   {
     id: "sormlandslistan",
@@ -240,7 +240,7 @@ const LOCAL_PARTIES: PartySeed[] = [
     abbreviation: "SL",
     color: "#0D9488",
     description:
-      "Testdata: exempel på ett regionalt parti utan mandat som ställer upp i regionvalet i Sörmland.",
+      "Regionalt parti som ställer upp i regionvalet i Sörmland. Partiet har ingen publicerad politik att bedöma och har ännu inte lämnat egna svar.",
     website: null,
   },
 ];
@@ -255,6 +255,15 @@ import {
   PARTY_SOURCES,
   RIKSDAG_POSITIONS,
 } from "./riksdagAnswers";
+import {
+  FALLBACK_JUSTIFICATION,
+  GENERIC_KOMMUN_POSITIONS,
+  KATRINEHOLM_POSITIONS,
+  KF_JUSTIFICATION,
+  KF_KATRINEHOLM,
+  KF_SOURCE,
+  REGION_POSITIONS,
+} from "./localAnswers";
 
 const RIKSDAG_QUESTIONS: QuestionSeed[] = [
   ["Statens inkomstskatt bör sänkas, även om det innebär mindre resurser till offentlig sektor.", "Ekonomi och skatt", "Frågan handlar om avvägningen mellan lägre skatt på arbete och finansiering av gemensam välfärd."],
@@ -368,24 +377,6 @@ const GENERIC_KOMMUN_QUESTIONS: QuestionSeed[] = [
   ["Medborgarna bör kunna väcka förslag som fullmäktige måste behandla.", "Demokrati", "Handlar om formerna för lokalt inflytande."],
 ];
 
-// ------------------------------------------------------- deterministic data
-
-// Deterministic pseudo-value from party+question. TEST DATA ONLY.
-function testAnswerValue(partyId: string, questionId: string): number | null {
-  const h = createHash("sha256").update(`${partyId}:${questionId}`).digest();
-  const b = h[0]!;
-  if (b < 18) return null; // ~7 % "ingen fastställd ståndpunkt"
-  return (h[1]! % 5) - 2; // -2..2
-}
-
-const TEST_JUSTIFICATION =
-  "Testdata: exempelmotivering, inte partiets verkliga ståndpunkt.";
-const TEST_SOURCE = {
-  title: "Testdata – exempelunderlag",
-  url: "https://example.com/testdata",
-  date: "2026-01-15",
-};
-
 async function main() {
   console.log("Clearing existing seed data...");
   await db.delete(partyAnswersTable);
@@ -433,10 +424,9 @@ async function main() {
       color: p.color,
       description: p.description,
       website: p.website,
-      // Riksdagsfrågornas svar är riktiga (redaktionellt bedömda). Region-
-      // och kommunsvaren är fortfarande testdata; det flaggas per fråga i
-      // quiz-payloaden i stället för per parti.
-      isTestData: !(p.id in RIKSDAG_POSITIONS),
+      // Alla svar är nu riktiga redaktionella bedömningar (eller saknas
+      // helt, som för Sörmlandslistan) — ingen testdata längre.
+      isTestData: false,
     })),
   );
 
@@ -508,8 +498,8 @@ async function main() {
         orderIndex: i + 1,
         explanation,
         moreInfo:
-          "Detta är en testfråga i utvecklingsversionen av Valkompass. Formuleringen är neutral och tar inte ställning.",
-        sources: [TEST_SOURCE],
+          "Frågan är formulerad neutralt av Valkompass redaktion och tar inte ställning.",
+        sources: [],
       });
     });
   };
@@ -519,64 +509,72 @@ async function main() {
   pushQuestions("kom", "kommun", GENERIC_KOMMUN_QUESTIONS, null, null);
   await db.insert(questionsTable).values(questionRows);
 
-  console.log("Seeding party answers (deterministic test data)...");
+  console.log("Seeding party answers (editorial assessments)...");
   type AnswerRow = typeof partyAnswersTable.$inferInsert;
   const answerRows: AnswerRow[] = [];
-  const answerFor = (partyId: string, questionId: string, origin: string) => {
-    const value = testAnswerValue(partyId, questionId);
-    answerRows.push({
-      partyId,
-      questionId,
-      value,
-      answerOrigin: value == null ? "none" : origin,
-      justification: value == null ? null : TEST_JUSTIFICATION,
-      sources: value == null ? [] : [TEST_SOURCE],
-    });
-  };
-  // Riksdagsfrågor: riktiga, redaktionellt bedömda positioner med källor.
+  // Alla nivåer: redaktionellt bedömda positioner med källor.
+  // Riksdag: bedömda direkt från partiets rikspolitik.
+  // Region/kommun: riksdagspartiernas lokala föreningar har sällan egna
+  // publicerade ståndpunkter — svaren utgår då från rikspolitiken och
+  // märks med en motivering som förklarar det.
+  const LEVEL_MATRICES: {
+    prefix: string;
+    positions: Record<string, (number | null)[]>;
+    justification: string;
+  }[] = [
+    { prefix: "rd", positions: RIKSDAG_POSITIONS, justification: EDITORIAL_JUSTIFICATION },
+    { prefix: "reg", positions: REGION_POSITIONS, justification: FALLBACK_JUSTIFICATION },
+    { prefix: "kh", positions: KATRINEHOLM_POSITIONS, justification: FALLBACK_JUSTIFICATION },
+    { prefix: "kom", positions: GENERIC_KOMMUN_POSITIONS, justification: FALLBACK_JUSTIFICATION },
+  ];
+  // Skydd mot off-by-one: varje matris måste ha exakt en rad per fråga.
+  for (const m of LEVEL_MATRICES) {
+    const count = questionRows.filter((q) => q.id!.startsWith(`${m.prefix}-`)).length;
+    for (const [partyId, values] of Object.entries(m.positions)) {
+      if (values.length !== count) {
+        throw new Error(
+          `Matrisfel: ${partyId} har ${values.length} värden för "${m.prefix}" men det finns ${count} frågor.`,
+        );
+      }
+    }
+  }
   const realAnswerFor = (partyId: string, questionId: string) => {
-    const idx = parseInt(questionId.replace("rd-", ""), 10) - 1;
-    const value = RIKSDAG_POSITIONS[partyId]?.[idx] ?? null;
+    const [prefix, num] = questionId.split("-");
+    const matrix = LEVEL_MATRICES.find((m) => m.prefix === prefix)!;
+    const value = matrix.positions[partyId]?.[parseInt(num!, 10) - 1] ?? null;
     answerRows.push({
       partyId,
       questionId,
       value,
       answerOrigin: value == null ? "none" : "editorial",
-      justification: value == null ? null : EDITORIAL_JUSTIFICATION,
+      justification: value == null ? null : matrix.justification,
       sources: value == null ? [] : [PARTY_SOURCES[partyId]!],
     });
   };
   for (const p of NATIONAL_PARTIES) {
-    for (const q of questionRows) {
-      if (q.id!.startsWith("rd-")) realAnswerFor(p.id, q.id!);
-      else answerFor(p.id, q.id!, "editorial");
-    }
+    for (const q of questionRows) realAnswerFor(p.id, q.id!);
   }
-  // Katrineholm FRAMÅT: answers "submitted by the party" (portal example),
-  // covering the Katrineholm question set fully.
-  for (const q of questionRows.filter((q) => q.id!.startsWith("kh-"))) {
-    const h = createHash("sha256").update(`kf:${q.id}`).digest();
-    answerRows.push({
-      partyId: "katrineholm-framat",
-      questionId: q.id!,
-      value: (h[1]! % 5) - 2,
-      answerOrigin: "party",
-      justification: TEST_JUSTIFICATION,
-      sources: [TEST_SOURCE],
+  // Katrineholm FRAMÅT: riktiga lokala ståndpunkter från partiets
+  // publicerade program (katrineholmframat.se).
+  questionRows
+    .filter((q) => q.id!.startsWith("kh-"))
+    .forEach((q, i) => {
+      const value = KF_KATRINEHOLM[i] ?? null;
+      answerRows.push({
+        partyId: "katrineholm-framat",
+        questionId: q.id!,
+        value,
+        answerOrigin: value == null ? "none" : "editorial",
+        justification: value == null ? null : KF_JUSTIFICATION,
+        sources: value == null ? [] : [KF_SOURCE],
+      });
     });
-  }
-  // Medborgerlig Samling: partial answers — appears under
-  // "Fler partier som ställer upp" (not qualified) with some positions.
-  const riksdagQuestions = questionRows.filter((q) => q.id!.startsWith("rd-"));
-  for (const q of riksdagQuestions) {
+  // Medborgerlig Samling: riksdagsfrågorna, delvis ofullständigt underlag.
+  for (const q of questionRows.filter((q) => q.id!.startsWith("rd-"))) {
     realAnswerFor("medborgerlig-samling", q.id!);
   }
-  // Sörmlandslistan: intentionally sparse answers, so it appears under
-  // "Fler partier som ställer upp" (not qualified).
-  const regionQuestions = questionRows.filter((q) => q.id!.startsWith("reg-"));
-  for (const q of regionQuestions.slice(0, 8)) {
-    answerFor("sormlandslistan", q.id!, "editorial");
-  }
+  // Sörmlandslistan: ingen publicerad politik att bedöma — inga svar alls.
+  // Partiet visas under "Fler partier som ställer upp" som ej kvalificerat.
 
   // Insert in chunks to stay under parameter limits.
   for (let i = 0; i < answerRows.length; i += 500) {

@@ -205,7 +205,6 @@ export function serializeParty(
   party: Party & { inAssembly?: boolean },
   answers: PartyAnswer[],
   totalQuestions: number,
-  level?: string,
 ) {
   const answeredCount = answers.filter(
     (a) => a.value != null && a.answerOrigin !== "none",
@@ -226,10 +225,7 @@ export function serializeParty(
       totalQuestions > 0 && answeredCount >= Math.ceil(totalQuestions * 0.9),
     answeredCount,
     totalQuestions,
-    // Riksdagssvaren är riktiga (redaktionellt bedömda). Region- och
-    // kommunsvaren är fortfarande genererad testdata, så för de nivåerna
-    // flaggas partiet som testdata oavsett partiflaggan i databasen.
-    isTestData: party.isTestData || (level != null && level !== "riksdag"),
+    isTestData: party.isTestData,
     inAssembly: party.inAssembly ?? false,
     answersUpdatedAt: latest ? latest.toISOString() : null,
   };

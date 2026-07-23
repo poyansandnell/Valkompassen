@@ -418,12 +418,13 @@ export default function HowItWorks() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Vad händer med testdata?</CardTitle>
+                <CardTitle className="text-lg">Varifrån kommer partiernas svar?</CardTitle>
               </CardHeader>
               <CardContent className="text-muted-foreground">
                 <p>
-                  Vissa partier märks med en "Testdata"-badge. Detta betyder att deras svar är preliminära och används 
-                  för att testa systemet innan valet. När riktiga svar finns tillgängliga ersätts testdatan och badgen försvinner.
+                  Partiernas svar är redaktionella bedömningar utifrån deras officiella program och webbplatser, med källa vid varje svar. 
+                  När en lokal partiförening inte har publicerat egna lokala ståndpunkter utgår bedömningen från partiets rikspolitik — det anges tydligt vid svaret. 
+                  Partierna kan när som helst lämna in egna svar som då ersätter bedömningarna.
                 </p>
               </CardContent>
             </Card>
