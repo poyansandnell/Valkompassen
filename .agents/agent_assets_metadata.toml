@@ -18,3 +18,9 @@ id = "ee51jv84NJswjxSJnorrb"
 uri = "file://attached_assets/qr_valkompass_app.png"
 type = "image"
 title = "QR-kod – Valkompassen på mobilen"
+
+[[outputs]]
+id = "hTs-2jL_riRhOfTyvD9tk"
+uri = "file://attached_assets/qr_expo_go.png"
+type = "image"
+title = "QR-kod – öppna appen i Expo Go"
