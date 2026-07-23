@@ -5,6 +5,9 @@ interface QuizState {
   answers: Record<string, UserAnswer>;
   currentQuestionIndex: number;
   isCompleted: boolean;
+  // Total question count for this level, remembered from the last quiz fetch
+  // so the home card can render an accurate progress bar without refetching.
+  totalQuestions?: number;
   lastUpdated?: number;
 }
 
@@ -80,6 +83,12 @@ export function useStoredQuiz(level: QuizPayloadLevel) {
     update((prev) => ({ ...prev, currentQuestionIndex: index }));
   }, [update]);
 
+  const setTotalQuestions = useCallback((total: number) => {
+    update((prev) =>
+      prev.totalQuestions === total ? prev : { ...prev, totalQuestions: total },
+    );
+  }, [update]);
+
   const setCompleted = useCallback((completed: boolean) => {
     update((prev) => ({ ...prev, isCompleted: completed, lastUpdated: Date.now() }));
   }, [update]);
@@ -88,7 +97,7 @@ export function useStoredQuiz(level: QuizPayloadLevel) {
     update(() => DEFAULT_STATE);
   }, [update]);
 
-  return { ...state, setAnswer, setWeight, setCurrentIndex, setCompleted, reset };
+  return { ...state, setAnswer, setWeight, setCurrentIndex, setCompleted, setTotalQuestions, reset };
 }
 
 export function useAppStore() {

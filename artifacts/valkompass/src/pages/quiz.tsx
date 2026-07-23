@@ -119,9 +119,15 @@ export default function Quiz() {
     { query: { queryKey: ['quiz', validLevel, municipalityId], enabled: !missingMunicipality } }
   );
 
-  const { answers, currentQuestionIndex, setAnswer, setWeight, setCurrentIndex, setCompleted, isCompleted, reset } = useStoredQuiz(validLevel);
+  const { answers, currentQuestionIndex, setAnswer, setWeight, setCurrentIndex, setCompleted, setTotalQuestions, isCompleted, reset } = useStoredQuiz(validLevel);
 
   const [showResumeNotice, setShowResumeNotice] = useState(currentQuestionIndex > 0 && !isCompleted);
+
+  // Remember the total question count locally so the home card can render an
+  // accurate progress bar without needing to refetch the quiz.
+  useEffect(() => {
+    if (quizPayload) setTotalQuestions(quizPayload.questions.length);
+  }, [quizPayload, setTotalQuestions]);
 
   const questions = quizPayload?.questions || [];
   const currentQ = questions[currentQuestionIndex];

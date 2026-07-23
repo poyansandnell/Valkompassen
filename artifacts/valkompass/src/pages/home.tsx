@@ -69,7 +69,7 @@ function LevelCard({
 }) {
   const [, setLocation] = useLocation();
   const { municipalityId } = useAppStore();
-  const { isCompleted, currentQuestionIndex, answers } = useStoredQuiz(level);
+  const { isCompleted, currentQuestionIndex, answers, totalQuestions: storedTotal } = useStoredQuiz(level);
 
   const needsMunicipality = level !== 'riksdag';
   const shouldFetchQuiz = isCompleted && (!needsMunicipality || municipalityId);
@@ -99,7 +99,7 @@ function LevelCard({
     return matches.sort((a, b) => b.matchPercent - a.matchPercent)[0];
   }, [isCompleted, quizPayload, answers]);
 
-  const totalQuestions = quizPayload?.questions.length || 0;
+  const totalQuestions = quizPayload?.questions.length || storedTotal || 0;
   const answeredCount = Object.keys(answers).length;
   
   const isStarted = answeredCount > 0 || currentQuestionIndex > 0;
