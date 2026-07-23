@@ -102,10 +102,21 @@ export default function Quiz() {
   const [, setLocation] = useLocation();
   
   const { municipalityId } = useAppStore();
-  
+
+  // Kommun/region require a chosen municipality — never fall back to the
+  // generic quiz silently, since that would show the wrong (national) parties.
+  const needsMunicipality = validLevel !== 'riksdag';
+  const missingMunicipality = needsMunicipality && !municipalityId;
+
+  useEffect(() => {
+    if (missingMunicipality) {
+      setLocation(`/val/${validLevel}`);
+    }
+  }, [missingMunicipality, validLevel, setLocation]);
+
   const { data: quizPayload, isLoading, error } = useGetQuiz(validLevel, 
-    validLevel !== 'riksdag' ? { municipalityId: municipalityId || undefined } : undefined,
-    { query: { queryKey: ['quiz', validLevel, municipalityId] } }
+    needsMunicipality ? { municipalityId: municipalityId || undefined } : undefined,
+    { query: { queryKey: ['quiz', validLevel, municipalityId], enabled: !missingMunicipality } }
   );
 
   const { answers, currentQuestionIndex, setAnswer, setWeight, setCurrentIndex, setCompleted, isCompleted, reset } = useStoredQuiz(validLevel);
@@ -139,7 +150,7 @@ export default function Quiz() {
     }
   };
 
-  if (isLoading) {
+  if (missingMunicipality || isLoading) {
     return (
       <Layout>
         <div className="flex-1 flex items-center justify-center">

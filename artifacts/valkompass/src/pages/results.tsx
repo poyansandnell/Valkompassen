@@ -210,9 +210,19 @@ export default function Results() {
     }
   }, [level, recorded, answers, recordCompletion]);
 
+  // Kommun/region results must never be computed against the generic
+  // national fallback — require a chosen municipality.
+  const missingMunicipality = level !== 'riksdag' && !!level && ['region', 'kommun'].includes(level) && !municipalityId;
+
+  useEffect(() => {
+    if (missingMunicipality) {
+      setLocation(`/val/${level}`);
+    }
+  }, [missingMunicipality, level, setLocation]);
+
   const { data: quizPayload, isLoading } = useGetQuiz(level, 
     level !== 'riksdag' ? { municipalityId: municipalityId || undefined } : undefined,
-    { query: { queryKey: ['quiz', level, municipalityId] } }
+    { query: { queryKey: ['quiz', level, municipalityId], enabled: !missingMunicipality } }
   );
 
   const results = useMemo(() => {
@@ -231,7 +241,7 @@ export default function Results() {
     return <Layout><div className="p-8 text-center">Ogiltig valnivå. <Button onClick={() => setLocation('/')}>Gå hem</Button></div></Layout>;
   }
 
-  if (isLoading) {
+  if (missingMunicipality || isLoading) {
     return (
       <Layout>
         <div className="flex-1 flex flex-col items-center justify-center min-h-[50vh]">
