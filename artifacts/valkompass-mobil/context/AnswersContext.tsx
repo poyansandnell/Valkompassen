@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { StoredAnswer } from '@/lib/quiz';
+import type { StoredAnswer, TopMatchSummary } from '@/lib/quiz';
 
 const STORAGE_KEY = 'valkompass-state-v1';
 
@@ -16,6 +16,7 @@ export interface LevelState {
   municipalityId?: string | null;
   municipalityName?: string | null;
   totalQuestions?: number;
+  topMatch?: TopMatchSummary | null;
 }
 
 type StateMap = Record<string, LevelState>;

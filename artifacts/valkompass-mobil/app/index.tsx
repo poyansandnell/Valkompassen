@@ -53,15 +53,34 @@ export default function HomeScreen() {
           const answered = state ? answeredCount(state.answers) : 0;
           const total = state?.totalQuestions ?? 0;
           const done = answered > 0 && total > 0 && answered >= total;
+          const topMatch = done ? state?.topMatch : undefined;
+
+          const resultsParams = {
+            pathname: '/results/[level]' as const,
+            params: {
+              level: meta.level,
+              ...(state?.municipalityId ? { municipalityId: state.municipalityId } : {}),
+              ...(state?.municipalityName ? { municipalityName: state.municipalityName } : {}),
+            },
+          };
 
           return (
             <Pressable
               key={meta.level}
               testID={`level-card-${meta.level}`}
-              onPress={() => router.push(`/level/${meta.level}`)}
+              onPress={() =>
+                done ? router.push(resultsParams) : router.push(`/level/${meta.level}`)
+              }
             >
               {({ pressed }) => (
-                <Card style={{ opacity: pressed ? 0.85 : 1 }}>
+                <Card
+                  style={{
+                    opacity: pressed ? 0.85 : 1,
+                    ...(topMatch
+                      ? { borderWidth: 2, borderColor: topMatch.color || c.primary }
+                      : {}),
+                  }}
+                >
                   <View style={styles.cardRow}>
                     <View style={[styles.iconCircle, { backgroundColor: c.accent }]}>
                       <Feather name={LEVEL_ICONS[meta.level]} size={20} color={c.accentForeground} />
@@ -77,31 +96,39 @@ export default function HomeScreen() {
                   {done ? (
                     <Pressable
                       testID={`show-results-${meta.level}`}
-                      onPress={() =>
-                        router.push({
-                          pathname: '/results/[level]',
-                          params: {
-                            level: meta.level,
-                            ...(state?.municipalityId
-                              ? { municipalityId: state.municipalityId }
-                              : {}),
-                            ...(state?.municipalityName
-                              ? { municipalityName: state.municipalityName }
-                              : {}),
-                          },
-                        })
-                      }
+                      onPress={() => router.push(resultsParams)}
                       style={({ pressed }) => [
                         styles.doneRow,
-                        { backgroundColor: c.accent, opacity: pressed ? 0.8 : 1 },
+                        {
+                          backgroundColor: topMatch
+                            ? `${topMatch.color}1A`
+                            : c.accent,
+                          opacity: pressed ? 0.8 : 1,
+                        },
                       ]}
                     >
-                      <Feather name="check-circle" size={16} color={c.success} />
-                      <Text style={[styles.doneText, { color: c.accentForeground }]}>
-                        Klart{state?.municipalityName ? ` · ${state.municipalityName}` : ''} — Visa
-                        ditt resultat
-                      </Text>
-                      <Feather name="arrow-right" size={16} color={c.accentForeground} />
+                      {topMatch ? (
+                        <>
+                          <View
+                            style={[styles.miniDot, { backgroundColor: topMatch.color || c.primary }]}
+                          >
+                            <Text style={styles.miniAbbr}>{topMatch.abbreviation}</Text>
+                          </View>
+                          <Text style={[styles.doneText, { color: c.foreground }]}>
+                            Bäst matchning: {topMatch.name} · {topMatch.matchPercent}%
+                            {state?.municipalityName ? ` · ${state.municipalityName}` : ''}
+                          </Text>
+                        </>
+                      ) : (
+                        <>
+                          <Feather name="check-circle" size={16} color={c.success} />
+                          <Text style={[styles.doneText, { color: c.accentForeground }]}>
+                            Klart{state?.municipalityName ? ` · ${state.municipalityName}` : ''} —
+                            Visa ditt resultat
+                          </Text>
+                        </>
+                      )}
+                      <Feather name="arrow-right" size={16} color={topMatch ? c.foreground : c.accentForeground} />
                     </Pressable>
                   ) : answered > 0 && total > 0 ? (
                     <View style={{ marginTop: 12, gap: 6 }}>
@@ -166,6 +193,14 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   doneText: { flex: 1, fontSize: 13, fontFamily: 'Inter_600SemiBold' },
+  miniDot: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  miniAbbr: { color: '#ffffff', fontSize: 9, fontFamily: 'Inter_700Bold' },
   infoLink: {
     flexDirection: 'row',
     alignItems: 'center',

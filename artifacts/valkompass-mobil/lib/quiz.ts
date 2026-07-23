@@ -69,6 +69,17 @@ export interface PartyMatch {
   isQualified: boolean;
   isTestData: boolean;
   inAssembly: boolean;
+  description: string | null;
+  website: string | null;
+}
+
+/** Kompakt sammanfattning av toppmatchningen, sparas lokalt för startsidan. */
+export interface TopMatchSummary {
+  partyId: string;
+  name: string;
+  abbreviation: string;
+  color: string;
+  matchPercent: number;
 }
 
 /**
@@ -107,6 +118,8 @@ export function computeMatches(
       isQualified: party.isQualified,
       isTestData: party.isTestData,
       inAssembly: party.inAssembly,
+      description: party.description ?? null,
+      website: party.website ?? null,
     };
   });
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
+  Linking,
   Platform,
   Pressable,
   ScrollView,
@@ -20,6 +21,7 @@ import {
 import { useColors } from '@/hooks/useColors';
 import { useAnswers } from '@/context/AnswersContext';
 import { Badge, Card, PrimaryButton, ProgressBar } from '@/components/ui';
+import { ConfettiBurst } from '@/components/ConfettiBurst';
 import { LEVELS, answerKey, answeredCount, computeMatches, type Level } from '@/lib/quiz';
 
 export default function ResultsScreen() {
@@ -34,7 +36,7 @@ export default function ResultsScreen() {
   const meta = LEVELS.find((l) => l.level === level);
 
   const key = answerKey(level, municipalityId ?? null);
-  const { hydrated, getLevel, clearLevel } = useAnswers();
+  const { hydrated, getLevel, clearLevel, setLevelMeta } = useAnswers();
   const levelState = getLevel(key);
 
   const quizQuery = useGetQuiz(
@@ -68,6 +70,42 @@ export default function ResultsScreen() {
     (nonQualified.length - visibleNonQualified.length);
   const answered = answeredCount(levelState.answers);
   const hasTestData = matches.some((m) => m.isTestData);
+  const topMatch = visibleMatches[0];
+  const runnersUp = visibleMatches.slice(1);
+  // Den övergripande vinnaren (utan filter) — det är den som sparas för startsidan.
+  const overallTop = qualifiedMatches[0];
+
+  // Konfetti i vinnarpartiets färger — bara första gången resultatet visas.
+  const [showConfetti, setShowConfetti] = useState<boolean>(false);
+  const confettiShownRef = useRef<boolean>(false);
+  useEffect(() => {
+    if (!confettiShownRef.current && overallTop && !levelState.topMatch) {
+      confettiShownRef.current = true;
+      setShowConfetti(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [overallTop?.partyId]);
+
+  // Spara toppmatchningen så startsidan kan visa den.
+  useEffect(() => {
+    if (!overallTop || !hydrated) return;
+    const stored = levelState.topMatch;
+    if (
+      stored?.partyId === overallTop.partyId &&
+      stored?.matchPercent === overallTop.matchPercent
+    )
+      return;
+    setLevelMeta(key, {
+      topMatch: {
+        partyId: overallTop.partyId,
+        name: overallTop.name,
+        abbreviation: overallTop.abbreviation,
+        color: overallTop.color,
+        matchPercent: overallTop.matchPercent,
+      },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [overallTop?.partyId, overallTop?.matchPercent, hydrated]);
 
   // Record anonymous completion once
   const recordCompletion = useRecordCompletion();
@@ -175,8 +213,64 @@ export default function ResultsScreen() {
           </Text>
         )}
 
+        {topMatch && (
+          <View
+            style={[
+              styles.heroCard,
+              {
+                backgroundColor: c.card,
+                borderColor: topMatch.color || c.primary,
+              },
+            ]}
+          >
+            <Text style={{ color: c.mutedForeground, fontSize: 12, fontFamily: 'Inter_600SemiBold', letterSpacing: 1, textTransform: 'uppercase' }}>
+              Bäst matchning
+            </Text>
+            <View style={[styles.matchRow, { marginTop: 10 }]}>
+              <View style={[styles.heroDot, { backgroundColor: topMatch.color || c.primary }]}>
+                <Text style={[styles.partyAbbr, { fontSize: 15 }]}>{topMatch.abbreviation}</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={{ color: c.foreground, fontSize: 19, fontFamily: 'Inter_700Bold' }}>
+                  {topMatch.name}
+                </Text>
+                <Text style={{ color: c.mutedForeground, fontSize: 12, fontFamily: 'Inter_400Regular', marginTop: 2 }}>
+                  Baserat på {topMatch.basedOnQuestions} av {topMatch.totalQuestions} frågor
+                </Text>
+              </View>
+              <Text style={{ color: topMatch.color || c.foreground, fontSize: 28, fontFamily: 'Inter_700Bold' }}>
+                {topMatch.matchPercent}%
+              </Text>
+            </View>
+            <View style={{ marginTop: 12 }}>
+              <ProgressBar
+                progress={topMatch.matchPercent / 100}
+                color={topMatch.color || c.primary}
+                height={8}
+              />
+            </View>
+            {topMatch.description ? (
+              <Text style={{ color: c.mutedForeground, fontSize: 13, fontFamily: 'Inter_400Regular', lineHeight: 19, marginTop: 12 }}>
+                {topMatch.description}
+              </Text>
+            ) : null}
+            {topMatch.website ? (
+              <Pressable
+                testID="top-match-website"
+                onPress={() => Linking.openURL(topMatch.website!)}
+                style={({ pressed }) => [styles.websiteRow, { opacity: pressed ? 0.6 : 1 }]}
+              >
+                <Feather name="external-link" size={14} color={c.primary} />
+                <Text style={{ color: c.primary, fontSize: 13, fontFamily: 'Inter_500Medium' }}>
+                  Besök partiets webbplats
+                </Text>
+              </Pressable>
+            ) : null}
+          </View>
+        )}
+
         <View style={{ gap: 12, marginTop: 16 }}>
-          {visibleMatches.map((m, i) => (
+          {runnersUp.map((m, i) => (
             <Card key={m.partyId}>
               <View style={styles.matchRow}>
                 <View
@@ -245,6 +339,13 @@ export default function ResultsScreen() {
           />
         </View>
       </ScrollView>
+
+      {showConfetti && topMatch && (
+        <ConfettiBurst
+          colors={[topMatch.color || c.primary, '#ffffff', `${topMatch.color || c.primary}99`]}
+          onDone={() => setShowConfetti(false)}
+        />
+      )}
     </View>
   );
 }
@@ -282,4 +383,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   partyAbbr: { color: '#ffffff', fontSize: 12, fontFamily: 'Inter_700Bold' },
+  heroCard: {
+    marginTop: 16,
+    borderRadius: 16,
+    borderWidth: 2,
+    padding: 16,
+  },
+  heroDot: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  websiteRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginTop: 12,
+  },
 });
