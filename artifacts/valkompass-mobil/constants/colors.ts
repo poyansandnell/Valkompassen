@@ -6,7 +6,7 @@ const colors = {
   light: {
     // Legacy aliases (kept for backward compatibility)
     text: '#111a2b',
-    tint: '#33455c',
+    tint: '#6d28d9',
 
     // Core surfaces
     background: '#f8fafc',
@@ -17,7 +17,7 @@ const colors = {
     cardForeground: '#111a2b',
 
     // Primary action color (buttons, links, active states)
-    primary: '#33455c',
+    primary: '#6d28d9',
     primaryForeground: '#f8fafc',
 
     // Secondary / less-emphasis interactive surfaces
@@ -29,8 +29,8 @@ const colors = {
     mutedForeground: '#64748b',
 
     // Accent highlights (badges, selected items, focus rings)
-    accent: '#eff6ff',
-    accentForeground: '#1d4ed8',
+    accent: '#f3e8ff',
+    accentForeground: '#6d28d9',
 
     // Destructive actions (delete, error states)
     destructive: '#ef4444',
