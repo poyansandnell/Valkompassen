@@ -225,19 +225,10 @@ const LOCAL_PARTIES: PartySeed[] = [
     website: "https://www.medborgerligsamling.se",
   },
   {
-    id: "katrineholms-val",
-    name: "Katrineholms Väl",
-    abbreviation: "KV",
-    color: "#B45309",
-    description:
-      "Testdata: exempel på ett lokalt parti som ställer upp i kommunvalet i Katrineholm men ännu inte lämnat svar.",
-    website: null,
-  },
-  {
     id: "katrineholm-framat",
     name: "Katrineholm FRAMÅT",
     abbreviation: "KF",
-    color: "#7C3AED",
+    color: "#EA580C",
     description:
       "Testdata: exempel på ett nytt lokalt parti som ställer upp i kommunvalet i Katrineholm. Behandlas exakt som alla andra partier.",
     website: null,
@@ -468,13 +459,6 @@ async function main() {
   participation.push({
     partyId: "medborgerlig-samling",
     level: "riksdag",
-    inAssembly: false,
-  });
-  // TEST DATA: new local party, not yet in kommunfullmäktige.
-  participation.push({
-    partyId: "katrineholms-val",
-    level: "kommun",
-    municipalityId: "katrineholm",
     inAssembly: false,
   });
   // TEST DATA: sits in regionfullmäktige.

@@ -15,7 +15,9 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { getGetQuizQueryKey, useGetQuiz } from '@workspace/api-client-react';
 import { useColors } from '@/hooks/useColors';
 import { useAnswers } from '@/context/AnswersContext';
-import { Card, PrimaryButton, ProgressBar } from '@/components/ui';
+import { PrimaryButton, ProgressBar } from '@/components/ui';
+import { MiniMatchWidget } from '@/components/MiniMatchWidget';
+import { computeMatches } from '@/lib/quiz';
 import {
   LEVELS,
   SCALE_OPTIONS,
@@ -83,6 +85,12 @@ export default function QuizScreen() {
 
   const total = quiz?.questions.length ?? 0;
   const progress = useMemo(() => (total > 0 && index >= 0 ? index / total : 0), [index, total]);
+
+  // Live matches for the mini bars widget (only parties with any basis yet)
+  const liveMatches = useMemo(() => {
+    if (!quiz) return [];
+    return computeMatches(quiz, levelState.answers).filter((m) => m.basedOnQuestions > 0);
+  }, [quiz, levelState.answers]);
 
   const topInset = Platform.OS === 'web' ? 67 : insets.top;
   const bottomInset = Platform.OS === 'web' ? 34 : insets.bottom;
@@ -157,13 +165,16 @@ export default function QuizScreen() {
         <Text style={[styles.counter, { color: c.mutedForeground }]}>
           {index + 1} / {total}
         </Text>
-        <Pressable
-          testID="quiz-close"
-          onPress={() => router.dismissTo('/')}
-          style={({ pressed }) => [styles.backBtn, { opacity: pressed ? 0.6 : 1 }]}
-        >
-          <Feather name="x" size={22} color={c.foreground} />
-        </Pressable>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+          <MiniMatchWidget matches={liveMatches} />
+          <Pressable
+            testID="quiz-close"
+            onPress={() => router.dismissTo('/')}
+            style={({ pressed }) => [styles.backBtn, { opacity: pressed ? 0.6 : 1 }]}
+          >
+            <Feather name="x" size={22} color={c.foreground} />
+          </Pressable>
+        </View>
       </View>
 
       <View style={{ paddingHorizontal: 20 }}>

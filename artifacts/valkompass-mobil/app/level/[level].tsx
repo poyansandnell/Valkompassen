@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -16,6 +16,7 @@ import {
   getListMunicipalitiesQueryKey,
   useListMunicipalities,
 } from '@workspace/api-client-react';
+import * as Location from 'expo-location';
 import { useColors } from '@/hooks/useColors';
 import { PrimaryButton, Card } from '@/components/ui';
 import { LEVELS, type Level } from '@/lib/quiz';
@@ -35,6 +36,45 @@ export default function LevelIntroScreen() {
       staleTime: 10 * 60 * 1000,
     },
   });
+
+  // Suggest the user's municipality from device location (native only)
+  const [suggested, setSuggested] = useState<{ id: string; name: string; slug: string } | null>(
+    null,
+  );
+  useEffect(() => {
+    if (Platform.OS === 'web' || !meta?.needsMunicipality) return;
+    const list = municipalitiesQuery.data;
+    if (!list || list.length === 0) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted' || cancelled) return;
+        const pos = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.Low,
+        });
+        if (cancelled) return;
+        const places = await Location.reverseGeocodeAsync({
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude,
+        });
+        if (cancelled) return;
+        const candidates = places
+          .flatMap((p) => [p.city, p.subregion, p.district, p.region])
+          .filter((s): s is string => !!s)
+          .map((s) => s.toLowerCase());
+        const match = list.find((m) =>
+          candidates.some((cand) => cand.includes(m.name.toLowerCase())),
+        );
+        if (match) setSuggested({ id: match.id, name: match.name, slug: match.slug });
+      } catch {
+        // location unavailable — silently skip the suggestion
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [meta?.needsMunicipality, municipalitiesQuery.data]);
 
   const filtered = useMemo(() => {
     const list = municipalitiesQuery.data ?? [];
@@ -88,6 +128,22 @@ export default function LevelIntroScreen() {
         ) : (
           <View style={{ flex: 1, marginTop: 20 }}>
             <Text style={[styles.sectionLabel, { color: c.foreground }]}>Välj din kommun</Text>
+            {suggested && (
+              <Pressable
+                testID="suggested-municipality"
+                onPress={() => startQuiz(suggested.id, suggested.name)}
+                style={({ pressed }) => [
+                  styles.suggestRow,
+                  { backgroundColor: c.accent, opacity: pressed ? 0.8 : 1 },
+                ]}
+              >
+                <Feather name="navigation" size={16} color={c.accentForeground} />
+                <Text style={{ flex: 1, color: c.accentForeground, fontSize: 14, fontFamily: 'Inter_600SemiBold' }}>
+                  Nära dig: {suggested.name}
+                </Text>
+                <Feather name="chevron-right" size={18} color={c.accentForeground} />
+              </Pressable>
+            )}
             <View
               style={[styles.searchBox, { backgroundColor: c.card, borderColor: c.border }]}
             >
@@ -174,6 +230,15 @@ const styles = StyleSheet.create({
   topTitle: { fontSize: 17, fontFamily: 'Inter_600SemiBold' },
   desc: { fontSize: 14, fontFamily: 'Inter_400Regular', lineHeight: 21 },
   sectionLabel: { fontSize: 15, fontFamily: 'Inter_600SemiBold', marginBottom: 10 },
+  suggestRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    marginBottom: 10,
+  },
   searchBox: {
     flexDirection: 'row',
     alignItems: 'center',

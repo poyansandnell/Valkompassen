@@ -33,7 +33,7 @@ export default function HomeScreen() {
       }}
     >
       <View style={styles.header}>
-        <View style={[styles.logoBox, { backgroundColor: c.primary }]}>
+        <View style={[styles.logoBox, { backgroundColor: '#6d28d9' }]}>
           <Feather name="flag" size={22} color={c.primaryForeground} />
         </View>
         <Text style={[styles.title, { color: c.foreground }]}>Valkompass</Text>
@@ -52,6 +52,7 @@ export default function HomeScreen() {
           const state = startedKey ? data[startedKey] : undefined;
           const answered = state ? answeredCount(state.answers) : 0;
           const total = state?.totalQuestions ?? 0;
+          const done = answered > 0 && total > 0 && answered >= total;
 
           return (
             <Pressable
@@ -73,14 +74,43 @@ export default function HomeScreen() {
                     </View>
                     <Feather name="chevron-right" size={22} color={c.mutedForeground} />
                   </View>
-                  {answered > 0 && total > 0 && (
+                  {done ? (
+                    <Pressable
+                      testID={`show-results-${meta.level}`}
+                      onPress={() =>
+                        router.push({
+                          pathname: '/results/[level]',
+                          params: {
+                            level: meta.level,
+                            ...(state?.municipalityId
+                              ? { municipalityId: state.municipalityId }
+                              : {}),
+                            ...(state?.municipalityName
+                              ? { municipalityName: state.municipalityName }
+                              : {}),
+                          },
+                        })
+                      }
+                      style={({ pressed }) => [
+                        styles.doneRow,
+                        { backgroundColor: c.accent, opacity: pressed ? 0.8 : 1 },
+                      ]}
+                    >
+                      <Feather name="check-circle" size={16} color={c.success} />
+                      <Text style={[styles.doneText, { color: c.accentForeground }]}>
+                        Klart{state?.municipalityName ? ` · ${state.municipalityName}` : ''} — Visa
+                        ditt resultat
+                      </Text>
+                      <Feather name="arrow-right" size={16} color={c.accentForeground} />
+                    </Pressable>
+                  ) : answered > 0 && total > 0 ? (
                     <View style={{ marginTop: 12, gap: 6 }}>
                       <ProgressBar progress={answered / total} />
                       <Text style={[styles.progressText, { color: c.mutedForeground }]}>
                         {answered} av {total} frågor besvarade
                       </Text>
                     </View>
-                  )}
+                  ) : null}
                 </Card>
               )}
             </Pressable>
@@ -126,6 +156,16 @@ const styles = StyleSheet.create({
   cardTitle: { fontSize: 17, fontFamily: 'Inter_600SemiBold' },
   cardDesc: { fontSize: 13, fontFamily: 'Inter_400Regular', marginTop: 2, lineHeight: 18 },
   progressText: { fontSize: 12, fontFamily: 'Inter_400Regular' },
+  doneRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginTop: 12,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
+  doneText: { flex: 1, fontSize: 13, fontFamily: 'Inter_600SemiBold' },
   infoLink: {
     flexDirection: 'row',
     alignItems: 'center',
