@@ -106,9 +106,9 @@ export const GENERIC_KOMMUN_POSITIONS = toRecord(
 // (katrineholmframat.se, läst juli 2026). null = programmet ger inte besked.
 export const KF_KATRINEHOLM: (number | null)[] = [
   2,    // 1 grundbemanning skolan — "fler vuxna i skolan"
-  null, // 2 landsbygdsskolor
+  2,    // 2 landsbygdsskolor — "bevara landsbygdsskolor trots minskat elevunderlag"
   1,    // 3 äldreomsorg — stora pensionärssatsningar
-  null, // 4 äldreboendegaranti
+  2,    // 4 äldreboendegaranti — "inom tre månader för alla över 85 år"
   2,    // 5 ordningsvakter — "ökad närvaro av vuxna och ordningsvakter"
   2,    // 6 kameror — "trygghetszoner med kameraövervakning"
   1,    // 7 förebyggande — satsningar på ungdomsgårdar
@@ -116,7 +116,7 @@ export const KF_KATRINEHOLM: (number | null)[] = [
   null, // 9 sänkt kommunalskatt — betonar klok användning, inte nivån
   null, // 10 parkering
   1,    // 11 stadskärnan — tryggare centrum, ungdomsgårdar i centrum
-  null, // 12 kransorter
+  2,    // 12 kransorter — "kommunal service kvar i kransorterna"
   -2,   // 13 vindkraft — folkinitiativ MOT vindkraft vid Ramsjöhult
   null, // 14 gågator
   -1,   // 15 farthinder — "bort med onödiga farthinder"
