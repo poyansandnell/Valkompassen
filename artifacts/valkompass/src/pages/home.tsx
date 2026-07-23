@@ -280,8 +280,8 @@ export default function Home() {
                 <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6">
                   <ShieldCheck className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Strikt Oberoende</h3>
-                <p className="text-muted-foreground">Vi tillhör inga politiska partier, valmyndigheter eller mediekoncerner. Vår enda drivkraft är objektivitet och transparens.</p>
+                <h3 className="text-xl font-semibold mb-3">Oberoende</h3>
+                <p className="text-muted-foreground">Tjänsten ägs inte av något politiskt parti, någon valmyndighet eller mediekoncern. Alla partier behandlas lika – med objektivitet och transparens som ledord.</p>
               </div>
               
               <div className="flex flex-col items-center text-center">

@@ -34,7 +34,7 @@ export function Footer() {
             Valkompass
           </Link>
           <p className="mb-4">
-            Valkompass är en oberoende tjänst och är inte en del av Valmyndigheten, något politiskt parti eller någon mediekoncern.
+            Valkompass är en oberoende tjänst och är inte en del av Valmyndigheten eller någon mediekoncern.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">

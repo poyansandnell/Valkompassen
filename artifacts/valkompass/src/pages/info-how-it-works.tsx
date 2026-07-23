@@ -357,9 +357,9 @@ export default function HowItWorks() {
               </CardHeader>
               <CardContent className="text-muted-foreground">
                 <p>
-                  Nej. Valkompass är en helt oberoende tjänst. Vi tillhör inga politiska partier, 
-                  Valmyndigheten eller mediekoncerner. Vårt enda syfte är att ge väljare ett transparent verktyg 
-                  för att jämföra sina åsikter med partiernas ståndpunkter.
+                  Valkompass är en oberoende tjänst som inte ägs eller styrs av något politiskt parti, 
+                  Valmyndigheten eller någon mediekoncern. Alla partier behandlas lika, och syftet är att ge väljare 
+                  ett transparent verktyg för att jämföra sina åsikter med partiernas ståndpunkter.
                 </p>
               </CardContent>
             </Card>
