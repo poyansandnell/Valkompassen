@@ -1,11 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { Link, useLocation, useParams } from 'wouter';
 import { Layout } from '@/components/layout';
 import { Button } from '@/components/ui/button';
-import { useGetQuiz, QuizPayloadLevel, QuizQuestion } from '@workspace/api-client-react';
+import { useGetQuiz, QuizPayloadLevel, QuizQuestion, UserAnswer } from '@workspace/api-client-react';
 import { useStoredQuiz, useAppStore } from '@/hooks/use-local-answers';
-import { ChevronLeft, Flag, HelpCircle, AlertCircle, Info, ChevronDown } from 'lucide-react';
-import { WEIGHTS } from '@/lib/matching';
+import { ChevronLeft, Flag, HelpCircle, AlertCircle, Info, ChevronDown, ChevronUp, X } from 'lucide-react';
+import { WEIGHTS, calculateMatches } from '@/lib/matching';
 import {
   Collapsible,
   CollapsibleContent,
@@ -28,6 +28,58 @@ const ANSWER_OPTIONS = [
   { value: -2, label: 'Tar helt avstånd', color: 'bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600', textColor: 'text-white' },
 ];
 
+function LiveMatchBars({ parties, userAnswers, questions, collapsed, onToggle }: any) {
+  const matches = useMemo(() => {
+    if (!parties || !userAnswers || !questions) return [];
+    const userAnswersArray = Object.values(userAnswers) as UserAnswer[];
+    const computed = calculateMatches(parties, userAnswersArray, questions);
+    // Sort ALPHABETICALLY by party name (neutrality rule)
+    return computed.sort((a, b) => a.partyName.localeCompare(b.partyName, 'sv'));
+  }, [parties, userAnswers, questions]);
+
+  if (matches.length === 0) return null;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  return (
+    <div className={`fixed top-20 right-4 z-30 bg-card border shadow-lg rounded-xl overflow-hidden transition-all ${collapsed ? 'w-12' : 'w-64'} max-w-[calc(100vw-2rem)]`}>
+      <button 
+        onClick={onToggle} 
+        className="w-full p-3 flex items-center justify-between hover:bg-muted/50 transition-colors border-b"
+        aria-label={collapsed ? 'Visa live-matchning' : 'Dölj live-matchning'}
+      >
+        <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+          {collapsed ? 'Live' : 'Live-matchning'}
+        </span>
+        {collapsed ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+      </button>
+      
+      {!collapsed && (
+        <div className="p-3 space-y-2 max-h-[60vh] overflow-y-auto">
+          {matches.map((match) => (
+            <div key={match.partySlug} className="space-y-1">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-medium truncate">{match.partyAbbreviation}</span>
+                <span className="tabular-nums font-bold text-primary ml-2">{match.matchPercent}%</span>
+              </div>
+              <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div 
+                  className="h-full rounded-full transition-all duration-700 ease-out"
+                  style={{ 
+                    width: `${match.matchPercent}%`, 
+                    backgroundColor: match.partyColor || 'hsl(var(--primary))',
+                    transitionDuration: prefersReducedMotion ? '0ms' : '700ms'
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Quiz() {
   const { level } = useParams<{ level: string }>();
   const validLevel = level as QuizPayloadLevel;
@@ -35,13 +87,14 @@ export default function Quiz() {
   
   const { municipalityId } = useAppStore();
   
-  // Use React Query to fetch the entire quiz payload. It will be cached.
   const { data: quizPayload, isLoading, error } = useGetQuiz(validLevel, 
     validLevel !== 'riksdag' ? { municipalityId: municipalityId || undefined } : undefined,
     { query: { queryKey: ['quiz', validLevel, municipalityId] } }
   );
 
   const { answers, currentQuestionIndex, setAnswer, setWeight, setCurrentIndex } = useStoredQuiz(validLevel);
+
+  const [liveCollapsed, setLiveCollapsed] = useState(false);
 
   const questions = quizPayload?.questions || [];
   const currentQ = questions[currentQuestionIndex];
@@ -116,9 +169,20 @@ export default function Quiz() {
             </div>
           </div>
           
-          <div className="w-10" /> {/* Spacer for centering */}
+          <div className="w-10" />
         </div>
       </header>
+
+      {/* Live Match Bars */}
+      {quizPayload && (
+        <LiveMatchBars 
+          parties={quizPayload.parties} 
+          userAnswers={answers} 
+          questions={questions} 
+          collapsed={liveCollapsed}
+          onToggle={() => setLiveCollapsed(!liveCollapsed)}
+        />
+      )}
 
       {/* Main Content */}
       <main className="flex-1 container max-w-3xl mx-auto px-4 py-8 md:py-16 flex flex-col">

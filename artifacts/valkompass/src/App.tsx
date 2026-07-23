@@ -12,13 +12,13 @@ import CreateChallenge from '@/pages/challenge';
 import ChallengeView from '@/pages/challenge-view';
 import PublicResult from '@/pages/public-result';
 import PartyProfile from '@/pages/party-profile';
+import HowItWorks from '@/pages/info-how-it-works';
 import { Layout } from '@/components/layout';
 
-function InfoPages({ type }: { type: 'metod' | 'integritet' | 'sa-fungerar-det' | 'kallor' | 'villkor' }) {
+function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villkor' }) {
   const titles = {
     'metod': 'Vår metod',
     'integritet': 'Integritetspolicy',
-    'sa-fungerar-det': 'Så fungerar Valkompass',
     'kallor': 'Källförteckning',
     'villkor': 'Användarvillkor'
   };
@@ -34,6 +34,7 @@ function InfoPages({ type }: { type: 'metod' | 'integritet' | 'sa-fungerar-det' 
             <p>Varje fråga besvaras på en skala från "Instämmer helt" (2) till "Tar helt avstånd" (-2). Om en användare hoppar över en fråga, eller om ett parti saknar fastställd åsikt, räknas frågan inte med i slutpoängen.</p>
             <p>Likheten per fråga beräknas som: <code>1 - abs(användarens svar - partiets svar) / 4</code>. En perfekt träff ger 1, och maximal skillnad (2 mot -2) ger 0.</p>
             <p>Matchningsprocenten är det vägda genomsnittet av likheten över alla besvarade gemensamma frågor, där användaren kan välja att ge vissa frågor högre vikt (0.75x till 2.25x).</p>
+            <p>Läs mer på sidan <a href="/sa-fungerar-det">Så fungerar det</a> där vi förklarar beräkningen i detalj med konkreta exempel.</p>
           </>
         )}
         
@@ -49,6 +50,33 @@ function InfoPages({ type }: { type: 'metod' | 'integritet' | 'sa-fungerar-det' 
             <button className="mt-8 px-6 py-3 bg-destructive text-destructive-foreground rounded-lg font-medium hover:bg-destructive/90 transition-colors" onClick={() => { localStorage.clear(); window.location.reload(); }}>
               Radera all min lokala data nu
             </button>
+          </>
+        )}
+        
+        {type === 'kallor' && (
+          <>
+            <h2>Varifrån kommer partiernas svar?</h2>
+            <p>Varje svar märks tydligt med sitt ursprung:</p>
+            <ul>
+              <li><strong>Svar lämnat av partiet</strong> – Partiet har själva bekräftat sin ståndpunkt.</li>
+              <li><strong>Bedömt från offentliga källor</strong> – Vi har gjort en redaktionell bedömning utifrån partiprogram, riksdagsmotioner och offentliga uttalanden.</li>
+              <li><strong>Partiets ståndpunkt är inte fastställd</strong> – Frågan räknas inte med i matchningen.</li>
+            </ul>
+            <p>Vi arbetar kontinuerligt med att samla in och verifiera svar från alla partier som ställer upp i valet.</p>
+          </>
+        )}
+        
+        {type === 'villkor' && (
+          <>
+            <h2>Användarvillkor</h2>
+            <p>Genom att använda Valkompass accepterar du följande villkor:</p>
+            <ul>
+              <li>Tjänsten tillhandahålls i befintligt skick utan garantier av något slag.</li>
+              <li>Resultaten ska betraktas som vägledning, inte som definitiv röstningsrekommendation.</li>
+              <li>Du ansvarar för innehållet du publicerar (offentliga resultatsidor). Vi förbehåller oss rätten att ta bort innehåll som bryter mot lagen eller våra riktlinjer.</li>
+              <li>Vi samlar in minimal data och endast när du uttryckligen väljer att dela information (se integritetspolicyn).</li>
+            </ul>
+            <p>Vid frågor eller klagomål, kontakta oss via projektets officiella kanaler.</p>
           </>
         )}
       </div>
@@ -71,9 +99,9 @@ function Router() {
       <Route path="/utmaning/:code" component={ChallengeView} />
       <Route path="/partier/:level/:slug" component={PartyProfile} />
       
+      <Route path="/sa-fungerar-det" component={HowItWorks} />
       <Route path="/metod"><InfoPages type="metod" /></Route>
       <Route path="/integritet"><InfoPages type="integritet" /></Route>
-      <Route path="/sa-fungerar-det"><InfoPages type="sa-fungerar-det" /></Route>
       <Route path="/kallor"><InfoPages type="kallor" /></Route>
       <Route path="/villkor"><InfoPages type="villkor" /></Route>
 

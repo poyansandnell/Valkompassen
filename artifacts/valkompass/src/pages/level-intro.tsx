@@ -1,11 +1,12 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link, useLocation, useParams } from 'wouter';
 import { Layout } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import { useListMunicipalities, QuizPayloadLevel } from '@workspace/api-client-react';
 import { useAppStore } from '@/hooks/use-local-answers';
-import { MapPin, Search, ArrowRight, ShieldAlert } from 'lucide-react';
+import { MapPin, Search, ArrowRight, ShieldAlert, Loader2, CheckCircle2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { Card, CardContent } from '@/components/ui/card';
 
 export default function LevelIntro() {
   const { level } = useParams<{ level: string }>();
@@ -16,6 +17,8 @@ export default function LevelIntro() {
   const { data: municipalities, isLoading } = useListMunicipalities({ query: { queryKey: ['municipalities'] } });
   
   const [search, setSearch] = useState('');
+  const [geoloading, setGeoloading] = useState(false);
+  const [geoSuggestion, setGeoSuggestion] = useState<{ id: string; name: string } | null>(null);
   
   const filteredMuni = useMemo(() => {
     if (!municipalities) return [];
@@ -34,6 +37,62 @@ export default function LevelIntro() {
   };
 
   const levelName = validLevel === 'riksdag' ? 'Riksdagsvalet' : validLevel === 'region' ? 'Regionvalet' : 'Kommunvalet';
+
+  // Attempt geolocation on mount
+  useEffect(() => {
+    if (!needsMunicipality || !municipalities || municipalities.length === 0 || municipalityId) return;
+
+    if (!navigator.geolocation) return;
+
+    setGeoloading(true);
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}&accept-language=sv`,
+            { headers: { 'User-Agent': 'Valkompass/1.0' } }
+          );
+          const data = await response.json();
+          
+          // Try to extract municipality name
+          let muniName = data.address?.municipality || data.address?.town || data.address?.city || null;
+          if (!muniName) {
+            setGeoloading(false);
+            return;
+          }
+
+          // Strip " kommun" suffix if present
+          muniName = muniName.replace(/ kommun$/i, '').trim();
+
+          // Match against the list (case-insensitive)
+          const matched = municipalities.find(m => m.name.toLowerCase() === muniName.toLowerCase());
+          
+          if (matched) {
+            setGeoSuggestion({ id: matched.id, name: matched.name });
+          }
+        } catch (err) {
+          // Silent fail
+        } finally {
+          setGeoloading(false);
+        }
+      },
+      () => {
+        // User denied or error
+        setGeoloading(false);
+      },
+      { timeout: 10000 }
+    );
+  }, [needsMunicipality, municipalities, municipalityId]);
+
+  const acceptSuggestion = () => {
+    if (geoSuggestion) {
+      setMunicipalityId(geoSuggestion.id);
+      setGeoSuggestion(null);
+    }
+  };
 
   return (
     <Layout>
@@ -67,6 +126,40 @@ export default function LevelIntro() {
                 För att kunna matcha dig mot rätt {validLevel === 'region' ? 'region' : 'kommun'} behöver vi veta var du bor.
               </p>
               
+              {/* Geolocation suggestion */}
+              {geoloading && (
+                <Card className="border-primary/30 bg-primary/5">
+                  <CardContent className="p-4 flex items-center gap-3">
+                    <Loader2 className="w-5 h-5 animate-spin text-primary" />
+                    <span className="text-sm font-medium">Försöker hitta din plats...</span>
+                  </CardContent>
+                </Card>
+              )}
+
+              {geoSuggestion && !municipalityId && (
+                <Card className="border-green-500/30 bg-green-50 dark:bg-green-950/20 animate-in fade-in slide-in-from-top-2 duration-500">
+                  <CardContent className="p-4 flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <MapPin className="w-5 h-5 text-green-600 dark:text-green-500 shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-green-900 dark:text-green-100">
+                          Det ser ut som att du är i <strong>{geoSuggestion.name}</strong>
+                        </p>
+                        <p className="text-xs text-green-700 dark:text-green-300">Stämmer det?</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-2 shrink-0">
+                      <Button size="sm" onClick={acceptSuggestion} className="bg-green-600 hover:bg-green-700 text-white">
+                        <CheckCircle2 className="w-4 h-4 mr-1" /> Ja
+                      </Button>
+                      <Button size="sm" variant="ghost" onClick={() => setGeoSuggestion(null)} className="text-green-900 dark:text-green-100">
+                        Nej
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
               <div className="relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input 
