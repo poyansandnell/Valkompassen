@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { UserAnswer, QuizPayloadLevel } from '@workspace/api-client-react';
 
 interface QuizState {
@@ -26,12 +26,27 @@ export function useStoredQuiz(level: QuizPayloadLevel) {
     }
   });
 
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(state));
-  }, [key, state]);
+  // Persist synchronously inside the updater. Persisting in a useEffect loses
+  // the final update when a state change is immediately followed by navigation
+  // (the component unmounts before the effect runs), which dropped the last
+  // answer and the completed flag at the end of the quiz.
+  const update = useCallback(
+    (updater: (prev: QuizState) => QuizState) => {
+      setState((prev) => {
+        const next = updater(prev);
+        try {
+          localStorage.setItem(key, JSON.stringify(next));
+        } catch {
+          // ignore storage errors
+        }
+        return next;
+      });
+    },
+    [key],
+  );
 
   const setAnswer = useCallback((questionId: string, value: number | null, weight = 1) => {
-    setState((prev) => ({
+    update((prev) => ({
       ...prev,
       answers: {
         ...prev.answers,
@@ -43,10 +58,10 @@ export function useStoredQuiz(level: QuizPayloadLevel) {
       },
       lastUpdated: Date.now(),
     }));
-  }, []);
+  }, [update]);
 
   const setWeight = useCallback((questionId: string, weight: number) => {
-    setState((prev) => ({
+    update((prev) => ({
       ...prev,
       answers: {
         ...prev.answers,
@@ -56,19 +71,19 @@ export function useStoredQuiz(level: QuizPayloadLevel) {
       },
       lastUpdated: Date.now(),
     }));
-  }, []);
+  }, [update]);
 
   const setCurrentIndex = useCallback((index: number) => {
-    setState((prev) => ({ ...prev, currentQuestionIndex: index }));
-  }, []);
+    update((prev) => ({ ...prev, currentQuestionIndex: index }));
+  }, [update]);
 
   const setCompleted = useCallback((completed: boolean) => {
-    setState((prev) => ({ ...prev, isCompleted: completed, lastUpdated: Date.now() }));
-  }, []);
+    update((prev) => ({ ...prev, isCompleted: completed, lastUpdated: Date.now() }));
+  }, [update]);
 
   const reset = useCallback(() => {
-    setState(DEFAULT_STATE);
-  }, []);
+    update(() => DEFAULT_STATE);
+  }, [update]);
 
   return { ...state, setAnswer, setWeight, setCurrentIndex, setCompleted, reset };
 }
@@ -87,28 +102,40 @@ export function useAppStore() {
     }
   });
 
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(state));
-  }, [state]);
+  // Same synchronous persistence as useStoredQuiz (see comment above).
+  const update = useCallback(
+    (updater: (prev: { municipalityId: string | null; resultTokens: Record<string, { editToken: string; deleteToken: string }> }) => { municipalityId: string | null; resultTokens: Record<string, { editToken: string; deleteToken: string }> }) => {
+      setState((prev) => {
+        const next = updater(prev);
+        try {
+          localStorage.setItem(key, JSON.stringify(next));
+        } catch {
+          // ignore storage errors
+        }
+        return next;
+      });
+    },
+    [],
+  );
 
   const setMunicipalityId = useCallback((id: string | null) => {
-    setState((prev) => ({ ...prev, municipalityId: id }));
-  }, []);
+    update((prev) => ({ ...prev, municipalityId: id }));
+  }, [update]);
 
   const addResultToken = useCallback((slug: string, tokens: { editToken: string; deleteToken: string }) => {
-    setState((prev) => ({
+    update((prev) => ({
       ...prev,
       resultTokens: { ...prev.resultTokens, [slug]: tokens },
     }));
-  }, []);
+  }, [update]);
 
   const removeResultToken = useCallback((slug: string) => {
-    setState((prev) => {
+    update((prev) => {
       const next = { ...prev.resultTokens };
       delete next[slug];
       return { ...prev, resultTokens: next };
     });
-  }, []);
+  }, [update]);
 
   return { ...state, setMunicipalityId, addResultToken, removeResultToken };
 }
