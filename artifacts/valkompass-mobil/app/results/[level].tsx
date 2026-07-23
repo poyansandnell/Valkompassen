@@ -36,7 +36,7 @@ export default function ResultsScreen() {
   const meta = LEVELS.find((l) => l.level === level);
 
   const key = answerKey(level, municipalityId ?? null);
-  const { hydrated, getLevel, clearLevel, setLevelMeta } = useAnswers();
+  const { hydrated, getLevel, clearLevelAll, setLevelMeta } = useAnswers();
   const levelState = getLevel(key);
 
   const quizQuery = useGetQuiz(
@@ -421,7 +421,9 @@ export default function ResultsScreen() {
             label="Gör om"
             variant="secondary"
             onPress={() => {
-              clearLevel(key);
+              // Rensa hela nivån (även tidigare vald kommun/region) så att
+              // startsidan inte faller tillbaka på ett gammalt resultat.
+              clearLevelAll(level);
               router.dismissTo('/');
             }}
           />

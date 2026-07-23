@@ -28,6 +28,8 @@ interface AnswersContextValue {
   setAnswer: (key: string, questionId: string, answer: StoredAnswer) => void;
   setLevelMeta: (key: string, meta: Partial<Omit<LevelState, 'answers'>>) => void;
   clearLevel: (key: string) => void;
+  /** Rensar allt sparat för en nivå (alla kommuner/regioner), t.ex. vid "Gör om". */
+  clearLevelAll: (level: string) => void;
 }
 
 const EMPTY_LEVEL: LevelState = { answers: {} };
@@ -106,9 +108,20 @@ export function AnswersProvider({ children }: { children: React.ReactNode }) {
     [commit],
   );
 
+  const clearLevelAll = useCallback(
+    (level: string) => {
+      const next: StateMap = {};
+      for (const [k, v] of Object.entries(dataRef.current)) {
+        if (!k.startsWith(`${level}:`)) next[k] = v;
+      }
+      commit(next);
+    },
+    [commit],
+  );
+
   return (
     <AnswersContext.Provider
-      value={{ hydrated, data, getLevel, setAnswer, setLevelMeta, clearLevel }}
+      value={{ hydrated, data, getLevel, setAnswer, setLevelMeta, clearLevel, clearLevelAll }}
     >
       {children}
     </AnswersContext.Provider>
