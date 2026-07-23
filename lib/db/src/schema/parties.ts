@@ -31,6 +31,9 @@ export const partyParticipationTable = pgTable("party_participation", {
   municipalityId: text("municipality_id").references(
     () => municipalitiesTable.id,
   ),
+  // Whether the party currently holds seats in the relevant assembly
+  // (riksdag / regionfullmäktige / kommunfullmäktige) for this participation.
+  inAssembly: boolean("in_assembly").notNull().default(false),
 });
 
 export type Party = typeof partiesTable.$inferSelect;

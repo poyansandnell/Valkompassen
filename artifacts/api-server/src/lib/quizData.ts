@@ -111,27 +111,41 @@ export async function questionsFor(ctx: QuizContext): Promise<Question[]> {
     .orderBy(questionsTable.orderIndex);
 }
 
-export async function partiesFor(ctx: QuizContext): Promise<Party[]> {
+export type PartyWithAssembly = Party & { inAssembly: boolean };
+
+export async function partiesFor(
+  ctx: QuizContext,
+): Promise<PartyWithAssembly[]> {
+  const inAssemblyById = new Map<string, boolean>();
   let participantIds: string[];
   if (ctx.level === "riksdag") {
     const rows = await db
-      .select({ partyId: partyParticipationTable.partyId })
+      .select({
+        partyId: partyParticipationTable.partyId,
+        inAssembly: partyParticipationTable.inAssembly,
+      })
       .from(partyParticipationTable)
       .where(eq(partyParticipationTable.level, "riksdag"));
     participantIds = rows.map((r) => r.partyId);
+    for (const r of rows) inAssemblyById.set(r.partyId, r.inAssembly);
   } else {
     const areaFilter =
       ctx.level === "region"
         ? eq(partyParticipationTable.regionId, ctx.region!.id)
         : eq(partyParticipationTable.municipalityId, ctx.municipality!.id);
     const rows = await db
-      .select({ partyId: partyParticipationTable.partyId })
+      .select({
+        partyId: partyParticipationTable.partyId,
+        inAssembly: partyParticipationTable.inAssembly,
+      })
       .from(partyParticipationTable)
       .where(and(eq(partyParticipationTable.level, ctx.level), areaFilter));
     participantIds = rows.map((r) => r.partyId);
+    for (const r of rows) inAssemblyById.set(r.partyId, r.inAssembly);
     if (participantIds.length === 0) {
       // Fallback for areas without seeded local participation: the national
-      // parties (they run in nearly every region/municipality).
+      // parties (they run in nearly every region/municipality). We do not
+      // know local assembly membership here, so inAssembly stays false.
       const national = await db
         .select({ partyId: partyParticipationTable.partyId })
         .from(partyParticipationTable)
@@ -144,7 +158,9 @@ export async function partiesFor(ctx: QuizContext): Promise<Party[]> {
     .select()
     .from(partiesTable)
     .where(inArray(partiesTable.id, participantIds));
-  return parties.sort((a, b) => a.name.localeCompare(b.name, "sv"));
+  return parties
+    .map((p) => ({ ...p, inAssembly: inAssemblyById.get(p.id) ?? false }))
+    .sort((a, b) => a.name.localeCompare(b.name, "sv"));
 }
 
 export async function answersFor(
@@ -186,7 +202,7 @@ export function serializeAnswer(a: PartyAnswer) {
 }
 
 export function serializeParty(
-  party: Party,
+  party: Party & { inAssembly?: boolean },
   answers: PartyAnswer[],
   totalQuestions: number,
 ) {
@@ -210,6 +226,7 @@ export function serializeParty(
     answeredCount,
     totalQuestions,
     isTestData: party.isTestData,
+    inAssembly: party.inAssembly ?? false,
     answersUpdatedAt: latest ? latest.toISOString() : null,
   };
 }

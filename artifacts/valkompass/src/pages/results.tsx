@@ -5,10 +5,12 @@ import { Button } from '@/components/ui/button';
 import { useGetQuiz, QuizPayloadLevel, useRecordCompletion, QuizParty } from '@workspace/api-client-react';
 import { useStoredQuiz, useAppStore } from '@/hooks/use-local-answers';
 import { calculateMatches, calculateTopicAgreements } from '@/lib/matching';
-import { AlertCircle, RefreshCcw, Share2, Globe, Users, ChevronRight, Fingerprint, Search, ChevronDown, ChevronUp } from 'lucide-react';
+import { AlertCircle, RefreshCcw, Share2, Globe, Users, ChevronRight, Fingerprint, Search, ChevronDown, ChevronUp, EyeOff } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Input } from '@/components/ui/input';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 
 function Counter({ value, duration = 800, delay = 0 }: { value: number, duration?: number, delay?: number }) {
   const [count, setCount] = useState(0);
@@ -225,6 +227,8 @@ export default function Results() {
     { query: { queryKey: ['quiz', level, municipalityId], enabled: !missingMunicipality } }
   );
 
+  const [filterInAssembly, setFilterInAssembly] = useState(false);
+
   const results = useMemo(() => {
     if (!quizPayload) return null;
     const userAnswersArray = Object.values(answers);
@@ -265,8 +269,24 @@ export default function Results() {
   }
 
   const { matches, parties } = results;
-  const qualifiedMatches = matches.filter(m => parties.find(p => p.slug === m.partySlug)?.isQualified);
-  const nonQualifiedParties = parties.filter(p => !p.isQualified);
+  
+  const displayedQualifiedMatches = useMemo(() => {
+    if (!filterInAssembly) return matches.filter(m => parties.find(p => p.slug === m.partySlug)?.isQualified);
+    return matches.filter(m => {
+      const p = parties.find(p => p.slug === m.partySlug);
+      return p?.isQualified && p?.inAssembly;
+    });
+  }, [matches, parties, filterInAssembly]);
+
+  const displayedNonQualifiedParties = useMemo(() => {
+    const nq = parties.filter(p => !p.isQualified);
+    if (!filterInAssembly) return nq;
+    return nq.filter(p => p.inAssembly);
+  }, [parties, filterInAssembly]);
+
+  const originalQualifiedCount = matches.filter(m => parties.find(p => p.slug === m.partySlug)?.isQualified).length;
+  const originalNonQualifiedCount = parties.filter(p => !p.isQualified).length;
+  const hiddenCount = (originalQualifiedCount - displayedQualifiedMatches.length) + (originalNonQualifiedCount - displayedNonQualifiedParties.length);
   
   const hasAnswers = Object.keys(answers).length > 0;
 
@@ -284,7 +304,7 @@ export default function Results() {
     );
   }
 
-  const bestParty = qualifiedMatches[0];
+  const bestParty = displayedQualifiedMatches[0];
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -307,7 +327,7 @@ export default function Results() {
       <div className="bg-slate-50 dark:bg-background pb-24">
         
         {/* Results Header */}
-        <section className="bg-white dark:bg-card border-b pt-12 pb-16 px-4 text-center relative overflow-hidden animate-in fade-in duration-700">
+        <section className="bg-white dark:bg-card border-b pt-12 pb-24 px-4 text-center relative overflow-hidden animate-in fade-in duration-700">
           <div className="absolute inset-0 pointer-events-none opacity-20 dark:opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 50% -20%, var(--primary) 0%, transparent 70%)' }}></div>
           <div className="container max-w-3xl mx-auto relative z-10 space-y-6">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Dina närmaste partier</h1>
@@ -315,6 +335,17 @@ export default function Results() {
               Baserat på dina svar i valkompassen för {quizPayload.areaName}. <br className="hidden sm:block" />
               Era svar ligger närmast varandra.
             </p>
+            <div className="flex flex-col items-center justify-center pt-2 gap-2">
+              <div className="flex items-center gap-3 bg-muted/30 px-4 py-2.5 rounded-full border">
+                <Switch id="assembly-filter" checked={filterInAssembly} onCheckedChange={setFilterInAssembly} />
+                <Label htmlFor="assembly-filter" className="text-sm font-medium cursor-pointer">
+                  {level === 'riksdag' ? 'Visa endast partier som redan sitter i riksdagen' : level === 'region' ? 'Visa endast partier som redan sitter i regionfullmäktige' : 'Visa endast partier som redan sitter i kommunfullmäktige'}
+                </Label>
+              </div>
+              <div className={`text-xs text-muted-foreground flex items-center gap-1.5 transition-opacity duration-300 ${filterInAssembly && hiddenCount > 0 ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+                <EyeOff className="w-3.5 h-3.5" /> {hiddenCount} {hiddenCount === 1 ? 'parti dolt' : 'partier dolda'} av filtret
+              </div>
+            </div>
           </div>
         </section>
 
@@ -363,14 +394,14 @@ export default function Results() {
 
         {/* Full List */}
         <div className="container max-w-3xl mx-auto px-4 mt-12 space-y-6">
-          {qualifiedMatches.length > 1 && (
+          {displayedQualifiedMatches.length > 1 && (
             <h3 className="text-2xl font-bold animate-in fade-in slide-in-from-bottom-2 duration-500 delay-200" style={{ animationFillMode: 'both' }}>
               Hela listan
             </h3>
           )}
           
           <div className="space-y-4">
-            {qualifiedMatches.slice(1).map((match, i) => {
+            {displayedQualifiedMatches.slice(1).map((match, i) => {
               const delay = 300 + (i * 80);
               return (
                 <Link key={match.partySlug} href={`/partier/${level}/${match.partySlug}?municipalityId=${municipalityId || ''}`} className="block">
@@ -400,7 +431,7 @@ export default function Results() {
         </div>
 
         {/* Non-qualified parties section */}
-        <UnqualifiedParties parties={nonQualifiedParties} level={level} municipalityId={municipalityId} />
+        <UnqualifiedParties parties={displayedNonQualifiedParties} level={level} municipalityId={municipalityId} />
 
         {/* Action Cards */}
         <div className="container max-w-3xl mx-auto px-4 mt-16 grid sm:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-700" style={{ animationFillMode: 'both' }}>

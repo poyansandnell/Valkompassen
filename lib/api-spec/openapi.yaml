@@ -473,7 +473,7 @@ components:
             $ref: "#/components/schemas/QuestionSource"
     Party:
       type: object
-      required: [id, name, slug, abbreviation, color, isQualified, answeredCount, totalQuestions, isTestData]
+      required: [id, name, slug, abbreviation, color, isQualified, answeredCount, totalQuestions, isTestData, inAssembly]
       properties:
         id: { type: string }
         name: { type: string }
@@ -488,6 +488,9 @@ components:
         answeredCount: { type: integer }
         totalQuestions: { type: integer }
         isTestData: { type: boolean }
+        inAssembly:
+          type: boolean
+          description: True when the party currently holds seats in the relevant assembly (riksdag/regionfullmäktige/kommunfullmäktige)
         answersUpdatedAt: { type: ["string", "null"] }
     QuizParty:
       allOf:

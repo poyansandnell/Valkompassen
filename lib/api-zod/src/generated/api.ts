@@ -81,6 +81,7 @@ export const GetQuizResponse = zod.object({
   "answeredCount": zod.number(),
   "totalQuestions": zod.number(),
   "isTestData": zod.boolean(),
+  "inAssembly": zod.boolean().describe('True when the party currently holds seats in the relevant assembly (riksdag\/regionfullmäktige\/kommunfullmäktige)'),
   "answersUpdatedAt": zod.string().nullish()
 }).and(zod.object({
   "answers": zod.array(zod.object({
@@ -118,6 +119,7 @@ export const ListPartiesResponseItem = zod.object({
   "answeredCount": zod.number(),
   "totalQuestions": zod.number(),
   "isTestData": zod.boolean(),
+  "inAssembly": zod.boolean().describe('True when the party currently holds seats in the relevant assembly (riksdag\/regionfullmäktige\/kommunfullmäktige)'),
   "answersUpdatedAt": zod.string().nullish()
 })
 export const ListPartiesResponse = zod.array(ListPartiesResponseItem)
@@ -148,6 +150,7 @@ export const GetPartyProfileResponse = zod.object({
   "answeredCount": zod.number(),
   "totalQuestions": zod.number(),
   "isTestData": zod.boolean(),
+  "inAssembly": zod.boolean().describe('True when the party currently holds seats in the relevant assembly (riksdag\/regionfullmäktige\/kommunfullmäktige)'),
   "answersUpdatedAt": zod.string().nullish()
 }),
   "questions": zod.array(zod.object({

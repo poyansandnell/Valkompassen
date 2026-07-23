@@ -445,31 +445,51 @@ async function main() {
     level: string;
     regionId?: string | null;
     municipalityId?: string | null;
+    inAssembly?: boolean;
   }[] = [];
   for (const p of NATIONAL_PARTIES) {
-    participation.push({ partyId: p.id, level: "riksdag" });
-    participation.push({ partyId: p.id, level: "region", regionId: "sormland" });
+    // TEST DATA: national parties hold seats in riksdag, regionfullmäktige
+    // (Sörmland) and kommunfullmäktige (Katrineholm).
+    participation.push({ partyId: p.id, level: "riksdag", inAssembly: true });
+    participation.push({
+      partyId: p.id,
+      level: "region",
+      regionId: "sormland",
+      inAssembly: true,
+    });
     participation.push({
       partyId: p.id,
       level: "kommun",
       municipalityId: "katrineholm",
+      inAssembly: true,
     });
   }
-  participation.push({ partyId: "medborgerlig-samling", level: "riksdag" });
+  // TEST DATA: MED runs nationally but holds no riksdag seats.
+  participation.push({
+    partyId: "medborgerlig-samling",
+    level: "riksdag",
+    inAssembly: false,
+  });
+  // TEST DATA: new local party, not yet in kommunfullmäktige.
   participation.push({
     partyId: "katrineholms-val",
     level: "kommun",
     municipalityId: "katrineholm",
+    inAssembly: false,
   });
+  // TEST DATA: sits in regionfullmäktige.
   participation.push({
     partyId: "sormlandslistan",
     level: "region",
     regionId: "sormland",
+    inAssembly: true,
   });
+  // TEST DATA: local party with seats in kommunfullmäktige.
   participation.push({
     partyId: "katrineholm-framat",
     level: "kommun",
     municipalityId: "katrineholm",
+    inAssembly: true,
   });
   await db.insert(partyParticipationTable).values(participation);
 

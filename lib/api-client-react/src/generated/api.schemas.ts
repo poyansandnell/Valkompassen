@@ -83,6 +83,8 @@ export interface Party {
   answeredCount: number;
   totalQuestions: number;
   isTestData: boolean;
+  /** True when the party currently holds seats in the relevant assembly (riksdag/regionfullmäktige/kommunfullmäktige) */
+  inAssembly: boolean;
   /** @nullable */
   answersUpdatedAt?: string | null;
 }

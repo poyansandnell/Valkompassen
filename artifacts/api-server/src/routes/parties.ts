@@ -1,6 +1,6 @@
 import { Router, type IRouter } from "express";
-import { eq } from "drizzle-orm";
-import { db, partiesTable } from "@workspace/db";
+import { and, eq } from "drizzle-orm";
+import { db, partiesTable, partyParticipationTable } from "@workspace/db";
 import {
   GetPartyProfileParams,
   GetPartyProfileQueryParams,
@@ -77,9 +77,26 @@ router.get("/parties/:slug", async (req, res): Promise<void> => {
     [party.id],
     questions.map((q) => q.id),
   );
+  const areaFilter =
+    ctx.level === "riksdag"
+      ? eq(partyParticipationTable.level, "riksdag")
+      : and(
+          eq(partyParticipationTable.level, ctx.level),
+          ctx.level === "region"
+            ? eq(partyParticipationTable.regionId, ctx.region!.id)
+            : eq(partyParticipationTable.municipalityId, ctx.municipality!.id),
+        );
+  const [participation] = await db
+    .select({ inAssembly: partyParticipationTable.inAssembly })
+    .from(partyParticipationTable)
+    .where(and(eq(partyParticipationTable.partyId, party.id), areaFilter));
   res.json(
     GetPartyProfileResponse.parse({
-      party: serializeParty(party, answers, questions.length),
+      party: serializeParty(
+        { ...party, inAssembly: participation?.inAssembly ?? false },
+        answers,
+        questions.length,
+      ),
       questions: questions.map(serializeQuestion),
       answers: answers.map(serializeAnswer),
     }),
