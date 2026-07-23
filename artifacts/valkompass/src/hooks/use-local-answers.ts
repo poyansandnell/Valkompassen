@@ -1,20 +1,26 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { UserAnswer, QuizPayloadLevel } from '@workspace/api-client-react';
 
 interface QuizState {
   answers: Record<string, UserAnswer>;
   currentQuestionIndex: number;
+  isCompleted: boolean;
+  lastUpdated?: number;
 }
 
-const DEFAULT_STATE: QuizState = { answers: {}, currentQuestionIndex: 0 };
+const DEFAULT_STATE: QuizState = { answers: {}, currentQuestionIndex: 0, isCompleted: false };
 
-function useStoredQuiz(level: QuizPayloadLevel) {
+export function useStoredQuiz(level: QuizPayloadLevel) {
   const key = `valkompass-${level}`;
   
   const [state, setState] = useState<QuizState>(() => {
     try {
       const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : DEFAULT_STATE;
+      if (item) {
+        const parsed = JSON.parse(item);
+        return { ...DEFAULT_STATE, ...parsed };
+      }
+      return DEFAULT_STATE;
     } catch {
       return DEFAULT_STATE;
     }
@@ -35,6 +41,7 @@ function useStoredQuiz(level: QuizPayloadLevel) {
           weight: prev.answers[questionId]?.weight ?? weight 
         },
       },
+      lastUpdated: Date.now(),
     }));
   }, []);
 
@@ -47,6 +54,7 @@ function useStoredQuiz(level: QuizPayloadLevel) {
           ? { ...prev.answers[questionId], weight }
           : { questionId, value: null, weight },
       },
+      lastUpdated: Date.now(),
     }));
   }, []);
 
@@ -54,11 +62,15 @@ function useStoredQuiz(level: QuizPayloadLevel) {
     setState((prev) => ({ ...prev, currentQuestionIndex: index }));
   }, []);
 
+  const setCompleted = useCallback((completed: boolean) => {
+    setState((prev) => ({ ...prev, isCompleted: completed, lastUpdated: Date.now() }));
+  }, []);
+
   const reset = useCallback(() => {
     setState(DEFAULT_STATE);
   }, []);
 
-  return { ...state, setAnswer, setWeight, setCurrentIndex, reset };
+  return { ...state, setAnswer, setWeight, setCurrentIndex, setCompleted, reset };
 }
 
 export function useAppStore() {
@@ -100,5 +112,3 @@ export function useAppStore() {
 
   return { ...state, setMunicipalityId, addResultToken, removeResultToken };
 }
-
-export { useStoredQuiz };

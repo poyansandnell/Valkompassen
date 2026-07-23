@@ -4,7 +4,7 @@ import { Layout } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import { useGetQuiz, QuizPayloadLevel, QuizQuestion, UserAnswer } from '@workspace/api-client-react';
 import { useStoredQuiz, useAppStore } from '@/hooks/use-local-answers';
-import { ChevronLeft, Flag, AlertCircle, Info, ChevronDown } from 'lucide-react';
+import { ChevronLeft, Flag, HelpCircle, AlertCircle, Info, ChevronDown, ChevronUp, RefreshCcw } from 'lucide-react';
 import { WEIGHTS, calculateMatches } from '@/lib/matching';
 import {
   Collapsible,
@@ -57,7 +57,6 @@ function LiveMatchBars({ parties, userAnswers, questions }: any) {
       >
         <div className="flex items-end h-5 gap-[3px]">
           {matches.map(match => {
-            // Calculate a height between 4px and 20px
             const h = Math.max(4, (match.matchPercent / 100) * 20);
             return (
               <div
@@ -109,7 +108,9 @@ export default function Quiz() {
     { query: { queryKey: ['quiz', validLevel, municipalityId] } }
   );
 
-  const { answers, currentQuestionIndex, setAnswer, setWeight, setCurrentIndex } = useStoredQuiz(validLevel);
+  const { answers, currentQuestionIndex, setAnswer, setWeight, setCurrentIndex, setCompleted, isCompleted, reset } = useStoredQuiz(validLevel);
+
+  const [showResumeNotice, setShowResumeNotice] = useState(currentQuestionIndex > 0 && !isCompleted);
 
   const questions = quizPayload?.questions || [];
   const currentQ = questions[currentQuestionIndex];
@@ -118,10 +119,14 @@ export default function Quiz() {
 
   const handleAnswer = (value: number | null) => {
     if (!currentQ) return;
+    
+    setShowResumeNotice(false); // Hide the resume notice once they interact
+    
     setAnswer(currentQ.id, value);
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentIndex(currentQuestionIndex + 1);
     } else {
+      setCompleted(true);
       setLocation(`/resultat?level=${validLevel}`);
     }
   };
@@ -199,8 +204,22 @@ export default function Quiz() {
       {/* Main Content */}
       <main className="flex-1 container max-w-3xl mx-auto px-4 py-8 md:py-16 flex flex-col relative z-0">
         
+        {/* Halfway Resume Notice */}
+        {showResumeNotice && (
+          <div className="mb-8 p-3 bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900 rounded-xl flex items-center justify-between animate-in fade-in slide-in-from-top-2">
+            <span className="text-sm font-medium text-blue-800 dark:text-blue-300 ml-2">Du fortsätter där du slutade.</span>
+            <button 
+              onClick={() => { reset(); setShowResumeNotice(false); }} 
+              className="text-sm flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 underline font-medium px-2 py-1 transition-colors"
+            >
+              <RefreshCcw className="w-3.5 h-3.5 mr-1" />
+              Börja om
+            </button>
+          </div>
+        )}
+
         {/* Category Label */}
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center mb-6 mt-2">
           <span className="px-3 py-1 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full text-xs font-bold tracking-wide uppercase">
             {currentQ.category}
           </span>

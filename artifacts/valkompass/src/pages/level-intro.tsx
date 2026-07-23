@@ -3,7 +3,7 @@ import { Link, useLocation, useParams } from 'wouter';
 import { Layout } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import { useListMunicipalities, QuizPayloadLevel } from '@workspace/api-client-react';
-import { useAppStore } from '@/hooks/use-local-answers';
+import { useAppStore, useStoredQuiz } from '@/hooks/use-local-answers';
 import { MapPin, Search, ArrowRight, ShieldAlert, Loader2, CheckCircle2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -15,6 +15,9 @@ export default function LevelIntro() {
   
   const { municipalityId, setMunicipalityId } = useAppStore();
   const { data: municipalities, isLoading } = useListMunicipalities({ query: { queryKey: ['municipalities'] } });
+  
+  // Use StoredQuiz to check completion state
+  const { isCompleted, lastUpdated, currentQuestionIndex, reset } = useStoredQuiz(validLevel);
   
   const [search, setSearch] = useState('');
   const [geoloading, setGeoloading] = useState(false);
@@ -41,35 +44,25 @@ export default function LevelIntro() {
   // Attempt geolocation on mount
   useEffect(() => {
     if (!needsMunicipality || !municipalities || municipalities.length === 0 || municipalityId) return;
-
     if (!navigator.geolocation) return;
 
     setGeoloading(true);
-
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
-        
         try {
           const response = await fetch(
             `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}&accept-language=sv`,
             { headers: { 'User-Agent': 'Valkompass/1.0' } }
           );
           const data = await response.json();
-          
-          // Try to extract municipality name
           let muniName = data.address?.municipality || data.address?.town || data.address?.city || null;
           if (!muniName) {
             setGeoloading(false);
             return;
           }
-
-          // Strip " kommun" suffix if present
           muniName = muniName.replace(/ kommun$/i, '').trim();
-
-          // Match against the list (case-insensitive)
           const matched = municipalities.find(m => m.name.toLowerCase() === muniName.toLowerCase());
-          
           if (matched) {
             setGeoSuggestion({ id: matched.id, name: matched.name });
           }
@@ -79,10 +72,7 @@ export default function LevelIntro() {
           setGeoloading(false);
         }
       },
-      () => {
-        // User denied or error
-        setGeoloading(false);
-      },
+      () => setGeoloading(false),
       { timeout: 10000 }
     );
   }, [needsMunicipality, municipalities, municipalityId]);
@@ -126,7 +116,6 @@ export default function LevelIntro() {
                 För att kunna matcha dig mot rätt {validLevel === 'region' ? 'region' : 'kommun'} behöver vi veta var du bor.
               </p>
               
-              {/* Geolocation suggestion */}
               {geoloading && (
                 <Card className="border-primary/30 bg-primary/5">
                   <CardContent className="p-4 flex items-center gap-3">
@@ -197,16 +186,40 @@ export default function LevelIntro() {
             </div>
           )}
 
-          <div className="pt-6">
-            <Button 
-              size="lg" 
-              className="w-full text-lg h-14" 
-              onClick={handleStart}
-              disabled={needsMunicipality && !municipalityId}
-            >
-              Starta Valkompass <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-          </div>
+          {isCompleted ? (
+            <div className="space-y-4 pt-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+              <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900 p-6 rounded-xl flex flex-col items-center text-center space-y-3">
+                <CheckCircle2 className="w-10 h-10 text-green-600 dark:text-green-500" />
+                <div>
+                  <h3 className="font-semibold text-lg text-green-900 dark:text-green-100">Du har redan gjort kompassen för {levelName}</h3>
+                  {lastUpdated && (
+                    <p className="text-sm text-green-700 dark:text-green-400 mt-1">
+                      Senast uppdaterad: {new Date(lastUpdated).toLocaleDateString('sv-SE', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-3 pt-2">
+                <Button size="lg" className="w-full text-lg h-14" onClick={() => setLocation(`/resultat?level=${validLevel}`)}>
+                  Visa mitt resultat
+                </Button>
+                <Button size="lg" variant="outline" className="w-full text-lg h-14" onClick={() => { reset(); setLocation(`/kompass/${validLevel}`); }}>
+                  Börja om på nytt
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="pt-6">
+              <Button 
+                size="lg" 
+                className="w-full text-lg h-14" 
+                onClick={handleStart}
+                disabled={needsMunicipality && !municipalityId}
+              >
+                {currentQuestionIndex > 0 ? 'Fortsätt Valkompassen' : 'Starta Valkompass'} <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </div>
+          )}
         </div>
 
       </div>
