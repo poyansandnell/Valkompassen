@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { Link, useLocation, useParams } from 'wouter';
 import { Layout } from '@/components/layout';
 import { Button } from '@/components/ui/button';
@@ -6,7 +6,6 @@ import { useListMunicipalities, QuizPayloadLevel } from '@workspace/api-client-r
 import { useAppStore, useStoredQuiz } from '@/hooks/use-local-answers';
 import { MapPin, Search, ArrowRight, ShieldAlert, Loader2, CheckCircle2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/card';
 
 export default function LevelIntro() {
   const { level } = useParams<{ level: string }>();
@@ -22,7 +21,22 @@ export default function LevelIntro() {
   const [search, setSearch] = useState('');
   const [geoloading, setGeoloading] = useState(false);
   const [geoSuggestion, setGeoSuggestion] = useState<{ id: string; name: string } | null>(null);
-  
+  const hasRequestedGeo = useRef(false);
+
+  const needsMunicipality = validLevel === 'region' || validLevel === 'kommun';
+
+  const selectedMunicipality = useMemo(() => {
+    if (!municipalityId || !municipalities) return null;
+    return municipalities.find(m => m.id === municipalityId);
+  }, [municipalityId, municipalities]);
+
+  // Initialize search with selected municipality if it exists
+  useEffect(() => {
+    if (selectedMunicipality && search === '') {
+      setSearch(selectedMunicipality.name);
+    }
+  }, [selectedMunicipality]);
+
   const filteredMuni = useMemo(() => {
     if (!municipalities) return [];
     if (!search) return municipalities;
@@ -32,8 +46,6 @@ export default function LevelIntro() {
     );
   }, [municipalities, search]);
 
-  const needsMunicipality = validLevel === 'region' || validLevel === 'kommun';
-  
   const handleStart = () => {
     if (needsMunicipality && !municipalityId) return;
     setLocation(`/kompass/${validLevel}`);
@@ -43,9 +55,12 @@ export default function LevelIntro() {
 
   // Attempt geolocation on mount
   useEffect(() => {
-    if (!needsMunicipality || !municipalities || municipalities.length === 0 || municipalityId) return;
+    if (!needsMunicipality || !municipalities || municipalities.length === 0) return;
+    if (municipalityId) return; // Already selected
+    if (hasRequestedGeo.current) return;
     if (!navigator.geolocation) return;
 
+    hasRequestedGeo.current = true;
     setGeoloading(true);
     navigator.geolocation.getCurrentPosition(
       async (position) => {
@@ -72,16 +87,26 @@ export default function LevelIntro() {
           setGeoloading(false);
         }
       },
-      () => setGeoloading(false),
+      () => setGeoloading(false), // Silent fail on denial
       { timeout: 10000 }
     );
   }, [needsMunicipality, municipalities, municipalityId]);
 
-  const acceptSuggestion = () => {
-    if (geoSuggestion) {
-      setMunicipalityId(geoSuggestion.id);
-      setGeoSuggestion(null);
+  const handleSearchChange = (val: string) => {
+    setSearch(val);
+    if (municipalityId) {
+      setMunicipalityId(null);
     }
+  };
+
+  const handleSelectMuni = (muni: { id: string; name: string }) => {
+    setMunicipalityId(muni.id);
+    setSearch(muni.name);
+  };
+
+  const handleClear = () => {
+    setMunicipalityId(null);
+    setSearch('');
   };
 
   return (
@@ -111,75 +136,89 @@ export default function LevelIntro() {
 
           {needsMunicipality && (
             <div className="space-y-4">
-              <h3 className="text-lg font-medium">Välj din kommun</h3>
-              <p className="text-sm text-muted-foreground">
-                För att kunna matcha dig mot rätt {validLevel === 'region' ? 'region' : 'kommun'} behöver vi veta var du bor.
-              </p>
-              
-              {geoloading && (
-                <Card className="border-primary/30 bg-primary/5">
-                  <CardContent className="p-4 flex items-center gap-3">
-                    <Loader2 className="w-5 h-5 animate-spin text-primary" />
-                    <span className="text-sm font-medium">Försöker hitta din plats...</span>
-                  </CardContent>
-                </Card>
-              )}
-
-              {geoSuggestion && !municipalityId && (
-                <Card className="border-green-500/30 bg-green-50 dark:bg-green-950/20 animate-in fade-in slide-in-from-top-2 duration-500">
-                  <CardContent className="p-4 flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <MapPin className="w-5 h-5 text-green-600 dark:text-green-500 shrink-0" />
-                      <div>
-                        <p className="text-sm font-medium text-green-900 dark:text-green-100">
-                          Det ser ut som att du är i <strong>{geoSuggestion.name}</strong>
-                        </p>
-                        <p className="text-xs text-green-700 dark:text-green-300">Stämmer det?</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-2 shrink-0">
-                      <Button size="sm" onClick={acceptSuggestion} className="bg-green-600 hover:bg-green-700 text-white">
-                        <CheckCircle2 className="w-4 h-4 mr-1" /> Ja
-                      </Button>
-                      <Button size="sm" variant="ghost" onClick={() => setGeoSuggestion(null)} className="text-green-900 dark:text-green-100">
-                        Nej
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
+              <div>
+                <h3 className="text-lg font-medium">Välj din kommun</h3>
+                <p className="text-sm text-muted-foreground">
+                  För att kunna matcha dig mot rätt {validLevel === 'region' ? 'region' : 'kommun'} behöver vi veta var du bor.
+                </p>
+              </div>
 
               <div className="relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-3.5 h-4 w-4 text-muted-foreground" />
                 <Input 
                   placeholder="Sök kommun..." 
-                  className="pl-9 bg-white dark:bg-black"
+                  className="pl-9 h-11 bg-white dark:bg-black"
                   value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={(e) => handleSearchChange(e.target.value)}
                 />
               </div>
 
-              {isLoading ? (
-                <div className="h-48 flex items-center justify-center">
-                  <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+              {selectedMunicipality ? (
+                <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900 rounded-lg p-4 flex items-center justify-between animate-in fade-in zoom-in-95 duration-200 mt-2">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-500 shrink-0" />
+                    <div>
+                      <p className="font-medium text-green-900 dark:text-green-100">
+                        {selectedMunicipality.name}
+                      </p>
+                      <p className="text-xs text-green-700 dark:text-green-400">
+                        {selectedMunicipality.regionName}
+                      </p>
+                    </div>
+                  </div>
+                  <Button size="sm" variant="ghost" onClick={handleClear} className="text-green-800 dark:text-green-200 hover:bg-green-100 dark:hover:bg-green-900/50">
+                    Ändra
+                  </Button>
                 </div>
               ) : (
-                <div className="border rounded-md divide-y max-h-64 overflow-y-auto bg-card shadow-sm">
-                  {filteredMuni.length === 0 ? (
-                    <div className="p-4 text-center text-sm text-muted-foreground">
-                      Inga kommuner hittades
+                <div className="border rounded-md divide-y max-h-64 overflow-y-auto bg-card shadow-sm mt-2">
+                  {isLoading ? (
+                    <div className="p-8 flex items-center justify-center">
+                      <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                     </div>
                   ) : (
-                    filteredMuni.map((muni) => (
-                      <button
-                        key={muni.id}
-                        className={`w-full text-left px-4 py-3 text-sm hover:bg-muted/50 transition-colors flex items-center justify-between ${municipalityId === muni.id ? 'bg-primary/10 text-primary font-medium' : ''}`}
-                        onClick={() => setMunicipalityId(muni.id)}
-                      >
-                        <span>{muni.name}</span>
-                        <span className="text-xs text-muted-foreground">{muni.regionName}</span>
-                      </button>
-                    ))
+                    <>
+                      {geoloading && !search && (
+                        <div className="px-4 py-3 text-sm text-muted-foreground flex items-center gap-2">
+                          <Loader2 className="w-4 h-4 animate-spin text-primary" /> Hämtar din plats...
+                        </div>
+                      )}
+                      
+                      {geoSuggestion && !search && (
+                        <button
+                          className="w-full text-left px-4 py-3 text-sm hover:bg-blue-100/50 dark:hover:bg-blue-900/30 transition-colors flex items-center justify-between bg-blue-50/50 dark:bg-blue-950/20 border-b-2 border-blue-100 dark:border-blue-900/50"
+                          onClick={() => {
+                             const m = municipalities?.find(x => x.id === geoSuggestion.id);
+                             if (m) handleSelectMuni(m);
+                          }}
+                        >
+                          <div className="flex items-center gap-2">
+                            <MapPin className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                            <span><strong className="text-blue-800 dark:text-blue-300">Din plats:</strong> {geoSuggestion.name}</span>
+                          </div>
+                          <span className="text-xs text-blue-600/70 dark:text-blue-400/70">
+                            {municipalities?.find(x => x.id === geoSuggestion.id)?.regionName}
+                          </span>
+                        </button>
+                      )}
+
+                      {filteredMuni.length === 0 ? (
+                        <div className="p-4 text-center text-sm text-muted-foreground">
+                          Inga kommuner hittades
+                        </div>
+                      ) : (
+                        filteredMuni.map((muni) => (
+                          <button
+                            key={muni.id}
+                            className="w-full text-left px-4 py-3 text-sm hover:bg-muted/50 transition-colors flex items-center justify-between"
+                            onClick={() => handleSelectMuni(muni)}
+                          >
+                            <span>{muni.name}</span>
+                            <span className="text-xs text-muted-foreground">{muni.regionName}</span>
+                          </button>
+                        ))
+                      )}
+                    </>
                   )}
                 </div>
               )}
