@@ -52,6 +52,7 @@ export default function ResultsScreen() {
   const quiz = quizQuery.data;
 
   const [onlyInAssembly, setOnlyInAssembly] = useState<boolean>(false);
+  const [expandedParty, setExpandedParty] = useState<string | null>(null);
 
   const matches = useMemo(
     () => (quiz ? computeMatches(quiz, levelState.answers) : []),
@@ -270,28 +271,71 @@ export default function ResultsScreen() {
         )}
 
         <View style={{ gap: 12, marginTop: 16 }}>
-          {runnersUp.map((m, i) => (
-            <Card key={m.partyId}>
-              <View style={styles.matchRow}>
-                <View
-                  style={[styles.partyDot, { backgroundColor: m.color || c.primary }]}
+          {runnersUp.map((m) => {
+            const expanded = expandedParty === m.partyId;
+            return (
+              <Pressable
+                key={m.partyId}
+                testID={`party-row-${m.partyId}`}
+                onPress={() => setExpandedParty(expanded ? null : m.partyId)}
+              >
+                <Card
+                  style={
+                    expanded
+                      ? { borderWidth: 2, borderColor: m.color || c.primary }
+                      : undefined
+                  }
                 >
-                  <Text style={styles.partyAbbr}>{m.abbreviation}</Text>
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ color: c.foreground, fontSize: 15, fontFamily: 'Inter_600SemiBold' }}>
-                    {m.name}
-                  </Text>
-                </View>
-                <Text style={{ color: c.foreground, fontSize: 18, fontFamily: 'Inter_700Bold' }}>
-                  {m.matchPercent}%
-                </Text>
-              </View>
-              <View style={{ marginTop: 10 }}>
-                <ProgressBar progress={m.matchPercent / 100} color={m.color || c.primary} height={6} />
-              </View>
-            </Card>
-          ))}
+                  <View style={styles.matchRow}>
+                    <View
+                      style={[styles.partyDot, { backgroundColor: m.color || c.primary }]}
+                    >
+                      <Text style={styles.partyAbbr}>{m.abbreviation}</Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ color: c.foreground, fontSize: 15, fontFamily: 'Inter_600SemiBold' }}>
+                        {m.name}
+                      </Text>
+                    </View>
+                    <Text style={{ color: c.foreground, fontSize: 18, fontFamily: 'Inter_700Bold' }}>
+                      {m.matchPercent}%
+                    </Text>
+                    <Feather
+                      name={expanded ? 'chevron-up' : 'chevron-down'}
+                      size={18}
+                      color={c.mutedForeground}
+                    />
+                  </View>
+                  <View style={{ marginTop: 10 }}>
+                    <ProgressBar progress={m.matchPercent / 100} color={m.color || c.primary} height={6} />
+                  </View>
+                  {expanded && (
+                    <View style={{ marginTop: 12 }}>
+                      <Text style={{ color: c.mutedForeground, fontSize: 12, fontFamily: 'Inter_400Regular' }}>
+                        Baserat på {m.basedOnQuestions} av {m.totalQuestions} frågor
+                      </Text>
+                      {m.description ? (
+                        <Text style={{ color: c.mutedForeground, fontSize: 13, fontFamily: 'Inter_400Regular', lineHeight: 19, marginTop: 8 }}>
+                          {m.description}
+                        </Text>
+                      ) : null}
+                      {m.website ? (
+                        <Pressable
+                          onPress={() => Linking.openURL(m.website!)}
+                          style={({ pressed }) => [styles.websiteRow, { opacity: pressed ? 0.6 : 1 }]}
+                        >
+                          <Feather name="external-link" size={14} color={c.primary} />
+                          <Text style={{ color: c.primary, fontSize: 13, fontFamily: 'Inter_500Medium' }}>
+                            Besök partiets webbplats
+                          </Text>
+                        </Pressable>
+                      ) : null}
+                    </View>
+                  )}
+                </Card>
+              </Pressable>
+            );
+          })}
         </View>
 
         {visibleNonQualified.length > 0 && (
@@ -304,25 +348,69 @@ export default function ResultsScreen() {
               matchningspoäng ({'\u2265'}50% av frågorna krävs).
             </Text>
             <View style={{ gap: 10, marginTop: 12 }}>
-              {visibleNonQualified.map((m) => (
-                <Card key={m.partyId}>
-                  <View style={styles.matchRow}>
-                    <View style={[styles.partyDot, { backgroundColor: m.color || c.mutedForeground }]}>
-                      <Text style={styles.partyAbbr}>{m.abbreviation}</Text>
-                    </View>
-                    <View style={{ flex: 1 }}>
-                      <Text style={{ color: c.foreground, fontSize: 15, fontFamily: 'Inter_600SemiBold' }}>
-                        {m.name}
-                      </Text>
-                      <Text style={{ color: c.mutedForeground, fontSize: 11, fontFamily: 'Inter_400Regular' }}>
-                        {m.basedOnQuestions === 0
-                          ? 'Har inte lämnat svar'
-                          : `Ofullständigt underlag (${m.basedOnQuestions} av ${m.totalQuestions} frågor)`}
-                      </Text>
-                    </View>
-                  </View>
-                </Card>
-              ))}
+              {visibleNonQualified.map((m) => {
+                const expanded = expandedParty === m.partyId;
+                return (
+                  <Pressable
+                    key={m.partyId}
+                    testID={`party-row-${m.partyId}`}
+                    onPress={() => setExpandedParty(expanded ? null : m.partyId)}
+                  >
+                    <Card
+                      style={
+                        expanded
+                          ? { borderWidth: 2, borderColor: m.color || c.mutedForeground }
+                          : undefined
+                      }
+                    >
+                      <View style={styles.matchRow}>
+                        <View style={[styles.partyDot, { backgroundColor: m.color || c.mutedForeground }]}>
+                          <Text style={styles.partyAbbr}>{m.abbreviation}</Text>
+                        </View>
+                        <View style={{ flex: 1 }}>
+                          <Text style={{ color: c.foreground, fontSize: 15, fontFamily: 'Inter_600SemiBold' }}>
+                            {m.name}
+                          </Text>
+                          <Text style={{ color: c.mutedForeground, fontSize: 11, fontFamily: 'Inter_400Regular' }}>
+                            {m.basedOnQuestions === 0
+                              ? 'Har inte lämnat svar'
+                              : `Ofullständigt underlag (${m.basedOnQuestions} av ${m.totalQuestions} frågor)`}
+                          </Text>
+                        </View>
+                        <Feather
+                          name={expanded ? 'chevron-up' : 'chevron-down'}
+                          size={18}
+                          color={c.mutedForeground}
+                        />
+                      </View>
+                      {expanded && (
+                        <View style={{ marginTop: 12 }}>
+                          {m.description ? (
+                            <Text style={{ color: c.mutedForeground, fontSize: 13, fontFamily: 'Inter_400Regular', lineHeight: 19 }}>
+                              {m.description}
+                            </Text>
+                          ) : (
+                            <Text style={{ color: c.mutedForeground, fontSize: 13, fontFamily: 'Inter_400Regular' }}>
+                              Ingen mer information finns om det här partiet ännu.
+                            </Text>
+                          )}
+                          {m.website ? (
+                            <Pressable
+                              onPress={() => Linking.openURL(m.website!)}
+                              style={({ pressed }) => [styles.websiteRow, { opacity: pressed ? 0.6 : 1 }]}
+                            >
+                              <Feather name="external-link" size={14} color={c.primary} />
+                              <Text style={{ color: c.primary, fontSize: 13, fontFamily: 'Inter_500Medium' }}>
+                                Besök partiets webbplats
+                              </Text>
+                            </Pressable>
+                          ) : null}
+                        </View>
+                      )}
+                    </Card>
+                  </Pressable>
+                );
+              })}
             </View>
           </View>
         )}
