@@ -15,18 +15,24 @@ import PartyProfile from '@/pages/party-profile';
 import HowItWorks from '@/pages/info-how-it-works';
 import { Layout } from '@/components/layout';
 
-function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villkor' }) {
+// Kontaktadress för support — visas på /support och /integritet.
+const SUPPORT_EMAIL = 'support@valkompass.app';
+
+function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villkor' | 'support' }) {
   const titles = {
     'metod': 'Vår metod',
     'integritet': 'Integritetspolicy',
     'kallor': 'Källförteckning',
-    'villkor': 'Användarvillkor'
+    'villkor': 'Användarvillkor',
+    'support': 'Support'
   };
   return (
     <Layout>
       <div className="container max-w-3xl mx-auto px-4 py-16 prose prose-slate dark:prose-invert">
         <h1>{titles[type]}</h1>
-        <p className="lead">Här förklarar vi hur Valkompass fungerar, vår inställning till integritet och den metod vi använder för att beräkna resultaten.</p>
+        <p className="lead">{type === 'support'
+          ? 'Hjälp och kontaktuppgifter för Valkompass – webben och mobilappen.'
+          : 'Här förklarar vi hur Valkompass fungerar, vår inställning till integritet och den metod vi använder för att beräkna resultaten.'}</p>
         
         {type === 'metod' && (
           <>
@@ -40,13 +46,23 @@ function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villko
         
         {type === 'integritet' && (
           <>
+            <p className="text-sm text-muted-foreground">Senast uppdaterad: 24 juli 2026. Denna policy gäller både webbplatsen och mobilappen Valkompass (iOS och Android).</p>
             <h2>Ingen inloggning, ingen spårning</h2>
-            <p>Vi tror att politiska åsikter är bland det mest privata en person har. Därför sparas dina svar endast i den lokala lagringen (localStorage) på din egen enhet.</p>
+            <p>Vi tror att politiska åsikter är bland det mest privata en person har. Därför sparas dina svar endast lokalt på din egen enhet — i webbläsarens lokala lagring på webben, och i appens lokala lagring på mobilen.</p>
+            <p>Valkompass kräver ingen inloggning och inget konto. Vi samlar inte in namn, e-postadress, telefonnummer eller annan personlig information. Vi använder inga annons- eller spårningsverktyg från tredje part.</p>
             <p>Ingen data skickas till våra servrar förutom när du uttryckligen väljer att:</p>
             <ul>
               <li>Publicera ditt resultat (då lagras endast matchningsprocenterna, inte dina enskilda svar).</li>
               <li>Utmana en vän (då sparas dina svar temporärt i en krypterad form fram till att utmaningen löper ut).</li>
             </ul>
+            <h2>Anonym statistik</h2>
+            <p>När du slutför en valkompass skickas en anonym räknepuls (endast vilken valnivå som genomförts) så att vi kan visa antalet genomförda kompasser. Den innehåller ingen personlig data och kan inte kopplas till dig.</p>
+            <h2>Platsåtkomst (frivillig)</h2>
+            <p>Om du väljer att tillåta platsåtkomst används din position en gång för att föreslå din kommun. Positionen sparas inte och skickas aldrig till våra servrar.</p>
+            <h2>Radera din data</h2>
+            <p>På mobilen raderar du all lokal data via knappen "Rensa allt och börja om" på startsidan, eller genom att avinstallera appen. På webben använder du knappen nedan.</p>
+            <h2>Kontakt</h2>
+            <p>Frågor om integritet? Kontakta oss på <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.</p>
             <button className="mt-8 px-6 py-3 bg-destructive text-destructive-foreground rounded-lg font-medium hover:bg-destructive/90 transition-colors" onClick={() => { localStorage.clear(); window.location.reload(); }}>
               Radera all min lokala data nu
             </button>
@@ -76,7 +92,24 @@ function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villko
               <li>Du ansvarar för innehållet du publicerar (offentliga resultatsidor). Vi förbehåller oss rätten att ta bort innehåll som bryter mot lagen eller våra riktlinjer.</li>
               <li>Vi samlar in minimal data och endast när du uttryckligen väljer att dela information (se integritetspolicyn).</li>
             </ul>
-            <p>Vid frågor eller klagomål, kontakta oss via projektets officiella kanaler.</p>
+            <p>Vid frågor eller klagomål, kontakta oss på <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.</p>
+          </>
+        )}
+
+        {type === 'support' && (
+          <>
+            <h2>Behöver du hjälp?</h2>
+            <p>Valkompass är en oberoende och kostnadsfri tjänst inför valen 2026. Här hittar du svar på de vanligaste frågorna.</p>
+            <h3>Vanliga frågor</h3>
+            <ul>
+              <li><strong>Mitt resultat försvann.</strong> Dina svar sparas endast lokalt på din enhet. Om du rensar appens data, avinstallerar appen eller byter enhet försvinner de.</li>
+              <li><strong>Varför saknar vissa partier matchningsprocent?</strong> Partier behöver bedömda svar på minst 50 % av frågorna för att få en rättvis matchning. Övriga visas med beskrivning och länk till sin webbplats.</li>
+              <li><strong>Varifrån kommer partiernas svar?</strong> Se vår <a href="/kallor">källförteckning</a> och <a href="/metod">metodsida</a>.</li>
+              <li><strong>Är ni politiskt oberoende?</strong> Ja. Tjänsten är oberoende, algoritmen är öppet redovisad och ingen matchning gynnar något parti.</li>
+            </ul>
+            <h3>Kontakta oss</h3>
+            <p>Hittar du inte svaret? Mejla oss på <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> så återkommer vi så snart vi kan.</p>
+            <p>Är du företrädare för ett parti och vill lämna eller rätta era svar? Hör av dig till samma adress så hjälper vi dig.</p>
           </>
         )}
       </div>
@@ -104,6 +137,7 @@ function Router() {
       <Route path="/integritet"><InfoPages type="integritet" /></Route>
       <Route path="/kallor"><InfoPages type="kallor" /></Route>
       <Route path="/villkor"><InfoPages type="villkor" /></Route>
+      <Route path="/support"><InfoPages type="support" /></Route>
 
       <Route component={NotFound} />
     </Switch>
