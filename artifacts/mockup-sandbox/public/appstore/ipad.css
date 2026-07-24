@@ -1,0 +1,23 @@
+/* Overrides for iPad 13" canvas 2064x2752 */
+html, body {
+  width: 2064px;
+  height: 2752px;
+}
+
+.copy {
+  padding: 170px 200px 0;
+  text-align: center;
+}
+
+.kicker { font-size: 46px; margin-bottom: 50px; }
+
+h1 { font-size: 140px; margin-bottom: 54px; }
+
+.sub { font-size: 56px; max-width: 1500px; margin: 0 auto; }
+
+.phone-wrap { margin-top: 110px; }
+
+.phone {
+  width: 940px;
+  height: 2040px;
+}
