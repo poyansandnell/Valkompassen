@@ -27,6 +27,7 @@ import type {
   ChallengeCreated,
   ChallengeInput,
   CompletionEvent,
+  CreateSupportMessage,
   DeleteResultPageParams,
   GetPartyProfileParams,
   GetQuizParams,
@@ -1226,6 +1227,77 @@ export const useRecordCompletion = <TError = ErrorType<unknown>,
         TContext
       > => {
       return useMutation(getRecordCompletionMutationOptions(options));
+    }
+
+export const getCreateSupportMessageUrl = () => {
+
+
+
+
+  return `/api/support-messages`
+}
+
+/**
+ * @summary Submit a support/contact message
+ */
+export const createSupportMessage = async (createSupportMessage: CreateSupportMessage, options?: RequestInit): Promise<ApiMessage> => {
+
+  return customFetch<ApiMessage>(getCreateSupportMessageUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(createSupportMessage)
+  }
+);}
+
+
+
+
+
+export const getCreateSupportMessageMutationOptions = <TError = ErrorType<ApiMessage>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createSupportMessage>>, TError,{data: BodyType<CreateSupportMessage>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof createSupportMessage>>, TError,{data: BodyType<CreateSupportMessage>}, TContext> => {
+
+const mutationKey = ['createSupportMessage'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createSupportMessage>>, {data: BodyType<CreateSupportMessage>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  createSupportMessage(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateSupportMessageMutationResult = NonNullable<Awaited<ReturnType<typeof createSupportMessage>>>
+    export type CreateSupportMessageMutationBody = BodyType<CreateSupportMessage>
+    export type CreateSupportMessageMutationError = ErrorType<ApiMessage>
+
+    /**
+ * @summary Submit a support/contact message
+ */
+export const useCreateSupportMessage = <TError = ErrorType<ApiMessage>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createSupportMessage>>, TError,{data: BodyType<CreateSupportMessage>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof createSupportMessage>>,
+        TError,
+        {data: BodyType<CreateSupportMessage>},
+        TContext
+      > => {
+      return useMutation(getCreateSupportMessageMutationOptions(options));
     }
 
 export const getGetStatsUrl = () => {

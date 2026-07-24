@@ -419,6 +419,29 @@ export const RecordCompletionResponse = zod.object({
 
 
 /**
+ * @summary Submit a support/contact message
+ */
+export const createSupportMessageBodyNameMax = 100;
+
+export const createSupportMessageBodyEmailMax = 200;
+
+export const createSupportMessageBodyMessageMin = 10;
+export const createSupportMessageBodyMessageMax = 4000;
+
+
+
+export const CreateSupportMessageBody = zod.object({
+  "name": zod.string().max(createSupportMessageBodyNameMax).optional(),
+  "email": zod.string().max(createSupportMessageBodyEmailMax).optional(),
+  "message": zod.string().min(createSupportMessageBodyMessageMin).max(createSupportMessageBodyMessageMax)
+})
+
+export const CreateSupportMessageResponse = zod.object({
+  "message": zod.string()
+})
+
+
+/**
  * @summary Anonymous aggregated statistics
  */
 export const GetStatsResponse = zod.object({

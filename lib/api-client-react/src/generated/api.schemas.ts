@@ -301,6 +301,18 @@ export interface ChallengeComparison {
   mostDisagreedTopics: TopicAgreement[];
 }
 
+export interface CreateSupportMessage {
+  /** @maxLength 100 */
+  name?: string;
+  /** @maxLength 200 */
+  email?: string;
+  /**
+     * @minLength 10
+     * @maxLength 4000
+     */
+  message: string;
+}
+
 export type CompletionEventLevel = typeof CompletionEventLevel[keyof typeof CompletionEventLevel];
 
 

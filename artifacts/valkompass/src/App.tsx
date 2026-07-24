@@ -1,4 +1,4 @@
-import { Route, Switch, Router as WouterRouter } from 'wouter';
+import { Link, Route, Switch, Router as WouterRouter } from 'wouter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -14,9 +14,7 @@ import PublicResult from '@/pages/public-result';
 import PartyProfile from '@/pages/party-profile';
 import HowItWorks from '@/pages/info-how-it-works';
 import { Layout } from '@/components/layout';
-
-// Kontaktadress för support — visas på /support och /integritet.
-const SUPPORT_EMAIL = 'support@valkompass.app';
+import { SupportForm } from '@/components/support-form';
 
 function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villkor' | 'support' }) {
   const titles = {
@@ -40,7 +38,7 @@ function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villko
             <p>Varje fråga besvaras på en skala från "Instämmer helt" (2) till "Tar helt avstånd" (-2). Om en användare hoppar över en fråga, eller om ett parti saknar fastställd åsikt, räknas frågan inte med i slutpoängen.</p>
             <p>Likheten per fråga beräknas som: <code>1 - abs(användarens svar - partiets svar) / 4</code>. En perfekt träff ger 1, och maximal skillnad (2 mot -2) ger 0.</p>
             <p>Matchningsprocenten är det vägda genomsnittet av likheten över alla besvarade gemensamma frågor, där användaren kan välja att ge vissa frågor högre vikt (0.75x till 2.25x).</p>
-            <p>Läs mer på sidan <a href="/sa-fungerar-det">Så fungerar det</a> där vi förklarar beräkningen i detalj med konkreta exempel.</p>
+            <p>Läs mer på sidan <Link href="/sa-fungerar-det">Så fungerar det</Link> där vi förklarar beräkningen i detalj med konkreta exempel.</p>
           </>
         )}
         
@@ -54,6 +52,7 @@ function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villko
             <ul>
               <li>Publicera ditt resultat (då lagras endast matchningsprocenterna, inte dina enskilda svar).</li>
               <li>Utmana en vän (då sparas dina svar temporärt i en krypterad form fram till att utmaningen löper ut).</li>
+              <li>Kontakta oss via supportformuläret (se nedan).</li>
             </ul>
             <h2>Anonym statistik</h2>
             <p>När du slutför en valkompass skickas en anonym räknepuls (endast vilken valnivå som genomförts) så att vi kan visa antalet genomförda kompasser. Den innehåller ingen personlig data och kan inte kopplas till dig.</p>
@@ -61,8 +60,8 @@ function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villko
             <p>Om du väljer att tillåta platsåtkomst används din position en gång för att föreslå din kommun. Positionen sparas inte och skickas aldrig till våra servrar.</p>
             <h2>Radera din data</h2>
             <p>På mobilen raderar du all lokal data via knappen "Rensa allt och börja om" på startsidan, eller genom att avinstallera appen. På webben använder du knappen nedan.</p>
-            <h2>Kontakt</h2>
-            <p>Frågor om integritet? Kontakta oss på <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.</p>
+            <h2>Om du kontaktar oss</h2>
+            <p>Om du väljer att skriva till oss via <Link href="/support">supportformuläret</Link> sparas ditt meddelande — och namn och e-postadress om du frivilligt anger dem — på våra servrar, endast för att vi ska kunna läsa och besvara ditt ärende. Uppgifterna används inte till något annat och delas aldrig med tredje part. Vill du att ditt meddelande raderas, skriv till oss så tar vi bort det.</p>
             <button className="mt-8 px-6 py-3 bg-destructive text-destructive-foreground rounded-lg font-medium hover:bg-destructive/90 transition-colors" onClick={() => { localStorage.clear(); window.location.reload(); }}>
               Radera all min lokala data nu
             </button>
@@ -92,7 +91,7 @@ function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villko
               <li>Du ansvarar för innehållet du publicerar (offentliga resultatsidor). Vi förbehåller oss rätten att ta bort innehåll som bryter mot lagen eller våra riktlinjer.</li>
               <li>Vi samlar in minimal data och endast när du uttryckligen väljer att dela information (se integritetspolicyn).</li>
             </ul>
-            <p>Vid frågor eller klagomål, kontakta oss på <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.</p>
+            <p>Vid frågor eller klagomål, kontakta oss via vår <Link href="/support">supportsida</Link>.</p>
           </>
         )}
 
@@ -104,12 +103,13 @@ function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villko
             <ul>
               <li><strong>Mitt resultat försvann.</strong> Dina svar sparas endast lokalt på din enhet. Om du rensar appens data, avinstallerar appen eller byter enhet försvinner de.</li>
               <li><strong>Varför saknar vissa partier matchningsprocent?</strong> Partier behöver bedömda svar på minst 50 % av frågorna för att få en rättvis matchning. Övriga visas med beskrivning och länk till sin webbplats.</li>
-              <li><strong>Varifrån kommer partiernas svar?</strong> Se vår <a href="/kallor">källförteckning</a> och <a href="/metod">metodsida</a>.</li>
+              <li><strong>Varifrån kommer partiernas svar?</strong> Se vår <Link href="/kallor">källförteckning</Link> och <Link href="/metod">metodsida</Link>.</li>
               <li><strong>Är ni politiskt oberoende?</strong> Ja. Tjänsten är oberoende, algoritmen är öppet redovisad och ingen matchning gynnar något parti.</li>
             </ul>
             <h3>Kontakta oss</h3>
-            <p>Hittar du inte svaret? Mejla oss på <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> så återkommer vi så snart vi kan.</p>
-            <p>Är du företrädare för ett parti och vill lämna eller rätta era svar? Hör av dig till samma adress så hjälper vi dig.</p>
+            <p>Hittar du inte svaret? Skriv till oss via formuläret nedan så återkommer vi så snart vi kan. Ange din e-postadress om du vill ha svar.</p>
+            <p>Är du företrädare för ett parti och vill lämna eller rätta era svar? Använd samma formulär så hjälper vi dig.</p>
+            <SupportForm />
           </>
         )}
       </div>

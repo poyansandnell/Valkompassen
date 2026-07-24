@@ -27,7 +27,7 @@ DÄRFÖR VALKOMPASS
 • Anonymt – ingen inloggning, inga konton, ingen spårning
 
 DIN INTEGRITET
-Dina svar sparas endast lokalt på din telefon. Ingenting skickas till några servrar och vi samlar inte in någon personlig information. Politiska åsikter är privata – och det förblir de.
+Dina svar sparas endast lokalt på din telefon och skickas aldrig till några servrar. Ingen inloggning, inga konton, ingen spårning. Politiska åsikter är privata – och det förblir de.
 
 SÅ FUNGERAR MATCHNINGEN
 Varje partisvar är redaktionellt bedömt utifrån partiernas officiella program och märkt med källa. Partier med bedömda svar på minst hälften av frågorna får en matchningsprocent; övriga visas med beskrivning och länk till sin webbplats.
@@ -38,7 +38,7 @@ Ladda ner och ta reda på var du står inför valet 2026!
 val,valet 2026,politik,parti,riksdag,kommun,region,valkompass,rösta,demokrati
 
 ## App-integritet (App Stores frågeformulär)
-- Samlar appen in data? **Nej** (allt sparas lokalt; den anonyma räknepulsen innehåller ingen identifierbar data)
+- Samlar appen in data? **Nej** för själva appen (svaren sparas lokalt; den anonyma räknepulsen innehåller ingen identifierbar data). Obs: supportformuläret finns på webbplatsen, inte i appen — om du väljer att skriva dit sparas meddelandet och frivilligt angivna kontaktuppgifter, vilket redovisas i integritetspolicyn.
 - Spårning: **Nej**
 - Plats: används endast lokalt för kommunförslag, sparas ej, skickas ej — ange "Location: Not collected" men förklara i granskningsanteckningen att platsbehörigheten är frivillig och används på enheten.
 
@@ -52,3 +52,7 @@ Valkompass is an independent, neutral Swedish election compass for the 2026 elec
 4. Skärmbilder: 6,7" iPhone (1290×2796) och Android-telefon – ta från appen
 5. Klistra in texterna ovan
 6. Skicka till granskning
+
+## Supportmeddelanden
+Kontakt sker via formuläret på https://attached-assets-y1phu.replit.app/support.
+Inkomna meddelanden sparas i databastabellen `support_messages` (öppna Database-panelen i Replit för att läsa dem).

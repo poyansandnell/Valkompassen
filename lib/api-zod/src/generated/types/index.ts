@@ -16,6 +16,7 @@ export * from './challengeInputLevel';
 export * from './challengeLevel';
 export * from './completionEvent';
 export * from './completionEventLevel';
+export * from './createSupportMessage';
 export * from './deleteResultPageParams';
 export * from './getPartyProfileLevel';
 export * from './getPartyProfileParams';
