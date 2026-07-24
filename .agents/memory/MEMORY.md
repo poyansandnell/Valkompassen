@@ -6,4 +6,6 @@
 
 - [localStorage persistence race](localstorage-persistence-race.md) — persist client state synchronously in the setState updater, never via useEffect; effect-based writes drop the last update before navigation.
 
+- [Lokalpartiresearch](localparty-research.md) — hemsidor/beskrivningar/svar för 138 lokalpartier från deras egna sajter; strikt null-regel, fingerprint-skydd i seed, regenereras efter val.
+
 - [Fullmäktige mandate pipeline](mandate-data-pipeline.md) — inAssembly for all kommuner/regions comes from SCB; refresh after each election with update-mandates + seed; local parties stay manual.

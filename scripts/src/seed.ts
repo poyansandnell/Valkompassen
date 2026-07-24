@@ -311,6 +311,32 @@ const LOCAL_PARTY_DATA: {
   ),
 );
 
+// Redaktionell research om de lokala partierna: hemsida, kort beskrivning
+// och (där partiets publicerade material ger besked) bedömda svar på de
+// generiska kommunfrågorna. Bedömningarna är strikta — null där materialet
+// inte ger tydligt besked. Genererad juli 2026 från partiernas webbplatser.
+const LOCAL_PARTY_RESEARCH: {
+  assessedAt: string;
+  questionFingerprint: { first: string; last: string; count: number };
+  parties: Record<
+    string,
+    {
+      website: string | null;
+      description: string | null;
+      answers: (number | null)[] | null;
+      sources: string[];
+    }
+  >;
+} = JSON.parse(
+  readFileSync(
+    join(dirname(fileURLToPath(import.meta.url)), "data", "localPartyResearch.json"),
+    "utf8",
+  ),
+);
+
+const LOCAL_RESEARCH_JUSTIFICATION =
+  "Redaktionell bedömning utifrån partiets eget publicerade material (partiets webbplats), juli 2026. Där materialet inte ger tydligt besked har partiet inget bedömt svar.";
+
 // ---------------------------------------------------------------- questions
 
 // [text, category, explanation]
@@ -487,15 +513,19 @@ async function main() {
   );
   const dataLocalParties: PartySeed[] = LOCAL_PARTY_DATA.parties
     .filter((p) => !manualIds.has(p.id))
-    .map((p) => ({
-      id: p.id,
-      name: p.name,
-      abbreviation: p.abbreviation,
-      color: "#64748b",
-      description:
-        "Lokalt parti med mandat i fullmäktige. Partiet har ännu inte lämnat eller fått bedömda svar i valkompassen.",
-      website: null,
-    }));
+    .map((p) => {
+      const research = LOCAL_PARTY_RESEARCH.parties[p.id];
+      return {
+        id: p.id,
+        name: p.name,
+        abbreviation: p.abbreviation,
+        color: "#64748b",
+        description:
+          research?.description ??
+          "Lokalt parti med mandat i fullmäktige. Partiet har ännu inte lämnat eller fått bedömda svar i valkompassen.",
+        website: research?.website ?? null,
+      };
+    });
   const allParties = [
     ...NATIONAL_PARTIES,
     ...LOCAL_PARTIES,
@@ -732,6 +762,69 @@ async function main() {
   }
   // Sörmlandslistan: ingen publicerad politik att bedöma — inga svar alls.
   // Partiet visas under "Fler partier som ställer upp" som ej kvalificerat.
+
+  // Lokala partier med redaktionellt bedömda svar från deras egna
+  // webbplatser (localPartyResearch.json). Endast kommunfrågorna (kom-).
+  const komQuestions = questionRows.filter((q) => q.id!.startsWith("kom-"));
+  // Skydd mot att frågorna ändras/omordnas utan att researchen görs om:
+  // fingeravtrycket (första/sista frågetexten + antal) måste stämma exakt.
+  const fp = LOCAL_PARTY_RESEARCH.questionFingerprint;
+  if (
+    fp.count !== komQuestions.length ||
+    fp.first !== komQuestions[0]!.text ||
+    fp.last !== komQuestions[komQuestions.length - 1]!.text
+  ) {
+    throw new Error(
+      "Researchfel: kommunfrågorna matchar inte questionFingerprint i localPartyResearch.json — gör om researchen innan seedning.",
+    );
+  }
+  let researchAnswerCount = 0;
+  const dataLocalIds = new Set(dataLocalParties.map((p) => p.id));
+  for (const [partyId, research] of Object.entries(LOCAL_PARTY_RESEARCH.parties)) {
+    if (!research.answers || !dataLocalIds.has(partyId)) continue;
+    if (research.answers.length !== komQuestions.length) {
+      throw new Error(
+        `Researchfel: ${partyId} har ${research.answers.length} värden men det finns ${komQuestions.length} kommunfrågor.`,
+      );
+    }
+    komQuestions.forEach((q, i) => {
+      const value = research.answers![i] ?? null;
+      answerRows.push({
+        partyId,
+        questionId: q.id!,
+        value,
+        answerOrigin: value == null ? "none" : "editorial",
+        justification: value == null ? null : LOCAL_RESEARCH_JUSTIFICATION,
+        sources:
+          value == null
+            ? []
+            : (research.sources.length
+                ? research.sources
+                : research.website
+                  ? [research.website]
+                  : []
+              ).map((url) => {
+                // Märk källan ärligt: bara partiets egen domän får heta
+                // "Partiets webbplats", allt annat är extern källa.
+                const host = url.match(/^https?:\/\/([^/]+)/)?.[1] ?? "";
+                const siteHost =
+                  research.website?.match(/^https?:\/\/([^/]+)/)?.[1] ?? null;
+                const own =
+                  siteHost &&
+                  (host === siteHost ||
+                    host.replace(/^www\./, "") === siteHost.replace(/^www\./, ""));
+                return {
+                  title: own ? "Partiets webbplats" : `Extern källa (${host})`,
+                  url,
+                };
+              }),
+      });
+      if (value != null) researchAnswerCount++;
+    });
+  }
+  console.log(
+    `Lokalpartiresearch: ${Object.keys(LOCAL_PARTY_RESEARCH.parties).length} partier med hemsida/beskrivning, ${researchAnswerCount} bedömda svar.`,
+  );
 
   // Insert in chunks to stay under parameter limits.
   for (let i = 0; i < answerRows.length; i += 500) {

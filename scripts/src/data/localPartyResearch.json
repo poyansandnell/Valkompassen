@@ -1,0 +1,2807 @@
+{
+ "source": "Redaktionell bedömning utifrån partiernas egna webbplatser och annat publicerat material, hämtat juli 2026. Skala 2..-2, null = materialet ger inte besked. Beskrivningar neutraliserade redaktionellt.",
+ "assessedAt": "2026-07-24",
+ "questionSet": "kom",
+ "questionFingerprint": {
+  "count": 20,
+  "first": "Kommunen bör öka grundbemanningen i skolan, även om det kräver besparingar på annat.",
+  "last": "Medborgarna bör kunna väcka förslag som fullmäktige måste behandla."
+ },
+ "parties": {
+  "aktiv-samling-bodenalternativet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Aktiv samling - Bodenalternativet är ett lokalt parti i Bodens kommun som driver frågor om samverkan över partigränserna och landsbygdsutveckling.",
+   "sources": [
+    "https://www.svt.se/nyheter/lokalt/norrbotten/inge-andersson-s-pa-femte-plats",
+    "https://www.nsd.se/nyheter/boden/artikel/ba-forslag-bygg-aldreboende-i-gunnarsbyn/rgq1107l"
+   ],
+   "website": null
+  },
+  "allt-for-ragunda": {
+   "answers": null,
+   "description": "Allt för Ragunda är ett lokalt parti i Ragunda kommun.",
+   "sources": [
+    "https://www.ltz.se/organisation/b30275be-b362-42f8-ba2c-90f051d93b4b",
+    "https://www.op.se/ragunda/lista-det-har-lovade-ragundas-partier-infor-valet-c-afr-och-kd-vill-se-full-fart-i-jarasskolan-redan-nasta-host/"
+   ],
+   "website": "https://www.ltz.se/"
+  },
+  "alska-svedala": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    2,
+    null,
+    null,
+    2,
+    null,
+    2,
+    null,
+    2,
+    2,
+    2
+   ],
+   "description": "Älska Svedala är ett lokalt parti i Svedala kommun som driver frågor om lokal demokrati och föreningsliv.",
+   "sources": [
+    "https://www.alskasvedala.se/",
+    "https://www.alskasvedala.se/om-oss/var-mission/"
+   ],
+   "website": "https://www.alskasvedala.se/"
+  },
+  "alternativet": {
+   "answers": null,
+   "description": "Alternativet är ett lokalt parti i Bromölla kommun som driver frågor om kollektivtrafik.",
+   "sources": [
+    "https://www.kristianstadsbladet.se/bromolla/alternativet-vill-se-gratis-bussresor-for-funktionshindrade/",
+    "https://dan.wikitrans.net/Alternativet_i_Brom%C3%B6lla"
+   ],
+   "website": "http://www.alternativetibromolla.se/"
+  },
+  "arvikapartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    2
+   ],
+   "description": "Arvikapartiet är ett lokalt parti i Arvika kommun som driver frågor om kommunal insyn, politikerlöner och direktdemokrati.",
+   "sources": [
+    "https://www.arvikapartiet.se/",
+    "https://www.arvikapartiet.se/demokrati-och-politisk-forvaltning/"
+   ],
+   "website": "https://www.arvikapartiet.se/"
+  },
+  "aselepartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    -1,
+    null,
+    null,
+    null,
+    null,
+    -2,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Åselepartiet är ett lokalt parti i Åsele kommun som driver frågor om näringsliv och ekonomi.",
+   "sources": [
+    "https://valkompass.svt.se/2018/kommun/asele/aselepartiet-asele-kommun/",
+    "https://www.allabolag.se/8024914270/aselepartiet"
+   ],
+   "website": "http://www.aselepartiet.se/"
+  },
+  "balstapartiet": {
+   "answers": null,
+   "description": "Bålstapartiet är ett lokalt parti i Håbo kommun som driver frågor om bevarande av ortens karaktär.",
+   "sources": [
+    "https://balstapartiet.nu/",
+    "https://balstapartiet.nu/om-oss/"
+   ],
+   "website": "https://balstapartiet.nu/"
+  },
+  "barapartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    2,
+    null
+   ],
+   "description": "Barapartiet är ett lokalt parti i Svedala kommun som driver frågor om kommunal service och närdemokrati.",
+   "sources": [
+    "https://www.barapartiet.se/",
+    "https://valkompass.svt.se/2022/parti/barapartiet-svedala"
+   ],
+   "website": "https://www.barapartiet.se/"
+  },
+  "bergspartiet": {
+   "answers": null,
+   "description": "Bergspartiet är ett lokalt parti i Bergs kommun.",
+   "sources": [
+    "https://berg.se/kommun-och-politik/politisk-organisation-moten-och-protokoll/politiska-partier",
+    "https://www.jamtlandstidning.se/berg-bergs-kommun-politik/moderat-valsamverkan-med-bergspartiet-och-sd/163347"
+   ],
+   "website": "https://berg.se/"
+  },
+  "bjarepartiet": {
+   "answers": [
+    null,
+    null,
+    2,
+    1,
+    null,
+    null,
+    1,
+    -1,
+    2,
+    null,
+    1,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    2,
+    null
+   ],
+   "description": "Bjärepartiet är ett lokalt parti i Båstads kommun som driver frågor om miljöbevarande, välfärd och kommunal förvaltning.",
+   "sources": [
+    "https://bjarepartiet.se/",
+    "https://bjarepartiet.se/partiprogram/"
+   ],
+   "website": "https://bjarepartiet.se/"
+  },
+  "bollnaspartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    1,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "Bollnäspartiet är ett blocköverskridande lokalt parti i Bollnäs kommun som driver frågor om tillväxt och inflyttning.",
+   "sources": [
+    "https://bollnaspartiet.se/om-oss/",
+    "https://bollnaspartiet.se/2018/08/bollnaspartiets-valbroschyr-2/"
+   ],
+   "website": "https://bollnaspartiet.se/"
+  },
+  "brobyggarpartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    2,
+    1,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Brobyggarpartiet är ett lokalt parti i Öckerö kommun som driver frågor om infrastruktur och vägförbindelser.",
+   "sources": [
+    "https://www.brobyggarpartiet.com/",
+    "https://www.brobyggarpartiet.com/partiprogram-2026"
+   ],
+   "website": "https://www.brobyggarpartiet.com/"
+  },
+  "bygdepartiet": {
+   "answers": [
+    null,
+    2,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Bygdepartiet är ett lokalt parti i Leksands kommun som driver frågor om decentralisering och bevarande av samhällsservice.",
+   "sources": [
+    "https://bygdepartiet.se/",
+    "https://bygdepartiet.se/v-r-politik"
+   ],
+   "website": "https://bygdepartiet.se/"
+  },
+  "dalademokraterna": {
+   "answers": null,
+   "description": "Dalademokraterna är ett lokalt parti i Ludvika kommun som driver frågor om skola, vård och föreningsliv.",
+   "sources": [
+    "https://dalademokraterna.net/",
+    "https://www.nyaludvikatidning.se/ludvika/dalademokraterna-siktar-uppat-satter-ner-foten-mot-multiarenan/"
+   ],
+   "website": "https://dalademokraterna.net/"
+  },
+  "de-oberoende-i-torsby": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    1,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "De Oberoende i Torsby är ett lokalt parti i Torsby kommun som driver frågor om att motverka centralisering.",
+   "sources": [
+    "https://torsby.tromanpublik.se/parti/b69c7d9d-7c85-4775-a4ee-04a24fc168ad",
+    "https://www.svt.se/nyheter/lokalt/varmland/nya-partiet-de-oberoende-i-torsby-hoppas-pa-fem-mandat"
+   ],
+   "website": null
+  },
+  "demokraterna": {
+   "answers": [
+    null,
+    null,
+    null,
+    2,
+    2,
+    2,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "Demokraterna är ett lokalt parti i Göteborgs stad som driver frågor om trygghet, vård, skola och näringsliv.",
+   "sources": [
+    "https://demokraterna.se/",
+    "https://demokraterna.se/var-politik/"
+   ],
+   "website": "https://demokraterna.se/"
+  },
+  "demokraterna-i-norberg": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    -2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Demokraterna i Norberg är ett lokalt parti i Norbergs kommun som driver frågor om dialog med näringslivet.",
+   "sources": [
+    "https://www.fagersta-posten.se/opinion/debatt/fogelbergs-beskrivning-stammer-inte/",
+    "https://www.fagersta-posten.se/opinion/debatt/din-vi-levererar/"
+   ],
+   "website": null
+  },
+  "demokratiresan": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    1,
+    1,
+    null,
+    2,
+    null,
+    null,
+    2,
+    null,
+    2,
+    null,
+    2,
+    2,
+    null
+   ],
+   "description": "Demokratiresan är ett lokalt parti i Sotenäs kommun som driver frågor om förvaltning, ekonomi och attraktivitet.",
+   "sources": [
+    "https://demokratiresan.se/",
+    "https://demokratiresan.se/?page_id=138"
+   ],
+   "website": "https://demokratiresan.se/"
+  },
+  "demokratiska-sekulara-socialister-arbetarpartiet": {
+   "answers": null,
+   "description": "Arbetarpartiet i Umeå är ett socialistiskt parti som driver frågor om välfärd och trygghet.",
+   "sources": [
+    "https://jobbepxk.firebaseapp.com/94680/68053.html",
+    "https://www.svt.se/nyheter/inrikes/har-ar-lokala-partierna-som-du-kan-rosta-pa-i-valet-2022-kommun-for-kommun"
+   ],
+   "website": "https://jobbepxk.firebaseapp.com/"
+  },
+  "drevvikenpartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    1,
+    2,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "Drevvikenpartiet är ett lokalt parti i Huddinge kommun som driver frågan om kommundelning.",
+   "sources": [
+    "https://drevvikenpartiet.se/",
+    "https://drevvikenpartiet.se/partiprogram/"
+   ],
+   "website": "https://drevvikenpartiet.se/"
+  },
+  "empa-r-tiet": {
+   "answers": [
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    -2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "EMPA(R)TIET är ett lokalt parti i Vaggeryds kommun som driver frågor om äldreomsorg, miljö och föreningsliv.",
+   "sources": [
+    "https://valkompass.svt.se/2022/parti/empa(r)tiet-vaggeryd",
+    "https://vaggeryd.tromanpublik.se/parti/071a94f5-dd06-4a79-9952-8d5a696dfcbf"
+   ],
+   "website": null
+  },
+  "engelholmspartiet": {
+   "answers": [
+    null,
+    2,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Engelholmspartiet är ett lokalt parti i Ängelholms kommun som driver frågor om skola och äldreomsorg.",
+   "sources": [
+    "https://engelholmspartiet.se/",
+    "https://engelholmspartiet.se/var-politik/"
+   ],
+   "website": "https://engelholmspartiet.se/"
+  },
+  "feministiskt-initiativ": {
+   "answers": null,
+   "description": "Feministerna är ett politiskt parti som driver frågor om välfärd och rättvisa.",
+   "sources": [
+    "https://www.mariestadstidningen.se/gullspang/feministiskt-initiativ-byter-namn-till-feministerna-gullspang/",
+    "https://feministerna.se/"
+   ],
+   "website": "https://feministerna.se/"
+  },
+  "fokus-bjarred": {
+   "answers": [
+    2,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Fokus är ett lokalt parti i Lomma kommun som driver frågor om kommunal service.",
+   "sources": [
+    "https://fokuspartiet.se/",
+    "https://fokuspartiet.se/sundainvesteringar"
+   ],
+   "website": "https://fokuspartiet.se/"
+  },
+  "folkets-rost-vox-humana": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Folkets röst - VOX humana är ett lokalt parti i Härjedalens kommun som driver frågor om skola, vård och samverkan.",
+   "sources": [
+    "https://valkompass.svt.se/2018/kommun/harjedalen/folkets-rost-vox-humana-harjedalens-kommun/",
+    "https://www.tidningenharjedalen.se/organisation/72f8561a-d4b6-3d7c-ba32-d2968273be51"
+   ],
+   "website": null
+  },
+  "folkets-val": {
+   "answers": null,
+   "description": "Folkets Väl är ett lokalt parti i Hässleholms kommun.",
+   "sources": [
+    "https://www.hassleholm.se/kommun-och-politik/sa-styrs-hassleholms-kommun/valresultat-och-mandatfordelning",
+    "https://hassleholm.tromanpublik.se/"
+   ],
+   "website": "https://www.hassleholm.se/"
+  },
+  "folkinitiativet-arjeplog": {
+   "answers": null,
+   "description": "Folkinitiativet Arjeplog är ett lokalt parti i Arjeplogs kommun.",
+   "sources": [
+    "https://folkinitiativetarjeplog.se/",
+    "https://folkinitiativetarjeplog.se/folkinitiativet-arjeplog-var-politik"
+   ],
+   "website": "https://folkinitiativetarjeplog.se/"
+  },
+  "folkviljan-orust": {
+   "answers": null,
+   "description": "Folkviljan Orust är ett lokalt parti i Orust kommun som driver frågor om näringsliv och effektivitet.",
+   "sources": [
+    "https://valkompass.svt.se/2018/kommun/orust/folkviljan-orust-orust-kommun/",
+    "https://orust.tromanpublik.se/parti/3bf69c0d-9fe6-4802-9066-8c27f6c1afbe"
+   ],
+   "website": "http://folkviljanorust.se/"
+  },
+  "fornyalund": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "FörNyaLund är ett lokalt parti i Lunds kommun som driver frågor om stadsutveckling, skola, äldreomsorg och infrastruktur.",
+   "sources": [
+    "https://fornyalund.se/",
+    "https://fornyalund.se/var-historia/"
+   ],
+   "website": "https://fornyalund.se/"
+  },
+  "framtid-i-ale": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    1,
+    1,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    1,
+    null,
+    null
+   ],
+   "description": "Framtid i Ale är ett lokalt parti i Ale kommun som driver frågor om företagande, byggnation, skola, äldreomsorg och trygghetssamverkan.",
+   "sources": [
+    "https://framtidiale.nu/",
+    "https://framtidiale.nu/var-politik/"
+   ],
+   "website": "https://framtidiale.nu/"
+  },
+  "framtid-i-jokkmokks-kommun": {
+   "answers": null,
+   "description": "Framtid i Jokkmokks kommun driver frågor om miljö och vattenkraft.",
+   "sources": [
+    "https://partierna.se/parti/framtid-i-jokkmokks-kommun/",
+    "https://valkompass.svt.se/2022/parti/framtid-i-jokkmokks-kommun-jokkmokk"
+   ],
+   "website": null
+  },
+  "framtid-i-kalix": {
+   "answers": null,
+   "description": "Framtid i Kalix är ett lokalt parti i Kalix kommun som driver frågor om förvaltnings effektivitet.",
+   "sources": [
+    "https://www.nsd.se/nyheter/kalix/artikel/brak-om-avtalet-med-ridklubben-sa-har-kan-vi-inte-ha-det/jow22n8l",
+    "https://kalix.tromanpublik.se/parti/4887f663-78b0-42b5-979d-f34de7480368"
+   ],
+   "website": "https://www.nsd.se/"
+  },
+  "framtid-oland": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    -2,
+    null,
+    null,
+    2,
+    null,
+    null,
+    2,
+    1,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Framtid Öland är ett lokalt parti i Borgholms kommun som driver frågor om ekonomisk förvaltning och landsbygdsutveckling.",
+   "sources": [
+    "https://framtidoland.se/vart-parti.html",
+    "https://framtidoland.se/politik.html"
+   ],
+   "website": "https://framtidoland.se/"
+  },
+  "framtid-s": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Framtid S är ett lokalt parti i Pajala kommun som driver frågor om äldreomsorg och näringsliv.",
+   "sources": [
+    "https://valkompass.svt.se/2022/parti/framtid-s-pajala",
+    "https://www.svt.se/nyheter/lokalt/norrbotten/framtid-s-nytt-parti-i-pajala"
+   ],
+   "website": null
+  },
+  "framtid-s-overtornea": {
+   "answers": null,
+   "description": "Framtid S Övertorneå är ett lokalt parti i Övertorneå kommun.",
+   "sources": [
+    "https://www.nsd.se/nyheter/overtornea/artikel/nya-framtid-s-hoppas-pa-mandat-i-fullmaktige/reyvpozj",
+    "https://www.nsd.se/nyheter/overtornea/artikel/ar-av-splittring-och-brak-nu-bildas-ett-nytt-parti-da-har-vi-mullvader-i-partiet/rmn4k01l"
+   ],
+   "website": "https://www.nsd.se/"
+  },
+  "framtidspartiet-i-lekeberg": {
+   "answers": null,
+   "description": "Framtidspartiet i Lekeberg är ett lokalt parti i Lekebergs kommun.",
+   "sources": [
+    "http://www.leijonborg.nu/page_232.html",
+    "http://www.leijonborg.nu/page_226.html"
+   ],
+   "website": "http://www.leijonborg.nu/"
+  },
+  "gotenes-framtid": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    -1,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Götenes framtid är ett lokalt parti i Götene kommun som driver frågor om lokala satsningar på skola, badhus och fritidsområden.",
+   "sources": [
+    "https://www.gotene.se/kommunochpolitik/politiskorganisation/partier.221.html",
+    "https://valkompass.svt.se/2022/parti/gotenes-framtid-gotene"
+   ],
+   "website": "http://www.gotenesframtid.com/"
+  },
+  "grythyttelistan": {
+   "answers": null,
+   "description": "Grythyttelistan är ett lokalt parti i Hällefors kommun som driver frågor om vård och omsorg.",
+   "sources": [
+    "https://www.filipstadstidning.se/2022/09/07/grythyttelistan-vill-driva-vard-och-omsorgs-fragor-lokalt-07a7b/",
+    "https://www.hellefors.se/16583.html"
+   ],
+   "website": null
+  },
+  "habodemokraterna": {
+   "answers": [
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    2,
+    -2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2
+   ],
+   "description": "Habodemokraterna är ett lokalt parti i Habo kommun som driver frågor om äldreomsorg, landsbygdsutveckling och sänkta kommunalskatter.",
+   "sources": [
+    "https://valkompass.svt.se/2022/parti/habodemokraterna-habo",
+    "https://www.allabolag.se/foretag/habodemokraterna/habo/f%C3%B6reningar/3OPWRB7I63IGG"
+   ],
+   "website": null
+  },
+  "halmstads-lokala-parti": {
+   "answers": null,
+   "description": "Halmstadpartiet är ett lokalt parti i Halmstads kommun.",
+   "sources": [
+    "https://www.svt.se/nyheter/lokalt/halland/halmstads-lokala-parti-byter-namn-och-siktar-mot-regionen",
+    "https://www.dagenssamhalle.se/styrning-och-beslut/demokrati/petade-moderater-gar-till-nybildat-lokalparti/"
+   ],
+   "website": null
+  },
+  "harjedalspartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    1,
+    -2,
+    null,
+    null,
+    2,
+    null,
+    -1,
+    null,
+    2,
+    2
+   ],
+   "description": "Härjedalspartiet var ett lokalt parti i Härjedalens kommun som driver frågor om självstyre och landsbygdsutveckling; partiet ställer inte upp i valet 2026.",
+   "sources": [
+    "https://harjedalspartiet.org/",
+    "https://harjedalspartiet.org/partiprogram/"
+   ],
+   "website": "https://harjedalspartiet.org/"
+  },
+  "hela-edas-lista": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    -2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Hela Edas Lista är ett lokalt parti i Eda kommun som driver frågor om skola, barnomsorg, äldreomsorg och motstånd mot vindkraft.",
+   "sources": [
+    "https://www.helaedaslista.se/",
+    "https://www.helaedaslista.se/var-politik/"
+   ],
+   "website": "https://www.helaedaslista.se/"
+  },
+  "hela-sunne": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Hela Sunne är ett lokalt parti i Sunne kommun som driver frågor om byskolor och glesbygd.",
+   "sources": [
+    "https://www.helasunne.se/",
+    "http://www.helasunne.se/?page_id=238"
+   ],
+   "website": "https://www.helasunne.se/"
+  },
+  "hela-vara-kommuns-basta": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    -2,
+    null,
+    null,
+    2,
+    null,
+    null,
+    2,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null
+   ],
+   "description": "Hela Vara kommuns bästa är ett lokalt parti i Vara kommun som driver frågor om ekonomi, landsbygd och insyn.",
+   "sources": [
+    "https://hvkb.se/var-politik/",
+    "https://hvkb.se/var-politik/var-politik-2026-2030-2/"
+   ],
+   "website": "https://hvkb.se/"
+  },
+  "hjarta-for-halmstad": {
+   "answers": null,
+   "description": "Hjärta för Halmstad är ett lokalt parti i Halmstads kommun som driver frågor om medborgardialog.",
+   "sources": [
+    "https://hjartaforhalmstad.com/",
+    "https://www.svt.se/nyheter/lokalt/halland/nytt-parti-sager-att-de-ska-lyssna-pa-halmstadsborna"
+   ],
+   "website": "https://hjartaforhalmstad.com/"
+  },
+  "hoforspartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    -1,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Hoforspartiet är ett lokalt parti i Hofors kommun som driver frågor om invånardialog och lokal service.",
+   "sources": [
+    "https://valkompass.svt.se/2018/kommun/hofors/hoforspartiet-hofors-kommun/",
+    "https://www.arbetarbladet.se/organisation/829e977f-06c3-3535-aa2e-e56990a4a690"
+   ],
+   "website": "http://www.hoforspartiet.se/"
+  },
+  "huddingepartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    2,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Huddingepartiet är ett lokalt parti i Huddinge kommun som driver frågor om trygghet och miljö.",
+   "sources": [
+    "https://huddingepartiet.se/",
+    "https://huddingepartiet.se/program/"
+   ],
+   "website": "https://huddingepartiet.se/"
+  },
+  "jamtlands-val-bracke": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    1,
+    null
+   ],
+   "description": "Jämtlands Väl Bräcke är ett lokalt parti i Bräcke kommun som driver frågor om lokal service, landsbygdsutveckling och föreningsliv.",
+   "sources": [
+    "https://jvb.nu/",
+    "https://xn--jmtlandsvlbrcke-0kbid.se/"
+   ],
+   "website": "https://jvb.nu/"
+  },
+  "karlstadpartiet-livskvalitet": {
+   "answers": null,
+   "description": "Karlstadpartiet Livskvalitet är ett lokalt parti i Karlstads kommun som driver frågor om hållbarhet och medborgardialog.",
+   "sources": [
+    "https://www.karlstadpartiet.se/",
+    "https://www.karlstadpartiet.se/var-politik-2/"
+   ],
+   "website": "https://www.karlstadpartiet.se/"
+  },
+  "klimatinitiativ-simrishamn": {
+   "answers": null,
+   "description": "Klimatinitiativ Simrishamn är ett lokalt parti i Simrishamns kommun som driver klimatfrågor.",
+   "sources": [
+    "https://klimatinitiativsimrishamn.se/",
+    "https://klimatinitiativsimrishamn.se/valmanifest"
+   ],
+   "website": "https://klimatinitiativsimrishamn.se/"
+  },
+  "knivsta-nu": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    -1,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Knivsta.Nu är ett lokalt parti i Knivsta kommun som fokuserar på lokala frågor och medborgarinflytande.",
+   "sources": [
+    "https://www.knivsta.nu/",
+    "https://www.knivsta.nu/om-oss/"
+   ],
+   "website": "https://www.knivsta.nu/"
+  },
+  "kommunal-samling": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "Kommunal Samling är ett lokalt parti i Gagnefs kommun som driver frågor om kommunal service, ekonomisk förvaltning och lokal representation.",
+   "sources": [
+    "https://kommunalsamling.se/",
+    "https://kommunalsamling.se/vad-har-vi-gjort/"
+   ],
+   "website": "https://kommunalsamling.se/"
+  },
+  "kommunens-basta": {
+   "answers": null,
+   "description": "Kommunens Bästa är ett lokalt parti i Forshaga kommun.",
+   "sources": [
+    "https://forshaga.tromanpublik.se/parti/100b41cf-2d4a-4b5b-959d-aac79920e808",
+    "https://www.forshaga.se/kommunochpolitik/politikochdemokrati/valresultatmandatfordelning.4.77c98e44148a6922277681.html"
+   ],
+   "website": null
+  },
+  "kommunens-val": {
+   "answers": [
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    -2,
+    null,
+    null,
+    null,
+    -1,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "Kommunens Väl är ett lokalt parti i Älvkarleby kommun som driver frågor om äldreomsorg och lokala faciliteter.",
+   "sources": [
+    "https://valkompass.svt.se/2022/parti/kommunens-val-alvkarleby",
+    "https://www.svt.se/nyheter/lokalt/uppsala/kvintett-ska-styra-i-alvkarleby-kommunens-val-med-och-styr"
+   ],
+   "website": null
+  },
+  "kommunistiska-partiet": {
+   "answers": null,
+   "description": "Kommunistiska Partiet i Lysekil driver socialistisk politik om välfärd och privatiseringar.",
+   "sources": [
+    "http://www.kommunistiskapartietlysekil.se/",
+    "https://kommunisterna.org/lokalt/lysekil"
+   ],
+   "website": "http://lysekil.kommunisterna.org/"
+  },
+  "kommunlistan": {
+   "answers": null,
+   "description": "Kommunlistan är ett lokalt parti i Älvdalens kommun.",
+   "sources": [
+    "https://www.dalademokraten.se/2022-09-12/alvdalens-lokala-parti-kommunlistan-forlorade-ett-mandat-ofta-har-vi-inte-en-chans/",
+    "https://alvdalen.tromanpublik.se/parti/2d952abe-3cb7-4978-8b6f-2c270b50ffa5"
+   ],
+   "website": "https://www.dalademokraten.se/"
+  },
+  "kommunpartiet": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "Kommunpartiet är ett lokalt parti i Härryda kommun som driver frågor om utveckling av lokala samhällen.",
+   "sources": [
+    "https://www.kommunpartiet.org/",
+    "http://kommunpartiet.org/program.html"
+   ],
+   "website": "http://www.kommunpartiet.org/"
+  },
+  "kommunpartiet-mellerud": {
+   "answers": null,
+   "description": "Kommunpartiet i Mellerud är ett lokalt parti i Melleruds kommun som driver frågor om bostadsutveckling.",
+   "sources": [
+    "https://www.mellerudsnyheter.se/nyheter/mellerud/mellerud-vill-underlatta-for-nybyggare-kan-bli-smahusby.c6747b54-4d5a-4ced-ac56-1ca2ad42baa7",
+    "https://mellerud.se/kommun-och-politik/demokrati-och-politik/politiska-partier/"
+   ],
+   "website": "https://www.mellerudsnyheter.se/"
+  },
+  "konsensus-for-vadstenas-basta": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    -1,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    2,
+    null
+   ],
+   "description": "Konsensus är ett lokalt parti i Vadstena kommun som driver frågor om ekonomi, skola, äldreomsorg och landsbygd.",
+   "sources": [
+    "https://www.konsensusvadstena.se/",
+    "https://www.konsensusvadstena.se/politiska-prioriteringar"
+   ],
+   "website": "https://www.konsensusvadstena.se/"
+  },
+  "kungsbackaborna": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    2
+   ],
+   "description": "Kungsbackaborna är ett lokalt parti i Kungsbacka kommun som driver frågor om närdemokrati, ekonomi och kärnverksamheter.",
+   "sources": [
+    "https://www.kungsbackaborna.se/",
+    "https://www.kungsbackaborna.se/om-kungsbackaborna/"
+   ],
+   "website": "https://www.kungsbackaborna.se/"
+  },
+  "kustlandspartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    -1,
+    2,
+    2,
+    2,
+    null,
+    null,
+    2,
+    null,
+    null,
+    2,
+    2,
+    2,
+    2
+   ],
+   "description": "Kustlandspartiet är ett lokalt parti i Oskarshamns kommun som driver frågor om skola och näringsliv.",
+   "sources": [
+    "https://kustlandspartiet.se/",
+    "https://www.oskarshamns-nytt.se/vilka-fragor-vill-kustlandspartiet-driva-i-oskarshamns-kommun-sa-svarar-mathias-karlsson/"
+   ],
+   "website": "https://kustlandspartiet.se/"
+  },
+  "laholmspartiet": {
+   "answers": [
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Laholmspartiet är ett lokalt parti i Laholms kommun som driver frågor om välfärd och äldreomsorg.",
+   "sources": [
+    "http://www.laholmspartiet.se/",
+    "https://laholmstidning.se/politik/laholmspartiet-kraver-aaterstart-av-stangda-seniorrestauranger/6452"
+   ],
+   "website": "http://www.laholmspartiet.se/"
+  },
+  "landsbygdspartiet-oberoende": {
+   "answers": [
+    null,
+    2,
+    null,
+    2,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    -2,
+    null,
+    2,
+    2,
+    null,
+    null,
+    null,
+    2,
+    2
+   ],
+   "description": "Landsbygdspartiet Oberoende driver frågor om decentralisering, lokal service och ökat medborgarinflytande för att stärka landsbygden.",
+   "sources": [
+    "https://landsbygdspartiet.org/",
+    "https://landsbygdspartiet.org/partiprogam/"
+   ],
+   "website": "https://landsbygdspartiet.org/"
+  },
+  "lidingopartiet": {
+   "answers": null,
+   "description": "Lidingöpartiet är ett lokalt parti i Lidingö stad som driver frågor om bevarande av småskalighet och natur.",
+   "sources": [
+    "https://www.lidingopartiet.se/",
+    "https://www.lidingopartiet.se/var-politik/"
+   ],
+   "website": "https://www.lidingopartiet.se/"
+  },
+  "linkopingslistan": {
+   "answers": null,
+   "description": "Linköpingslistan är ett lokalt parti i Linköpings kommun.",
+   "sources": [
+    "https://linkopingslistan.se/",
+    "https://linkopingslistan.se/var-politik/"
+   ],
+   "website": "https://linkopingslistan.se/"
+  },
+  "ljusdalsbygdens-parti": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    -2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    1,
+    2,
+    null
+   ],
+   "description": "Ljusdalsbygdens parti är ett lokalt parti i Ljusdals kommun som driver frågor om välfärd, landsbygdsutveckling och insyn.",
+   "sources": [
+    "https://www.ljusdalsbygden.se/",
+    "https://www.svt.se/nyheter/video/884c3c336acdc07b-darfor-rostar-ljusdalsbygdens-parti-nej-till-alvhallarna-i-ljusdals-kommun/k6jb2d"
+   ],
+   "website": "https://www.ljusdalsbygden.se/"
+  },
+  "loddebygden": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    -1,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null
+   ],
+   "description": "Löddebygden är ett lokalt parti i Kävlinge kommun som driver frågor om decentralisering och lokal service.",
+   "sources": [
+    "https://loddebygden.se/",
+    "https://loddebygden.se/yrkanden/"
+   ],
+   "website": "https://loddebygden.se/"
+  },
+  "lokalpartiet-boa": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    2,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Lokalpartiet BoA är ett lokalt parti i Östhammars kommun som driver frågor om småskalighet och lokal självständighet.",
+   "sources": [
+    "https://www.lokalpartietboa.se/",
+    "https://osthammar.tromanpublik.se/parti/efea549f-3f8b-495a-bed8-9a3886918226"
+   ],
+   "website": "https://www.lokalpartietboa.se/"
+  },
+  "lysekilspartiet": {
+   "answers": null,
+   "description": "Lysekilspartiet är ett lokalt parti i Lysekils kommun som driver frågor om skola och omsorg.",
+   "sources": [
+    "https://lysekilspartiet.nu/var-politik/",
+    "https://valkompass.svt.se/2022/parti/lysekilspartiet-lysekil"
+   ],
+   "website": "https://lysekilspartiet.nu/"
+  },
+  "malalistan": {
+   "answers": null,
+   "description": "Malålistan är ett lokalt parti i Malå kommun som driver frågor om näringsliv.",
+   "sources": [
+    "https://www.nissepedia.com/index.php/Mal%C3%A5listan",
+    "https://www.mala.se/kommun-och-politik/politik/mandatfordelning/"
+   ],
+   "website": "https://www.nissepedia.com/"
+  },
+  "medborgarpartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Medborgarpartiet är ett lokalt parti i Vänersborgs kommun som driver frågor om lokalt självbestämmande.",
+   "sources": [
+    "https://www.medborgarpartiet.nu/",
+    "https://valkompass.svt.se/2022/parti/medborgarpartiet-vanersborg"
+   ],
+   "website": "http://medborgarpartiet.nu/"
+  },
+  "medborgarpartiet-i-gislaved": {
+   "answers": null,
+   "description": "Medborgarpartiet i Gislaved är ett lokalt parti i Gislaveds kommun.",
+   "sources": [
+    "https://medborgarpartietigislaved.se/",
+    "https://medborgarpartietigislaved.se/hem/v-r-politik"
+   ],
+   "website": "https://medborgarpartietigislaved.se/"
+  },
+  "morapartiet": {
+   "answers": [
+    2,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    1,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Morapartiet är ett lokalt parti i Mora kommun som driver frågor om vård, skola, omsorg och infrastruktur.",
+   "sources": [
+    "https://www.morapartiet.se/om-oss/",
+    "https://www.morapartiet.se/valet-2026/"
+   ],
+   "website": "https://www.morapartiet.se/"
+  },
+  "nackalistan": {
+   "answers": null,
+   "description": "Nackalistan är ett lokalt parti i Nacka kommun som driver frågor om stadsutveckling och natur.",
+   "sources": [
+    "https://nackalistan.se/",
+    "https://nackalistan.se/var-politik/"
+   ],
+   "website": "https://nackalistan.se/"
+  },
+  "norapartiet": {
+   "answers": null,
+   "description": "Norapartiet är ett lokalt parti i Nora kommun.",
+   "sources": [
+    "https://norapartiet.se/",
+    "https://nora.tromanpublik.se/parti/74927a1e-18fa-4c3d-a399-10edeb37fd88"
+   ],
+   "website": "http://norapartiet.se/"
+  },
+  "nordanstigspartiet-se": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    1,
+    1,
+    2,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Nordanstigspartiet är ett lokalt parti i Nordanstigs kommun som driver frågor om närdemokrati och landsbygdsutveckling.",
+   "sources": [
+    "https://nordanstigspartiet.se/",
+    "https://www.ljusdalsposten.se/2018-09-10/ovantade-valvinnarna-i-nordanstig-se-analysen-en-stor-overraskning/"
+   ],
+   "website": "https://nordanstigspartiet.se/"
+  },
+  "nordvarmlands-kommunparti": {
+   "answers": null,
+   "description": "Nordvärmlands kommunparti är ett lokalt parti i Torsby kommun.",
+   "sources": [
+    "https://torsby.tromanpublik.se/parti/f7483667-ab7e-4e13-9bbd-dbca28de5549",
+    "https://www.ratsit.se/8025294904-NORDVARMLANDS_KOMMUNPARTI"
+   ],
+   "website": null
+  },
+  "nya-ulricehamn": {
+   "answers": null,
+   "description": "Nya Ulricehamn är ett lokalt parti i Ulricehamns kommun som driver frågor om skola, vård och näringsliv.",
+   "sources": [
+    "https://www.nyaulricehamn.se/?page_id=183",
+    "https://www.nyaulricehamn.se/?cat=52"
+   ],
+   "website": "https://www.nyaulricehamn.se/"
+  },
+  "nykvarnspartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    -1,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Nykvarnspartiet är ett lokalt parti i Nykvarns kommun som driver frågor om ekonomi och bostadsutveckling.",
+   "sources": [
+    "https://www.nykvarnspartiet.se/",
+    "https://nykvarn.tromanpublik.se/parti/4692ecc4-a3db-434e-8a71-9bf029882dc8"
+   ],
+   "website": "https://www.nykvarnspartiet.se/"
+  },
+  "nystart-enkoping-ne": {
+   "answers": null,
+   "description": "Nystart Enköping är ett lokalt parti i Enköpings kommun.",
+   "sources": [
+    "https://nystartenkoping.com/",
+    "https://nystartenkoping.com/om-oss/var-politik/"
+   ],
+   "website": "https://nystartenkoping.com/"
+  },
+  "oberoende-realister": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    2,
+    2,
+    2,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "Oberoende realister är ett lokalt parti i Hagfors kommun som driver frågor om näringsliv, landsbygdsutveckling, barn- och äldreomsorg.",
+   "sources": [
+    "https://oberoenderealister.se/",
+    "https://oberoenderealister.se/framtidsprogram/"
+   ],
+   "website": "https://oberoenderealister.se/"
+  },
+  "opartiet": {
+   "answers": null,
+   "description": "Mälaröpartiet är ett lokalt parti i Ekerö kommun.",
+   "sources": [
+    "https://www.mitti.se/nyheter/opartiet-byter-namn-6.3.289579.1703355aca",
+    "https://www.mynewsdesk.com/se/opartiet/pressreleases/ekeroe-byggnadsnaemnd-foerlorar-85-procent-av-bygglovsmaalen-140287"
+   ],
+   "website": "http://www.o-partiet.se/"
+  },
+  "orebropartiet": {
+   "answers": null,
+   "description": "Örebropartiet är ett lokalt parti i Örebro kommun som driver frågor om kärnverksamhet.",
+   "sources": [
+    "https://orebropartiet.se/var-politik/",
+    "https://orebropartiet.se/om-oss/"
+   ],
+   "website": "https://orebropartiet.se/"
+  },
+  "osterlenpartiet": {
+   "answers": null,
+   "description": "Österlenpartiet var ett lokalt parti i Simrishamns kommun; de har pausat verksamheten.",
+   "sources": [
+    "https://www.ystadsallehanda.se/simrishamn/ett-parti-mindre-att-rosta-pa-i-simrishamn-i-host-vi-ar-for-gamla/",
+    "https://www.sverigesradio.se/artikel/osterlenpartiet-nobbar-valet-vi-har-trottnat"
+   ],
+   "website": null
+  },
+  "overtorneas-fria-alternativ": {
+   "answers": null,
+   "description": "Övertorneås Fria Alternativ är ett lokalt parti i Övertorneå kommun.",
+   "sources": [
+    "https://www.nsd.se/nyheter/overtornea/artikel/klart-ofa-gar-till-val/rxo4n0yr",
+    "https://www.nsd.se/nyheter/overtornea/artikel/allt-fler-engagerar-sig-i-det-lokala-partiet/rx3zw08r"
+   ],
+   "website": "https://www.nsd.se/"
+  },
+  "partiet-for-norbergs-framtid": {
+   "answers": null,
+   "description": "Partiet för Norbergs Framtid är ett lokalt parti i Norbergs kommun.",
+   "sources": [
+    "https://www.fagersta-posten.se/2025-05-10/pnf-firar-tio-ar-samma-fragor-da-som-nu/",
+    "https://norberg.tromanpublik.se/parti/4ef0507a-beb4-49a1-b31f-3aa72b51da30"
+   ],
+   "website": null
+  },
+  "pensionarspartiet-i-nynashamns-kommun": {
+   "answers": [
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Pensionärspartiet är ett lokalt parti i Nynäshamns kommun som driver frågor om äldreomsorg och kommunal service.",
+   "sources": [
+    "https://www.ppin.nu/",
+    "https://www.nynashamnsposten.se/insandare/pensionarspartiet-vill-mojliggora-en-vardig-social-omsorg/"
+   ],
+   "website": "https://www.ppin.nu/"
+  },
+  "perstorps-framtid": {
+   "answers": null,
+   "description": "Perstorps Framtid är ett lokalt parti i Perstorps kommun.",
+   "sources": [
+    "https://perstorpsframtid.se/",
+    "https://perstorpsframtid.se/index.php/vardegrund/"
+   ],
+   "website": "https://perstorpsframtid.se/"
+  },
+  "politiskt-alternativ": {
+   "answers": null,
+   "description": "Politiskt Alternativ är ett lokalt parti i Vilhelmina kommun som driver frågor om landsbygdsutveckling.",
+   "sources": [
+    "https://politiskt-alternativ.se/",
+    "https://www.regeringen.se/contentassets/40af86e855234adca7fd8370defff8d4/politiskt-alternativ-i-vilhelmina.pdf"
+   ],
+   "website": "https://politiskt-alternativ.se/"
+  },
+  "rattvis-demokrati": {
+   "answers": null,
+   "description": "Rättvis Demokrati är ett lokalt parti i Strömsunds kommun.",
+   "sources": [
+    "https://www.op.se/organisation/f476f5d5-989e-3207-ae3e-acd34bcc3920?pageSlug=rattvis-demokrati",
+    "https://www.stromsund.se/1007.html"
+   ],
+   "website": "https://www.op.se/"
+  },
+  "rattvisepartiet-socialisterna": {
+   "answers": [
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "Rättvisepartiet Socialisterna är ett lokalt parti i Luleå kommun som driver frågor om välfärd, bostadspolitik och offentliga investeringar.",
+   "sources": [
+    "https://rslulea.wordpress.com/",
+    "https://www.socialisterna.org/rs-valmanifest-lulea-2018/"
+   ],
+   "website": "https://www.socialisterna.org/"
+  },
+  "realistpartiet": {
+   "answers": null,
+   "description": "Realistpartiet är ett lokalt parti i Södertälje kommun.",
+   "sources": [
+    "https://www.realistpartiet.se/v%C3%A5r-politik/ekonomi-aff%C3%A4rer-politiskt-ansvar-46604531?desktop=1",
+    "https://www.realistpartiet.se/v%C3%A5r-politik/kultur-fritid-idrott-46604567"
+   ],
+   "website": "https://realistpartiet.se/"
+  },
+  "ronnebypartiet": {
+   "answers": null,
+   "description": "Ronnebypartiet är ett lokalt parti i Ronneby kommun som driver frågor om trygghet och service.",
+   "sources": [
+    "https://www.ronnebypartiet.se/",
+    "https://www.blt.se/debatt/rp-darfor-kommer-vi-att-rosta-nej-till-ronnebystyrets-uppgorelse/"
+   ],
+   "website": "https://www.ronnebypartiet.se/"
+  },
+  "ronningepartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    2
+   ],
+   "description": "Rönningepartiet är ett lokalt parti i Salems kommun som driver frågor om äldreomsorg och friluftsområden.",
+   "sources": [
+    "https://www.xn--rnningepartiet-vpb.se/",
+    "https://www.xn--rnningepartiet-vpb.se/vara-fragor/"
+   ],
+   "website": "https://www.xn--rnningepartiet-vpb.se/"
+  },
+  "roslagspartiet": {
+   "answers": [
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "Roslagspartiet är ett lokalt parti i Österåkers kommun som driver frågor om lokal anpassning.",
+   "sources": [
+    "https://roslagspartiet.se/",
+    "https://roslagspartiet.se/om-oss/partiet/var-politik/partiprogram/"
+   ],
+   "website": "https://roslagspartiet.se/"
+  },
+  "s-melistu-samelistan-partipolitiskt-obunden": {
+   "answers": null,
+   "description": "Sámelistu är ett lokalt parti i Kiruna kommun som driver frågor om samisk kultur och språk.",
+   "sources": [
+    "https://valkompass.svt.se/2022/parti/samelistusamelistan-partipolitiskt-obunden-kiruna",
+    "https://www.newsworthy.se/artikel/150686/milj%C3%B6partiet-och-liberalerna-saknar-kandidater-inf%C3%B6r-valet-i-kiruna"
+   ],
+   "website": null
+  },
+  "safe-solidaritet-arbete-fred-ekologi": {
+   "answers": [
+    2,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    -2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "SAFE är ett lokalt parti i Nässjö kommun som driver frågor om välfärd och motstånd mot privatiseringar.",
+   "sources": [
+    "https://www.safe-nassjo.nu/",
+    "https://www.safe-nassjo.nu/valsida18/rostapa.htm"
+   ],
+   "website": "https://www.safe-nassjo.nu/"
+  },
+  "salas-basta": {
+   "answers": null,
+   "description": "Salas Bästa är ett lokalt parti i Sala kommun som driver frågor om företagsklimat och välfärd.",
+   "sources": [
+    "https://www.salasbasta.nu/neve-amadeus-bb-about-me/",
+    "https://sala.tromanpublik.se/parti/4f621b72-9e08-4482-ab8a-9e0729079c2a"
+   ],
+   "website": "https://www.salasbasta.nu/"
+  },
+  "samernas-val": {
+   "answers": null,
+   "description": "Samernas Väl är ett lokalt parti i Jokkmokks kommun som driver frågor om samiska intressen och kyrkopolitik.",
+   "sources": [
+    "https://www.sverigesradio.se/artikel/samernas-val-i-jokkmokk-far-egen-majoritet",
+    "https://www.kuriren.nu/nyheter/jokkmokk/artikel/samernas-val-vill-ta-plats-i-fullmaktige/j8w0g2pj"
+   ],
+   "website": null
+  },
+  "sans-o-balans": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    -2,
+    -1,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Sans o Balans är ett lokalt parti i Hammarö kommun som driver frågor om tillväxt, bevarande av naturområden samt barn- och äldreomsorg.",
+   "sources": [
+    "https://partietsansobalans.se/",
+    "https://partietsansobalans.se/?page_id=11"
+   ],
+   "website": "https://partietsansobalans.se/"
+  },
+  "sigtunapartiet-samling-for-sigtuna": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    1,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Sigtunapartiet är ett lokalt parti i Sigtuna kommun som driver frågor om ekonomi, miljöer och valfrihet i välfärden.",
+   "sources": [
+    "https://valkompass.svt.se/2022/parti/sigtunapartiet-samling-for-sigtuna-sigtuna",
+    "https://www.sigtuna.se/kommun-och-politik/sa-styrs-vi/valresultat-och-mandatfordelning.html"
+   ],
+   "website": null
+  },
+  "sjukvardspartiet": {
+   "answers": null,
+   "description": "Sjukvårdspartiet är ett regionalt parti i Norrbotten som driver frågor om vård, omsorg och skola.",
+   "sources": [
+    "https://sjukvardspartiet.nu/",
+    "https://sjukvardspartiet.nu/lokala-avdelningar/boden/"
+   ],
+   "website": "https://sjukvardspartiet.nu/"
+  },
+  "sjukvardspartiet-i-varmland": {
+   "answers": null,
+   "description": "Sjukvårdspartiet i Värmland är ett regionalt parti som driver frågor om vård, omsorg och regional utveckling.",
+   "sources": [
+    "https://www.sjukvardspartietivarmland.se/",
+    "https://www.sjukvardspartietivarmland.se/var-politik/"
+   ],
+   "website": "https://www.sjukvardspartietivarmland.se/"
+  },
+  "skargardspartiet": {
+   "answers": [
+    2,
+    2,
+    null,
+    null,
+    1,
+    2,
+    1,
+    null,
+    null,
+    1,
+    2,
+    null,
+    null,
+    2,
+    1,
+    null,
+    null,
+    2,
+    2,
+    2
+   ],
+   "description": "Skärgårdspartiet är ett lokalt parti i Värmdö kommun som driver frågor om välfärd och inflytande.",
+   "sources": [
+    "https://skargardspartiet.se/skargardspartiets-partiprogram-2026/",
+    "https://skargardspartiet.se/vad-ar-skargardspartiet/"
+   ],
+   "website": "https://skargardspartiet.se/"
+  },
+  "skol-och-landsbygdspartiet": {
+   "answers": null,
+   "description": "Skol- och landsbygdspartiet i Piteå är ett lokalt parti som driver frågor om skola och landsbygd.",
+   "sources": [
+    "https://www.slp.nu/",
+    "https://www.slp.nu/vara-politiker/"
+   ],
+   "website": "https://www.slp.nu/"
+  },
+  "skovdepartiet": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    2,
+    2,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null
+   ],
+   "description": "Skövdepartiet är ett lokalt parti i Skövde kommun som driver frågor om skola, omsorg, trygghet och förvaltning.",
+   "sources": [
+    "https://www.skovdepartiet.se/",
+    "https://www.skovdepartiet.se/partiprogram/"
+   ],
+   "website": "https://www.skovdepartiet.se/"
+  },
+  "socialisterna-valfardspartiet": {
+   "answers": null,
+   "description": "Socialisterna-Välfärdspartiet var ett socialistiskt parti i Västerviks kommun; de ställer inte upp i valet 2026.",
+   "sources": [
+    "https://www.valfardspartiet.org/",
+    "https://www.valfardspartiet.org/var-politik"
+   ],
+   "website": "https://www.valfardspartiet.org/"
+  },
+  "soderkopingsinitiativet": {
+   "answers": null,
+   "description": "Söderköpingsinitiativet är ett lokalt parti i Söderköpings kommun.",
+   "sources": [
+    "https://www.soderkopingsinitiativet.se/",
+    "https://www.soderkopingsinitiativet.se/copy-of-om-oss/"
+   ],
+   "website": "https://www.soderkopingsinitiativet.se/"
+  },
+  "sol-partiet-solvesborg-och-lister": {
+   "answers": [
+    null,
+    null,
+    null,
+    2,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2
+   ],
+   "description": "SoL-partiet är ett lokalt parti i Sölvesborgs kommun.",
+   "sources": [
+    "https://solpartiet.se/",
+    "https://www.allabolag.se/foretag/sol-partiet-s%C3%B6lvesborg-och-lister/s%C3%B6lvesborg/f%C3%B6reningar/3OPTDL1I63IGG"
+   ],
+   "website": "https://solpartiet.se/"
+  },
+  "sorundanet-nynashamns-kommunparti": {
+   "answers": null,
+   "description": "Sorundanet är ett lokalt parti i Nynäshamns kommun som driver frågor om resursfördelning.",
+   "sources": [
+    "https://sorundanet.se/",
+    "https://sorundanet.se/hem/index.html"
+   ],
+   "website": "https://sorundanet.se/"
+  },
+  "sportpartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "Sport- och kommunpartiet är ett lokalt parti i Härryda kommun som driver frågor om föreningsliv och samhällsbyggnad.",
+   "sources": [
+    "https://www.harrydaposten.se/nyheter/sportpartiet-och-kommunpartiet-blir-ett-inga-roda-linjer.f2308bf7-09c0-4490-93c5-6c3150889235",
+    "https://www.lokalpressen.se/de-lokala-partierna-blir-ett-infor-valet-vi-vill-se-mer-action-6.2.7718.b698ceb3cf"
+   ],
+   "website": null
+  },
+  "stenungsundspartiet": {
+   "answers": null,
+   "description": "Stenungsundspartiet är ett lokalt parti i Stenungsunds kommun.",
+   "sources": [
+    "https://www.stenungsundspartiet.se/",
+    "https://www.stenungsundspartiet.se/valmanifest-2022/"
+   ],
+   "website": "https://www.stenungsundspartiet.se/"
+  },
+  "strangnaspartiet": {
+   "answers": [
+    null,
+    null,
+    2,
+    2,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    2,
+    null,
+    null,
+    2,
+    2,
+    2
+   ],
+   "description": "Lokalpartiet är ett lokalt parti i Strängnäs kommun som driver frågor om skola, omsorg och lokaldemokrati.",
+   "sources": [
+    "https://lokalpartiet.se/v%C3%A5r-politik/strp-valmanifest-2022",
+    "https://lokalpartiet.se/v%C3%A5r-politik/str%C3%A4ngn%C3%A4spartiet-blev-lokalpartiet"
+   ],
+   "website": "https://lokalpartiet.se/"
+  },
+  "sveriges-pensionarers-intresseparti": {
+   "answers": null,
+   "description": "Sveriges Pensionärers Intresseparti är en förening med säte i Sjöbo.",
+   "sources": [
+    "https://www.ratsit.se/8024472816-SVERIGES_PENSIONARERS_INTRESSEPARTI_SPI",
+    "https://politpro.eu/sv/sverige/politiska-partier/spi"
+   ],
+   "website": "https://www.ratsit.se/"
+  },
+  "tierpslistan": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    2
+   ],
+   "description": "Tierpslistan är ett lokalt parti i Tierps kommun som driver frågor om välfärd och insyn.",
+   "sources": [
+    "https://tierpslistan.se/",
+    "https://tierpslistan.se/v%C3%A5r-politik/index"
+   ],
+   "website": "https://tierpslistan.se/"
+  },
+  "timrapartiet": {
+   "answers": [
+    2,
+    null,
+    2,
+    2,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    2,
+    null,
+    null,
+    2,
+    2,
+    null,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "Timråpartiet är ett lokalt parti i Timrå kommun som driver frågor om välfärd, trygghet och lokal utveckling.",
+   "sources": [
+    "https://www.timrapartiet.nu/",
+    "https://www.timrapartiet.nu/valprogram/vad-vi-vill3/"
+   ],
+   "website": "https://www.timrapartiet.nu/"
+  },
+  "tjornpartiet": {
+   "answers": [
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    -2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    2,
+    null
+   ],
+   "description": "Tjörnpartiet är ett lokalt parti på Tjörn som driver frågor om lokal förankring och insyn.",
+   "sources": [
+    "https://www.tjornpartiet.se/",
+    "https://valkompass.svt.se/2022/parti/tjornpartiet-tjorn"
+   ],
+   "website": "https://www.tjornpartiet.se/"
+  },
+  "tjugofyrasju": {
+   "answers": null,
+   "description": "Tjugofyrasju är ett lokalt parti i Varbergs kommun som driver frågor om välfärdsanställdas villkor.",
+   "sources": [
+    "https://arbetet.se/2022/09/14/underskoterska-startade-tjugofyrasju-ett-nytt-parti-for-anstallda-i-valfarden/",
+    "https://varberg.tromanpublik.se/parti/218499a6-5f1b-4b5c-8495-d2675100d263"
+   ],
+   "website": "https://arbetet.se/"
+  },
+  "tullingepartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "Tullingepartiet är ett lokalt parti i Botkyrka kommun som driver frågan om att göra Tullinge till en egen kommun.",
+   "sources": [
+    "https://www.tullingepartiet.se/",
+    "https://www.tullingepartiet.se/vad-vi-vill-vad-vi-gor-och-vad-vi-gjort/"
+   ],
+   "website": "https://www.tullingepartiet.se/"
+  },
+  "uddevallapartiet": {
+   "answers": [
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Uddevallapartiet är ett lokalt parti i Uddevalla kommun som driver frågor om kärnverksamhet, näringsliv och ekonomi.",
+   "sources": [
+    "https://uddevallapartiet.se/",
+    "https://uddevallapartiet.se/politik/"
+   ],
+   "website": "https://uddevallapartiet.se/"
+  },
+  "utvecklingspartiet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Utvecklingspartiet är ett lokalt parti i Kungälvs kommun som driver frågor om trygghet och näringsliv.",
+   "sources": [
+    "https://www.utvecklingspartiet.se/",
+    "https://www.utvecklingspartiet.se/ideprogram/"
+   ],
+   "website": "https://www.utvecklingspartiet.se/"
+  },
+  "utvecklingspartiet-demokraterna": {
+   "answers": [
+    2,
+    null,
+    2,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "Utvecklingspartiet demokraterna är ett lokalt parti i Uppsala kommun som driver frågor om välfärd och motstånd mot spårväg.",
+   "sources": [
+    "https://updem.se/",
+    "https://updem.se/var-politik/"
+   ],
+   "website": "https://updem.se/"
+  },
+  "vanligt-folk-i-kopings-kommun": {
+   "answers": [
+    2,
+    null,
+    null,
+    2,
+    2,
+    2,
+    null,
+    null,
+    null,
+    2,
+    2,
+    -2,
+    null,
+    2,
+    null,
+    2,
+    -1,
+    2,
+    null,
+    null
+   ],
+   "description": "Vanligt Folk är ett lokalt parti i Köpings kommun som driver frågor om närdemokrati, landsbygd och vård/skola samt motstånd mot vindkraft.",
+   "sources": [
+    "https://vanligtfolk.com/politikomraden",
+    "https://vanligtfolkkoping.com/"
+   ],
+   "website": "https://vanligtfolk.com/"
+  },
+  "var-framtid-klippan": {
+   "answers": [
+    null,
+    null,
+    null,
+    2,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Vår Framtid är ett lokalt parti i Klippans kommun som driver frågor om trygghet och samhällsansvar.",
+   "sources": [
+    "https://xn--vrframtid-52a.se/",
+    "https://xn--vrframtid-52a.se/v%C3%A5r-politik/"
+   ],
+   "website": "https://xn--vrframtid-52a.se/"
+  },
+  "var-framtids-politiska-utskott": {
+   "answers": null,
+   "description": "Vår Framtid är ett lokalt parti i Ånge kommun.",
+   "sources": [
+    "https://varframtid.se/varframtid/var-framtids-politiska-utskott/",
+    "https://varframtid.se/"
+   ],
+   "website": "https://varframtid.se/"
+  },
+  "varbergspartiet": {
+   "answers": null,
+   "description": "Varbergspartiet är ett lokalt parti i Varbergs kommun.",
+   "sources": [
+    "https://varbergspartiet.se/",
+    "https://varbergspartiet.se/om-oss"
+   ],
+   "website": "https://varbergspartiet.se/"
+  },
+  "vart-soderslatt": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    1,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Vårt Söderslätt är ett lokalt parti i Trelleborgs kommun som driver frågor om skola och omsorg.",
+   "sources": [
+    "https://vartsoderslatt.se/",
+    "https://vartsoderslatt.se/var-politik/"
+   ],
+   "website": "https://vartsoderslatt.se/"
+  },
+  "vasbys-basta": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    2,
+    null,
+    null
+   ],
+   "description": "Väsbys Bästa är ett lokalt parti i Upplands Väsby kommun som driver frågor om trygghet, grönområden och föreningsliv.",
+   "sources": [
+    "https://www.vasbysbasta.se/",
+    "https://www.vasbysbasta.se/vasbys-basta-politik"
+   ],
+   "website": "https://www.vasbysbasta.se/"
+  },
+  "vastjamtlands-val": {
+   "answers": null,
+   "description": "Västjämtlands Väl är ett lokalt parti i Åre kommun som driver frågor om service.",
+   "sources": [
+    "https://valkompass.svt.se/2022/parti/vastjamtlands-val-are"
+   ],
+   "website": null
+  },
+  "vastra-initiativet": {
+   "answers": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    -2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "description": "Västra Initiativet är ett lokalt parti i Sollefteå kommun som driver frågor om motstånd mot vindkraft.",
+   "sources": [
+    "https://vastrainitiativet.se/",
+    "https://vastrainitiativet.se/kontakt/"
+   ],
+   "website": "https://vastrainitiativet.se/"
+  },
+  "vaxholmsdemokraterna": {
+   "answers": null,
+   "description": "Vaxholmsdemokraterna är ett lokalt parti i Vaxholms kommun.",
+   "sources": [
+    "https://www.vaxholm.se/download/18.51a2292e1900c66f38537ba3/1718604986912/Budgetf%C3%B6rslag%20%20LVD%20%20till%20KF%202024-06-17.pdf",
+    "https://vaxholm.tromanpublik.se/parti/f5bdfa2b-15aa-4a1c-93e2-1afd10d78481"
+   ],
+   "website": null
+  },
+  "vetlanda-framatanda": {
+   "answers": null,
+   "description": "Vetlanda framåtanda är ett lokalt parti i Vetlanda kommun.",
+   "sources": [
+    "https://www.vetlandaframatanda.se/",
+    "https://www.vetlandaframatanda.se/partiprogram/"
+   ],
+   "website": "https://www.vetlandaframatanda.se/"
+  },
+  "vi-i-perstorp": {
+   "answers": null,
+   "description": "Vi i Perstorp är ett lokalt parti i Perstorps kommun som driver frågor om vindkraft och fjärrvärme.",
+   "sources": [
+    "https://www.svt.se/nyheter/lokalt/helsingborg/det-nygrundade-partiet-vi-i-perstorp-blir-storsta-parti-i-kommunen-med-22-9-procent",
+    "https://www.hd.se/perstorp/perstorp-far-ett-nytt-lokalparti/"
+   ],
+   "website": null
+  },
+  "vi-tidaholm": {
+   "answers": null,
+   "description": "Vi Tidaholm är ett lokalt parti i Tidaholms kommun.",
+   "sources": [
+    "https://www.vastgotabladet.se/2025-04-29/bomben-vi-tidaholm-lamnar-det-politiska-styret/",
+    "https://www.vastgotabladet.se/organisation/419bc7f3-fde1-4e92-96f4-1de6ee0c97ee?pageSlug=vi-tidaholm"
+   ],
+   "website": "https://www.vastgotabladet.se/"
+  },
+  "vingakerspartiet-vtl": {
+   "answers": null,
+   "description": "Vingåkerspartiet är ett lokalt parti i Vingåkers kommun.",
+   "sources": [
+    "https://vingakerspartiet.se/v-rt-arbete/v-r-tidslinje",
+    "https://vingakerspartiet.se/om-oss/v-r-historia"
+   ],
+   "website": "https://vingakerspartiet.se/"
+  },
+  "waxholmspartiet-borgerligt-alternativ": {
+   "answers": [
+    null,
+    2,
+    1,
+    null,
+    null,
+    null,
+    -1,
+    null,
+    null,
+    2,
+    2,
+    null,
+    null,
+    2,
+    null,
+    1,
+    null,
+    1,
+    2,
+    2
+   ],
+   "description": "Waxholmspartiet är ett lokalt parti i Vaxholms kommun som driver frågor om närdemokrati, stadsplanering och service.",
+   "sources": [
+    "https://www.waxholmspartiet.se/wp",
+    "https://www.waxholmspartiet.se/_files/ugd/79a05f_fd2e235575db4a2a89f0172620839d4b.pdf"
+   ],
+   "website": "https://www.waxholmspartiet.se/"
+  },
+  "westbopartiet": {
+   "answers": null,
+   "description": "Westbopartiet är ett lokalt parti i Gislaveds kommun som driver frågor om närdemokrati och ekonomi.",
+   "sources": [
+    "https://www.westbopartiet.se/",
+    "https://www.westbopartiet.se/val-2022-38805222"
+   ],
+   "website": "https://westbopartiet.se/"
+  },
+  "westerwikspartiet": {
+   "answers": [
+    null,
+    null,
+    2,
+    null,
+    null,
+    2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    -2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    2,
+    2,
+    null
+   ],
+   "description": "Westerwikspartiet är ett lokalt parti i Västerviks kommun som driver frågor om kärnverksamhet, arbetsmiljö och insyn.",
+   "sources": [
+    "https://www.vt.se/nyheter/vastervik/artikel/wp-kan-bli-vagmastare-vill-se-ett-kommunalrad-som-far-saker-att-handa-satsningarna-de-vill-se/lwd8mewr",
+    "https://www.vt.se/nyheter/vastervik/artikel/westerwikspartiet-kritiserar-kommunala-bolag/jvd75yoj"
+   ],
+   "website": "https://www.vt.se/"
+  }
+ }
+}
