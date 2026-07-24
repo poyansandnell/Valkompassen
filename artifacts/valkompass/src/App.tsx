@@ -16,10 +16,11 @@ import HowItWorks from '@/pages/info-how-it-works';
 import { Layout } from '@/components/layout';
 import { SupportForm } from '@/components/support-form';
 
-function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villkor' | 'support' }) {
+function InfoPages({ type }: { type: 'metod' | 'integritet' | 'privacy' | 'kallor' | 'villkor' | 'support' }) {
   const titles = {
     'metod': 'Vår metod',
     'integritet': 'Integritetspolicy',
+    'privacy': 'Privacy Policy',
     'kallor': 'Källförteckning',
     'villkor': 'Användarvillkor',
     'support': 'Support'
@@ -30,6 +31,8 @@ function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villko
         <h1>{titles[type]}</h1>
         <p className="lead">{type === 'support'
           ? 'Hjälp och kontaktuppgifter för Valkompass – webben och mobilappen.'
+          : type === 'privacy'
+          ? 'How Valkompass handles your data — for the website and the mobile app.'
           : 'Här förklarar vi hur Valkompass fungerar, vår inställning till integritet och den metod vi använder för att beräkna resultaten.'}</p>
         
         {type === 'metod' && (
@@ -44,7 +47,7 @@ function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villko
         
         {type === 'integritet' && (
           <>
-            <p className="text-sm text-muted-foreground">Senast uppdaterad: 24 juli 2026. Denna policy gäller både webbplatsen och mobilappen Valkompass (iOS och Android).</p>
+            <p className="text-sm text-muted-foreground">Senast uppdaterad: 24 juli 2026. Denna policy gäller både webbplatsen och mobilappen Valkompass (iOS och Android). <Link href="/privacy">Read this policy in English</Link>.</p>
             <h2>Ingen inloggning, ingen spårning</h2>
             <p>Vi tror att politiska åsikter är bland det mest privata en person har. Därför sparas dina svar endast lokalt på din egen enhet — i webbläsarens lokala lagring på webben, och i appens lokala lagring på mobilen.</p>
             <p>Valkompass kräver ingen inloggning och inget konto. Vi samlar inte in namn, e-postadress, telefonnummer eller annan personlig information. Vi använder inga annons- eller spårningsverktyg från tredje part.</p>
@@ -68,6 +71,29 @@ function InfoPages({ type }: { type: 'metod' | 'integritet' | 'kallor' | 'villko
           </>
         )}
         
+        {type === 'privacy' && (
+          <>
+            <p className="text-sm text-muted-foreground">Last updated: July 24, 2026. This policy applies to both the Valkompass website and the Valkompass mobile app (iOS and Android). <Link href="/integritet">Läs policyn på svenska</Link>.</p>
+            <h2>No login, no tracking</h2>
+            <p>We believe political opinions are among the most private things a person has. Your answers are therefore stored only locally on your own device — in your browser's local storage on the web, and in the app's local storage on mobile.</p>
+            <p>Valkompass requires no login and no account. We do not collect your name, email address, phone number or any other personal information. We do not use any third-party advertising or tracking tools.</p>
+            <p>No data is sent to our servers except when you explicitly choose to:</p>
+            <ul>
+              <li>Publish your result (only your matching percentages are stored, never your individual answers).</li>
+              <li>Challenge a friend (your answers are stored temporarily in encrypted form until the challenge expires).</li>
+              <li>Contact us via the support form (see below).</li>
+            </ul>
+            <h2>Anonymous statistics</h2>
+            <p>When you complete a compass, an anonymous counter ping is sent (containing only which election level was completed) so we can show the number of completed compasses. It contains no personal data and cannot be linked to you.</p>
+            <h2>Location access (optional)</h2>
+            <p>If you choose to allow location access, your position is used once to suggest your municipality. The position is never stored and never sent to our servers.</p>
+            <h2>Deleting your data</h2>
+            <p>On mobile, you delete all local data with the "Rensa allt och börja om" (Clear everything and start over) button on the home screen, or by uninstalling the app. On the web, use the button on the <Link href="/integritet">Swedish policy page</Link>.</p>
+            <h2>If you contact us</h2>
+            <p>If you choose to write to us via the <Link href="/support">support form</Link>, your message — and your name and email address if you voluntarily provide them — is stored on our servers, solely so we can read and respond to your inquiry. This information is not used for anything else and is never shared with third parties. If you want your message deleted, write to us and we will remove it.</p>
+          </>
+        )}
+
         {type === 'kallor' && (
           <>
             <h2>Varifrån kommer partiernas svar?</h2>
@@ -135,6 +161,7 @@ function Router() {
       <Route path="/sa-fungerar-det" component={HowItWorks} />
       <Route path="/metod"><InfoPages type="metod" /></Route>
       <Route path="/integritet"><InfoPages type="integritet" /></Route>
+      <Route path="/privacy"><InfoPages type="privacy" /></Route>
       <Route path="/kallor"><InfoPages type="kallor" /></Route>
       <Route path="/villkor"><InfoPages type="villkor" /></Route>
       <Route path="/support"><InfoPages type="support" /></Route>
