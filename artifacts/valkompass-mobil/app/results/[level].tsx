@@ -21,7 +21,7 @@ import {
 import { useColors } from '@/hooks/useColors';
 import { useAnswers } from '@/context/AnswersContext';
 import { Badge, Card, PrimaryButton, ProgressBar } from '@/components/ui';
-import { ConfettiBurst } from '@/components/ConfettiBurst';
+import { FadeInUp, useCountUp } from '@/components/ResultReveal';
 import { LEVELS, answerKey, answeredCount, computeMatches, type Level } from '@/lib/quiz';
 
 export default function ResultsScreen() {
@@ -76,16 +76,8 @@ export default function ResultsScreen() {
   // Den övergripande vinnaren (utan filter) — det är den som sparas för startsidan.
   const overallTop = qualifiedMatches[0];
 
-  // Konfetti i vinnarpartiets färger — bara första gången resultatet visas.
-  const [showConfetti, setShowConfetti] = useState<boolean>(false);
-  const confettiShownRef = useRef<boolean>(false);
-  useEffect(() => {
-    if (!confettiShownRef.current && overallTop && !levelState.topMatch) {
-      confettiShownRef.current = true;
-      setShowConfetti(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [overallTop?.partyId]);
+  // Diskret intoning + procenträknare på toppmatchningen.
+  const animatedPercent = useCountUp(topMatch?.matchPercent ?? 0);
 
   // Spara toppmatchningen så startsidan kan visa den.
   useEffect(() => {
@@ -218,7 +210,7 @@ export default function ResultsScreen() {
         )}
 
         {topMatch && (
-          <View
+          <FadeInUp
             style={[
               styles.heroCard,
               {
@@ -243,7 +235,7 @@ export default function ResultsScreen() {
                 </Text>
               </View>
               <Text style={{ color: topMatch.color || c.foreground, fontSize: 28, fontFamily: 'Inter_700Bold' }}>
-                {topMatch.matchPercent}%
+                {animatedPercent}%
               </Text>
             </View>
             <View style={{ marginTop: 12 }}>
@@ -270,7 +262,7 @@ export default function ResultsScreen() {
                 </Text>
               </Pressable>
             ) : null}
-          </View>
+          </FadeInUp>
         )}
 
         <View style={{ gap: 12, marginTop: 16 }}>
@@ -432,13 +424,6 @@ export default function ResultsScreen() {
           />
         </View>
       </ScrollView>
-
-      {showConfetti && topMatch && (
-        <ConfettiBurst
-          colors={[topMatch.color || c.primary, '#ffffff', `${topMatch.color || c.primary}99`]}
-          onDone={() => setShowConfetti(false)}
-        />
-      )}
     </View>
   );
 }
