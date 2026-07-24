@@ -24,3 +24,33 @@ id = "hTs-2jL_riRhOfTyvD9tk"
 uri = "file://attached_assets/qr_expo_go.png"
 type = "image"
 title = "QR-kod – öppna appen i Expo Go"
+
+[[outputs]]
+id = "Lf7XuUA0tcRWbAjTIEU21"
+uri = "file://screenshots/appstore/iphone-01.jpg"
+type = "image"
+title = "App Store-bild 1 av 5 (iPhone 1242×2688)"
+
+[[outputs]]
+id = "1w0q7kUWInCr3y_f-WlcM"
+uri = "file://screenshots/appstore/iphone-02.jpg"
+type = "image"
+title = "App Store-bild 2 av 5 (iPhone 1242×2688)"
+
+[[outputs]]
+id = "7O6dH7vHNbZ0IffWNJ7vF"
+uri = "file://screenshots/appstore/iphone-03.jpg"
+type = "image"
+title = "App Store-bild 3 av 5 (iPhone 1242×2688)"
+
+[[outputs]]
+id = "zjaf98G5nb_zCUqBzkvHo"
+uri = "file://screenshots/appstore/iphone-04.jpg"
+type = "image"
+title = "App Store-bild 4 av 5 (iPhone 1242×2688)"
+
+[[outputs]]
+id = "92JCY0Oy8C1_f8bGHThdq"
+uri = "file://screenshots/appstore/iphone-05.jpg"
+type = "image"
+title = "App Store-bild 5 av 5 (iPhone 1242×2688)"
