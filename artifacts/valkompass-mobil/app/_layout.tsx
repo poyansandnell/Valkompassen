@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
@@ -19,7 +19,8 @@ import * as SplashScreen from 'expo-splash-screen';
 setBaseUrl(`https://${process.env.EXPO_PUBLIC_DOMAIN}`);
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+// preventAutoHideAsync can reject in rare cases — never let that crash startup.
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 const queryClient = new QueryClient();
 
@@ -43,19 +44,39 @@ export default function RootLayout() {
     Inter_700Bold,
   });
 
+  // Failsafe: if font loading hangs for any reason, show the app anyway after
+  // a short timeout instead of leaving the user stuck on the splash screen.
+  const [timedOut, setTimedOut] = useState(false);
   useEffect(() => {
-    if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
+    const t = setTimeout(() => setTimedOut(true), 3000);
+    return () => clearTimeout(t);
+  }, []);
 
-  if (!fontsLoaded && !fontError) return null;
+  const ready = fontsLoaded || !!fontError || timedOut;
+
+  useEffect(() => {
+    if (!ready) return;
+    // Retry hiding the splash a few times — a single failed attempt would
+    // otherwise leave the native splash visible forever.
+    let attempts = 0;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const tryHide = () => {
+      SplashScreen.hideAsync().catch(() => {
+        attempts += 1;
+        if (attempts < 5) timer = setTimeout(tryHide, 500);
+      });
+    };
+    tryHide();
+    return () => { if (timer) clearTimeout(timer); };
+  }, [ready]);
+
+  if (!ready) return null;
 
   return (
     <SafeAreaProvider>
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
-          <GestureHandlerRootView>
+          <GestureHandlerRootView style={{ flex: 1 }}>
             <KeyboardProvider>
               <AnswersProvider>
                 <RootLayoutNav />
