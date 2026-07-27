@@ -1,4 +1,5 @@
 import { errorInfo } from '@/lib/errorInfo';
+import { logStep } from '@/lib/netlog';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
@@ -54,6 +55,17 @@ export default function QuizScreen() {
   );
   const quiz = quizQuery.data;
 
+  // Debug flow logging: query status, question count, state, render.
+  useEffect(() => {
+    logStep(
+      `Quiz-skärm [${level}] React Query-status: ${quizQuery.status}${
+        quizQuery.isFetching ? ' (hämtar)' : ''
+      }${quiz ? `, ${quiz.questions.length} frågor` : ''}${
+        quizQuery.error ? `, fel: ${(quizQuery.error as Error).message}` : ''
+      }`,
+    );
+  }, [level, quizQuery.status, quizQuery.isFetching, quiz, quizQuery.error]);
+
   const [index, setIndex] = useState<number>(-1); // -1 = not initialized
 
   // Initialize to first unanswered question once quiz + storage are ready
@@ -61,6 +73,11 @@ export default function QuizScreen() {
     if (!quiz || !hydrated || index >= 0) return;
     const firstUnanswered = quiz.questions.findIndex(
       (q) => levelState.answers[q.id] === undefined,
+    );
+    logStep(
+      `Quiz-skärm [${level}] state init: hydrated=${hydrated}, startindex=${
+        firstUnanswered === -1 ? 0 : firstUnanswered
+      }`,
     );
     setIndex(firstUnanswered === -1 ? 0 : firstUnanswered);
     setLevelMeta(key, {
@@ -77,6 +94,12 @@ export default function QuizScreen() {
 
   // Sync weight state when the visible question changes (explicit key change, not prop sync)
   const questionId = question?.id;
+  useEffect(() => {
+    if (questionId && quiz) {
+      logStep(`RENDER: fråga ${index + 1}/${quiz.questions.length} (${questionId})`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questionId]);
   useEffect(() => {
     if (!questionId) return;
     const saved = levelState.answers[questionId];

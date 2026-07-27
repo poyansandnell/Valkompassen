@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { setBaseUrl } from '@workspace/api-client-react';
-import { installNetLog } from '@/lib/netlog';
+import { installNetLog, logStep } from '@/lib/netlog';
+import { DebugOverlay } from '@/components/DebugOverlay';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AnswersProvider } from '@/context/AnswersContext';
 import {
@@ -29,7 +30,24 @@ installNetLog(API_DOMAIN);
 // preventAutoHideAsync can reject in rare cases — never let that crash startup.
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-const queryClient = new QueryClient();
+// Log React Query outcomes for every query (success incl. data size, errors).
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onSuccess: (data, query) => {
+      const n = Array.isArray(data)
+        ? `${data.length} poster`
+        : data && typeof data === 'object' && Array.isArray((data as any).questions)
+          ? `${(data as any).questions.length} frågor`
+          : 'ok';
+      logStep(`React Query LYCKADES ${JSON.stringify(query.queryKey)} → ${n}`);
+    },
+    onError: (error, query) => {
+      logStep(
+        `React Query FEL ${JSON.stringify(query.queryKey)} → ${(error as Error)?.message}\n${((error as Error)?.stack ?? '').slice(0, 300)}`,
+      );
+    },
+  }),
+});
 
 function RootLayoutNav() {
   return (
@@ -87,6 +105,7 @@ export default function RootLayout() {
             <KeyboardProvider>
               <AnswersProvider>
                 <RootLayoutNav />
+                <DebugOverlay />
               </AnswersProvider>
             </KeyboardProvider>
           </GestureHandlerRootView>

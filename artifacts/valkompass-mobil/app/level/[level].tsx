@@ -1,4 +1,5 @@
 import { errorInfo } from '@/lib/errorInfo';
+import { logStep } from '@/lib/netlog';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
@@ -92,6 +93,9 @@ export default function LevelIntroScreen() {
   if (!meta) return null;
 
   const startQuiz = (municipalityId?: string, municipalityName?: string) => {
+    logStep(
+      `KNAPPTRYCK: Starta quiz [${meta.level}]${municipalityName ? ` – ${municipalityName}` : ''}`,
+    );
     router.push({
       pathname: '/quiz/[level]',
       params: {

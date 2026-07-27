@@ -6,7 +6,7 @@
 
 type Entry = {
   ts: number;
-  kind: 'net' | 'js';
+  kind: 'net' | 'js' | 'step';
   method?: string;
   url?: string;
   status?: number;
@@ -18,20 +18,56 @@ type Entry = {
 const entries: Entry[] = [];
 let apiDomain = '(okänd)';
 let patched = false;
+const listeners = new Set<() => void>();
+
+function notify() {
+  listeners.forEach((l) => l());
+}
+
+/** Subscribe to log changes (used by the debug overlay). Returns unsubscribe. */
+export function subscribeNetLog(listener: () => void): () => void {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
+}
 
 function push(e: Entry) {
   entries.push(e);
-  if (entries.length > 30) entries.shift();
+  if (entries.length > 80) entries.shift();
+  notify();
+}
+
+/** Log an arbitrary flow step (button press, query status, render, state). */
+export function logStep(msg: string): void {
+  push({ ts: Date.now(), kind: 'step', error: msg });
+  console.log(`[STEG] ${msg}`);
+}
+
+function fmtTime(ts: number): string {
+  const d = new Date(ts);
+  const p = (n: number, w = 2) => String(n).padStart(w, '0');
+  return `${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}.${p(d.getMilliseconds(), 3)}`;
+}
+
+export function getApiDomain(): string {
+  return apiDomain;
+}
+
+/** Full log, newest last — used by the debug overlay. */
+export function fullLogLines(): string[] {
+  return entries.map((e) => {
+    const t = fmtTime(e.ts);
+    if (e.kind === 'step') return `${t} ${e.error}`;
+    if (e.kind === 'js') return `${t} JS-FEL: ${e.error}`;
+    const outcome =
+      e.status != null
+        ? `→ ${e.status}`
+        : `→ NÄTVERKSFEL (lämnade ev. aldrig telefonen): ${e.error}`;
+    return `${t} ${e.method} ${e.url} ${outcome} (${e.ms} ms)${e.body ? `\nSvar: ${e.body}` : ''}`;
+  });
 }
 
 export function netLogText(): string {
-  const lines = entries.slice(-6).map((e) => {
-    if (e.kind === 'js') return `JS-FEL: ${e.error}`;
-    const outcome =
-      e.status != null ? `→ ${e.status}` : `→ NÄTVERKSFEL (lämnade ev. aldrig telefonen): ${e.error}`;
-    return `${e.method} ${e.url} ${outcome} (${e.ms} ms)${e.body ? `\nSvar: ${e.body}` : ''}`;
-  });
-  return [`API-domän i denna build: ${apiDomain}`, ...lines].join('\n');
+  return [`API-domän i denna build: ${apiDomain}`, ...fullLogLines().slice(-8)].join('\n');
 }
 
 export function installNetLog(domain: string): void {
@@ -45,6 +81,7 @@ export function installNetLog(domain: string): void {
       typeof input === 'string' ? input : (input?.url ?? String(input));
     const method = (init?.method ?? input?.method ?? 'GET').toUpperCase();
     const start = Date.now();
+    push({ ts: start, kind: 'step', error: `fetch START ${method} ${url}` });
     try {
       const res = await origFetch(input, init);
       const entry: Entry = {
