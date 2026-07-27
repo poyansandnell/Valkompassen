@@ -16,7 +16,10 @@ import {
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 
-setBaseUrl(`https://${process.env.EXPO_PUBLIC_DOMAIN}`);
+// Failsafe: if the build was made without EXPO_PUBLIC_DOMAIN, fall back to
+// the production domain instead of calling "https://undefined".
+const API_DOMAIN = process.env.EXPO_PUBLIC_DOMAIN || 'attached-assets-y1phu.replit.app';
+setBaseUrl(`https://${API_DOMAIN}`);
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 // preventAutoHideAsync can reject in rare cases — never let that crash startup.

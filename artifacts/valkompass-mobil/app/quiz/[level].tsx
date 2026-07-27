@@ -1,3 +1,4 @@
+import { errorInfo } from '@/lib/errorInfo';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
@@ -143,6 +144,13 @@ export default function QuizScreen() {
         <Text style={{ color: c.foreground, fontFamily: 'Inter_500Medium', marginTop: 12 }}>
           Kunde inte hämta frågorna.
         </Text>
+        {quizQuery.error ? (
+          <Text
+            style={{ color: c.mutedForeground, fontSize: 12, marginTop: 8, textAlign: 'center' }}
+          >
+            {errorInfo(quizQuery.error)}
+          </Text>
+        ) : null}
         <View style={{ marginTop: 16, alignSelf: 'stretch' }}>
           <PrimaryButton label="Försök igen" onPress={() => quizQuery.refetch()} />
         </View>

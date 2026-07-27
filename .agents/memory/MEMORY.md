@@ -8,4 +8,6 @@
 
 - [Lokalpartiresearch](localparty-research.md) — hemsidor/beskrivningar/svar för 138 lokalpartier från deras egna sajter; strikt null-regel, fingerprint-skydd i seed, regenereras efter val.
 
+- [Mobile prod API domain failsafe](mobile-prod-api-domain.md) — app hardcodes fallback API-domän + visar fel-URL på skärm; TestFlight-buggen berodde på saknad EXPO_PUBLIC_DOMAIN vid bygget, inte backend.
+
 - [Fullmäktige mandate pipeline](mandate-data-pipeline.md) — inAssembly for all kommuner/regions comes from SCB; refresh after each election with update-mandates + seed; local parties stay manual.

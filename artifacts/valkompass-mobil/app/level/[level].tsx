@@ -1,3 +1,4 @@
+import { errorInfo } from '@/lib/errorInfo';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
@@ -166,6 +167,11 @@ export default function LevelIntroScreen() {
                 <Text style={{ color: c.foreground, fontFamily: 'Inter_500Medium' }}>
                   Kunde inte hämta kommuner.
                 </Text>
+                {municipalitiesQuery.error ? (
+                  <Text style={{ color: c.mutedForeground, fontSize: 12, marginTop: 8 }}>
+                    {errorInfo(municipalitiesQuery.error)}
+                  </Text>
+                ) : null}
                 <View style={{ marginTop: 12 }}>
                   <PrimaryButton
                     label="Försök igen"
