@@ -4,6 +4,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { setBaseUrl } from '@workspace/api-client-react';
+import { installNetLog } from '@/lib/netlog';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AnswersProvider } from '@/context/AnswersContext';
 import {
@@ -20,6 +21,9 @@ import * as SplashScreen from 'expo-splash-screen';
 // the production domain instead of calling "https://undefined".
 const API_DOMAIN = process.env.EXPO_PUBLIC_DOMAIN || 'attached-assets-y1phu.replit.app';
 setBaseUrl(`https://${API_DOMAIN}`);
+// Log every network request (URL, status, body, network errors) + JS errors
+// so failures are visible on-screen in TestFlight builds.
+installNetLog(API_DOMAIN);
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 // preventAutoHideAsync can reject in rare cases — never let that crash startup.
