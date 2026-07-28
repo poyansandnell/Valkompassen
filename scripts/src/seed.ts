@@ -274,7 +274,7 @@ const RIKSDAG_MINOR_PARTIES: PartySeed[] = [
     abbreviation: "NYANS",
     color: "#2AA9B7",
     description:
-      "Parti utanför riksdagen (0,44 % i riksdagsvalet 2022). Partiet har ännu inte lämnat eller fått bedömda svar i valkompassen.",
+      "Parti utanför riksdagen (0,44 % i riksdagsvalet 2022). Svaren är redaktionellt bedömda utifrån partiets officiella program och delvis ofullständiga.",
     website: "https://partietnyans.se",
   },
   {
@@ -283,7 +283,7 @@ const RIKSDAG_MINOR_PARTIES: PartySeed[] = [
     abbreviation: "AFS",
     color: "#104E8B",
     description:
-      "Parti utanför riksdagen (0,26 % i riksdagsvalet 2022). Partiet har ännu inte lämnat eller fått bedömda svar i valkompassen.",
+      "Parti utanför riksdagen (0,26 % i riksdagsvalet 2022). Svaren är redaktionellt bedömda utifrån partiets officiella program och delvis ofullständiga.",
     website: "https://alternativforsverige.se",
   },
   {
@@ -292,7 +292,7 @@ const RIKSDAG_MINOR_PARTIES: PartySeed[] = [
     abbreviation: "PP",
     color: "#572B85",
     description:
-      "Parti utanför riksdagen (0,14 % i riksdagsvalet 2022). Partiet har ännu inte lämnat eller fått bedömda svar i valkompassen.",
+      "Parti utanför riksdagen (0,14 % i riksdagsvalet 2022). Partiets program tar bara ställning i ett fåtal av frågorna; de svar som finns är redaktionellt bedömda utifrån partiets officiella program.",
     website: "https://piratpartiet.se",
   },
 ];
@@ -756,9 +756,17 @@ async function main() {
         sources: value == null ? [] : [KF_SOURCE],
       });
     });
-  // Medborgerlig Samling: riksdagsfrågorna, delvis ofullständigt underlag.
-  for (const q of questionRows.filter((q) => q.id!.startsWith("rd-"))) {
-    realAnswerFor("medborgerlig-samling", q.id!);
+  // Partier utanför riksdagen: riksdagsfrågorna, delvis ofullständigt
+  // underlag — bedömda utifrån respektive partis egna programsidor.
+  for (const partyId of [
+    "medborgerlig-samling",
+    "alternativ-for-sverige",
+    "partiet-nyans",
+    "piratpartiet",
+  ]) {
+    for (const q of questionRows.filter((q) => q.id!.startsWith("rd-"))) {
+      realAnswerFor(partyId, q.id!);
+    }
   }
   // Sörmlandslistan: ingen publicerad politik att bedöma — inga svar alls.
   // Partiet visas under "Fler partier som ställer upp" som ej kvalificerat.

@@ -47,6 +47,18 @@ export const PARTY_SOURCES: Record<string, { title: string; url: string }> = {
     title: "Medborgerlig Samling – Politik",
     url: "https://www.med.se/",
   },
+  "alternativ-for-sverige": {
+    title: "Alternativ för Sverige – Vår politik",
+    url: "https://alternativforsverige.se/politik/",
+  },
+  "partiet-nyans": {
+    title: "Partiet Nyans – Vår politik",
+    url: "https://www.partietnyans.se/var-politik/",
+  },
+  piratpartiet: {
+    title: "Piratpartiet – Sakpolitik",
+    url: "https://piratpartiet.se/sakpolitik/",
+  },
 };
 
 // Ordning: index 0 = rd-1 … index 29 = rd-30.
@@ -61,6 +73,10 @@ export const RIKSDAG_POSITIONS: Record<string, (number | null)[]> = {
   liberalerna:        [  2,  2,  2,  1,  0,  2,  2,  1,  1,  2,  2,  0,  0,  0,  2,  2, -1,  1, -1,  0,  0,  2,  2, -1,  1,  1, -2,  0, -1,  2],
   miljopartiet:       [ -2,  0,  0, -1,  2,  1,  0, -1, -2, -1, -2,  2,  2, -2,  0, -1,  1, -1,  1,  1, -1,  1, -2,  1,  1, -2,  1,  2, -2,  0],
   "medborgerlig-samling": [2, 1,  2, null, -1, null, 2,  1,  2,  2,  2, -2, -2,  1,  2,  2, -1,  2, -2, -2,  1, -2,  2, -2,  1, null, -2, null, null, null],
+  // Bedömt 2026-07-28 utifrån partiets egna programsidor (se PARTY_SOURCES).
+  "alternativ-for-sverige": [2, -2, null, 2, null, 2, 2, -1, 2, 2, 2, -2, -2, 2, 2, -2, 2, null, null, null, 2, -2, null, null, 2, null, -2, null, 2, null],
+  "partiet-nyans":          [null, 2, 2, 2, null, 2, 2, null, -1, null, 2, 1, null, 2, null, -2, 2, null, 2, null, null, null, -2, 2, null, null, null, null, 1, null],
+  piratpartiet:             [null, null, 1, null, null, null, null, -2, null, null, 1, null, null, null, null, null, null, null, null, null, null, null, 1, null, 2, null, null, null, null, null],
 };
 
 export const EDITORIAL_JUSTIFICATION =
