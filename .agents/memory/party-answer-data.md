@@ -13,6 +13,9 @@ description: How real vs. test party answers are handled across election levels 
 
 Riksdag-level inclusion criterion (decided by user, July 2026): parties outside
 the riksdag are included if they got >= 0.1% in the latest riksdag election
-(2022: Nyans 0.44%, AfS 0.26%, MED 0.20%, Piratpartiet 0.14%). Only MED has
-editorial answers; the others show as "har inte lämnat svar". This resolves the
-earlier open consistency question about MED's inclusion.
+(2022: Nyans 0.44%, AfS 0.26%, MED 0.20%, Piratpartiet 0.14%). All four now have
+editorial answers assessed strictly from their own program pages (July 28, 2026):
+MED 25/30, AfS 20/30, Nyans 15/30 (all qualified, >=50%), Piratpartiet 5/30
+(NOT qualified — their program simply doesn't address most questions; shown as
+"har inte lämnat svar" with the few assessed answers visible). Strict null rule:
+never infer from general ideology, only from explicit statements on their sites.
