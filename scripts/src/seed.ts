@@ -247,7 +247,7 @@ const LOCAL_PARTIES: PartySeed[] = [
     id: "katrineholm-framat",
     name: "Katrineholm FRAMÅT",
     abbreviation: "KF",
-    color: "#EA580C",
+    color: "#FF8B01",
     description:
       "Lokalt parti i Katrineholm. Svaren är redaktionellt bedömda utifrån partiets publicerade program.",
     website: "https://www.katrineholmframat.se",

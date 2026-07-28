@@ -1,0 +1,118 @@
+Fantastiskt! 🎉🎉 Nu vet vi att grundproblemet var löst och att appen fungerar i TestFlight. Det är ett riktigt stort steg framåt.
+
+Jag skulle skicka detta till Replit:
+
+⸻
+
+Slutlig finputsning innan App Store
+
+Appen fungerar nu i TestFlight och quizet laddar korrekt. Tack! Nu återstår några förbättringar innan publicering.
+
+1. Ta bort all testdata
+
+Resultatet får inte längre visa:
+
+* “TESTDATA – inte partiernas riktiga svar”
+* “Testdata: exempelprofil…”
+* eller någon annan text som antyder att testdata används.
+
+Appen ska nu använda de riktiga partiernas svar överallt.
+
+⸻
+
+2. Ta bort DEBUG
+
+Ta bort hela debugfunktionen från produktionsversionen:
+
+* DEBUG-knappen uppe till höger
+* Debug-overlay
+* All debugkod som endast användes för felsökning
+
+⸻
+
+3. Ta bort testpartiet
+
+Längst ned visas fortfarande ett exempelparti:
+
+“Katrineholms Väl”
+
+Det ska tas bort helt.
+
+Endast riktiga partier ska visas.
+
+⸻
+
+4. Katrineholm FRAMÅT
+
+Ändra partiets färg.
+
+Använd vår officiella orange profilfärg istället för lila.
+
+Hex:
+
+#FF8B01
+
+Använd samma färg på:
+
+* cirkeln med KF
+* progressbaren
+* övriga accentfärger
+
+⸻
+
+5. Laddning av kommuner
+
+Första gången kommunen laddas tar det ganska lång tid.
+
+Istället för att visa en tom lista vill vi ha en tydlig laddningsvy.
+
+Exempel:
+
+* spinner
+* “Laddar kommuner…”
+* eller skeleton-lista
+
+Användaren ska direkt förstå att listan håller på att hämtas.
+
+⸻
+
+6. Platsbehörighet fungerar inte
+
+Appen frågade aldrig om platsbehörighet.
+
+Den borde:
+
+* fråga om plats första gången Region/Kommun används
+* om användaren godkänner:
+    * hämta aktuell kommun automatiskt
+    * välja kommunen direkt
+* om användaren nekar:
+    * låta användaren söka manuellt
+
+Kontrollera även att:
+
+* Info.plist innehåller rätt Location Usage Description
+* permissions faktiskt begärs i produktion
+* Expo-konfigurationen är korrekt
+
+⸻
+
+7. Kontroll inför release
+
+Gör en sista genomgång av hela appen innan nästa build:
+
+* inga debugrester
+* inga testtexter
+* inga exempelpartier
+* inga hårdkodade testvärden
+* inga utvecklarloggar kvar
+
+Målet är en helt produktionsfärdig App Store-version.
+
+⸻
+
+Jag skulle också lägga till en sista punkt som jag tycker är viktig:
+
+8. Lägg till caching av kommunlistan. Hämta den bara första gången och spara den lokalt. Då öppnas kommunväljaren nästan direkt nästa gång användaren använder appen och ni slipper onödiga API-anrop.
+
+Det är en liten ändring som ger en mycket bättre användarupplevelse. 🚀

@@ -1,6 +1,5 @@
 import { errorInfo } from '@/lib/errorInfo';
-import { logStep } from '@/lib/netlog';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -17,7 +16,9 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
   getListMunicipalitiesQueryKey,
   useListMunicipalities,
+  type Municipality,
 } from '@workspace/api-client-react';
+import { loadCachedMunicipalities, saveCachedMunicipalities } from '@/lib/municipalityCache';
 import * as Location from 'expo-location';
 import { useColors } from '@/hooks/useColors';
 import { PrimaryButton, Card } from '@/components/ui';
@@ -31,6 +32,16 @@ export default function LevelIntroScreen() {
   const meta = LEVELS.find((l) => l.level === level);
 
   const [search, setSearch] = useState<string>('');
+
+  // Locally cached municipality list: makes the picker open instantly on
+  // repeat visits and avoids showing an empty list during the first fetch.
+  const [cached, setCached] = useState<Municipality[] | null>(null);
+  useEffect(() => {
+    loadCachedMunicipalities().then((list) => {
+      if (list) setCached(list);
+    });
+  }, []);
+
   const municipalitiesQuery = useListMunicipalities({
     query: {
       queryKey: getListMunicipalitiesQueryKey(),
@@ -39,14 +50,27 @@ export default function LevelIntroScreen() {
     },
   });
 
+  // Save fresh data to the local cache whenever it arrives.
+  useEffect(() => {
+    if (municipalitiesQuery.data) saveCachedMunicipalities(municipalitiesQuery.data);
+  }, [municipalitiesQuery.data]);
+
+  // Prefer fresh data; fall back to the cache while loading (or on error).
+  const municipalities = municipalitiesQuery.data ?? cached;
+
   // Suggest the user's municipality from device location (native only)
   const [suggested, setSuggested] = useState<{ id: string; name: string; slug: string } | null>(
     null,
   );
+  const suggestAttempted = useRef(false);
   useEffect(() => {
     if (Platform.OS === 'web' || !meta?.needsMunicipality) return;
-    const list = municipalitiesQuery.data;
+    const list = municipalities;
     if (!list || list.length === 0) return;
+    // Run once per screen visit — otherwise the location lookup would rerun
+    // when fresh API data replaces the cached list.
+    if (suggestAttempted.current) return;
+    suggestAttempted.current = true;
     let cancelled = false;
     (async () => {
       try {
@@ -76,16 +100,17 @@ export default function LevelIntroScreen() {
     return () => {
       cancelled = true;
     };
-  }, [meta?.needsMunicipality, municipalitiesQuery.data]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [meta?.needsMunicipality, municipalities]);
 
   const filtered = useMemo(() => {
-    const list = municipalitiesQuery.data ?? [];
+    const list = municipalities ?? [];
     const q = search.trim().toLowerCase();
     if (!q) return list;
     return list.filter(
       (m) => m.name.toLowerCase().includes(q) || m.regionName.toLowerCase().includes(q),
     );
-  }, [municipalitiesQuery.data, search]);
+  }, [municipalities, search]);
 
   const topInset = Platform.OS === 'web' ? 67 : insets.top;
   const bottomInset = Platform.OS === 'web' ? 34 : insets.bottom;
@@ -93,9 +118,6 @@ export default function LevelIntroScreen() {
   if (!meta) return null;
 
   const startQuiz = (municipalityId?: string, municipalityName?: string) => {
-    logStep(
-      `KNAPPTRYCK: Starta quiz [${meta.level}]${municipalityName ? ` – ${municipalityName}` : ''}`,
-    );
     router.push({
       pathname: '/quiz/[level]',
       params: {
@@ -164,9 +186,14 @@ export default function LevelIntroScreen() {
               />
             </View>
 
-            {municipalitiesQuery.isLoading ? (
-              <ActivityIndicator style={{ marginTop: 32 }} color={c.primary} />
-            ) : municipalitiesQuery.isError ? (
+            {municipalitiesQuery.isLoading && !municipalities ? (
+              <View style={{ alignItems: 'center', marginTop: 32, gap: 12 }}>
+                <ActivityIndicator size="large" color={c.primary} />
+                <Text style={{ color: c.mutedForeground, fontFamily: 'Inter_500Medium' }}>
+                  Laddar kommuner…
+                </Text>
+              </View>
+            ) : municipalitiesQuery.isError && !municipalities ? (
               <Card style={{ marginTop: 16 }}>
                 <Text style={{ color: c.foreground, fontFamily: 'Inter_500Medium' }}>
                   Kunde inte hämta kommuner.
