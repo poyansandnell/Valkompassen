@@ -1,0 +1,20 @@
+/* 10-tums surfplatta för Google Play: 1800×3200 (9:16) */
+html, body {
+  width: 1620px;
+  height: 2880px;
+}
+
+.copy { padding: 150px 170px 0; }
+
+.kicker { font-size: 45px; margin-bottom: 54px; }
+
+h1 { font-size: 132px; margin-bottom: 58px; }
+
+.sub { font-size: 54px; max-width: 1260px; }
+
+.phone-wrap { margin-top: 110px; }
+
+.phone {
+  width: 970px;
+  height: 2000px;
+}
