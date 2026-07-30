@@ -60,3 +60,9 @@ id = "3P4PcG5nAwUXOmTawljL0"
 uri = "file://screenshots/appstore/valkompass-appstore-bilder.zip"
 type = "unspecified"
 title = "Alla App Store-bilder – iPhone + iPad (zip)"
+
+[[outputs]]
+id = "-7ZG2_FE2aqomur4jsggC"
+uri = "file://screenshots/googleplay/valkompass-googleplay-bilder.zip"
+type = "unspecified"
+title = "Google Play-bilder (Android, svenska)"
