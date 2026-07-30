@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="sv"><head><meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1024px; height: 500px; overflow: hidden; }
+  body {
+    font-family: 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif;
+    background:
+      radial-gradient(900px 600px at 85% -20%, rgba(124,58,237,.45), transparent 60%),
+      radial-gradient(700px 500px at -10% 120%, rgba(124,58,237,.30), transparent 55%),
+      linear-gradient(135deg, #17102b 0%, #1e1436 55%, #241242 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  /* diskret kompassring till höger */
+  .ring {
+    position: absolute; right: -170px; top: 50%; transform: translateY(-50%);
+    width: 560px; height: 560px; border-radius: 50%;
+    border: 2px solid rgba(167,139,250,.22);
+  }
+  .ring::before {
+    content: ""; position: absolute; inset: 70px; border-radius: 50%;
+    border: 2px dashed rgba(167,139,250,.18);
+  }
+  .ring::after {
+    content: ""; position: absolute; inset: 160px; border-radius: 50%;
+    border: 2px solid rgba(167,139,250,.14);
+  }
+  .needle {
+    position: absolute; right: 92px; top: 50%;
+    width: 0; height: 0; transform: translateY(-50%) rotate(38deg);
+  }
+  .needle i {
+    position: absolute; left: -13px; top: -120px;
+    border-left: 13px solid transparent; border-right: 13px solid transparent;
+    border-bottom: 120px solid rgba(167,139,250,.85);
+    filter: drop-shadow(0 6px 18px rgba(124,58,237,.6));
+  }
+  .needle b {
+    position: absolute; left: -13px; top: 0;
+    border-left: 13px solid transparent; border-right: 13px solid transparent;
+    border-top: 120px solid rgba(255,255,255,.35);
+  }
+  .needle s {
+    position: absolute; left: -11px; top: -11px; width: 22px; height: 22px;
+    background: #fff; border-radius: 50%; box-shadow: 0 0 0 6px rgba(255,255,255,.15);
+  }
+  .content { padding-left: 84px; position: relative; z-index: 2; max-width: 640px; }
+  .brand { display: flex; align-items: center; gap: 22px; margin-bottom: 30px; }
+  .tile {
+    width: 84px; height: 84px; border-radius: 22px;
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 14px 34px rgba(109,40,217,.5);
+  }
+  .name { font-size: 44px; font-weight: 800; letter-spacing: -0.5px; }
+  h1 {
+    font-size: 58px; line-height: 1.08; font-weight: 800; letter-spacing: -1px;
+    margin-bottom: 22px;
+  }
+  h1 em { font-style: normal; color: #c4b5fd; }
+  .sub { font-size: 25px; color: #cbd5e1; font-weight: 500; }
+</style></head>
+<body>
+  <div class="ring"></div>
+  <div class="needle"><i></i><b></b><s></s></div>
+  <div class="content">
+    <div class="brand">
+      <div class="tile">
+        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+      </div>
+      <div class="name">Valkompass</div>
+    </div>
+    <h1>Hitta partiet som<br><em>tycker som du</em></h1>
+    <div class="sub">Oberoende valkompass 2026 · Riksdag, region och kommun</div>
+  </div>
+</body></html>
