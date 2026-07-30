@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="sv"><head><meta charset="utf-8"><link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="android.css">
+<style>
+  .fake { padding: 170px 56px 0; color: #0f172a; }
+  .fake .header { text-align: center; font-size: 42px; font-weight: 800; margin-bottom: 14px; }
+  .fake .meta { text-align: center; font-size: 30px; color: #64748b; margin-bottom: 46px; }
+  .best {
+    border: 4px solid #16a34a; border-radius: 32px; background: #fff;
+    padding: 44px 40px; margin-bottom: 36px; box-shadow: 0 12px 30px rgba(15,23,42,.06);
+  }
+  .best .tag { font-size: 26px; letter-spacing: 3px; font-weight: 800; color: #16a34a; margin-bottom: 26px; }
+  .row { display: flex; align-items: center; gap: 28px; }
+  .dot { width: 92px; height: 92px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+         color: #fff; font-weight: 800; font-size: 40px; flex-shrink: 0; }
+  .row .name { font-size: 44px; font-weight: 800; flex: 1; }
+  .row .name small { display: block; font-size: 28px; color: #64748b; font-weight: 500; margin-top: 6px; }
+  .row .pct { font-size: 66px; font-weight: 800; color: #16a34a; }
+  .card { background: #fff; border-radius: 32px; padding: 38px 40px; margin-bottom: 28px;
+          box-shadow: 0 10px 24px rgba(15,23,42,.05); }
+  .card .pct { font-size: 48px; color: #0f172a; }
+  .bar { height: 14px; background: #eef2f7; border-radius: 7px; margin-top: 26px; overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 7px; background: #7c3aed; }
+  .example { position: absolute; bottom: 60px; left: 0; right: 0; text-align: center;
+             font-size: 28px; color: #94a3b8; }
+</style></head>
+<body>
+  <div class="copy">
+    <div class="kicker">Ditt resultat</div>
+    <h1>Se din matchning<br>i procent</h1>
+    <div class="sub">Jämför partiernas svar fråga för fråga — med källor för varje bedömning.</div>
+  </div>
+  <div class="phone-wrap">
+    <div class="phone"><div class="screen">
+      <div class="island"></div>
+      <div class="statusbar"><span>9:41</span><svg width="130" height="40" viewBox="0 0 130 40" fill="#0f172a"><rect x="0" y="18" width="6" height="14" rx="2"/><rect x="10" y="12" width="6" height="20" rx="2"/><rect x="20" y="6" width="6" height="26" rx="2"/><rect x="30" y="0" width="6" height="32" rx="2"/><path d="M55 14 a18 18 0 0 1 26 0 l-4 5 a12 12 0 0 0-18 0 z"/><circle cx="68" cy="26" r="5"/><rect x="92" y="8" width="32" height="20" rx="6" fill="none" stroke="#0f172a" stroke-width="3"/><rect x="96" y="12" width="20" height="12" rx="3"/><rect x="126" y="14" width="4" height="8" rx="2"/></svg></div>
+      <div class="fake">
+        <div class="header">Ditt resultat</div>
+        <div class="meta">Riksdag · Baserat på 30 besvarade frågor</div>
+        <div class="best">
+          <div class="tag">BÄST MATCHNING</div>
+          <div class="row">
+            <div class="dot" style="background:#16a34a">A</div>
+            <div class="name">Parti A<small>Baserat på 30 av 30 frågor</small></div>
+            <div class="pct">82%</div>
+          </div>
+          <div class="bar"><i style="width:82%;background:#16a34a"></i></div>
+        </div>
+        <div class="card"><div class="row">
+          <div class="dot" style="background:#7c3aed">B</div>
+          <div class="name">Parti B</div><div class="pct">74%</div></div>
+          <div class="bar"><i style="width:74%"></i></div>
+        </div>
+        <div class="card"><div class="row">
+          <div class="dot" style="background:#2563eb">C</div>
+          <div class="name">Parti C</div><div class="pct">69%</div></div>
+          <div class="bar"><i style="width:69%"></i></div>
+        </div>
+        <div class="card"><div class="row">
+          <div class="dot" style="background:#f59e0b">D</div>
+          <div class="name">Parti D</div><div class="pct">61%</div></div>
+          <div class="bar"><i style="width:61%"></i></div>
+        </div>
+        <div class="card"><div class="row">
+          <div class="dot" style="background:#dc2626">E</div>
+          <div class="name">Parti E</div><div class="pct">54%</div></div>
+          <div class="bar"><i style="width:54%"></i></div>
+        </div>
+        <div class="example">Exempelresultat</div>
+      </div>
+    </div></div>
+  </div>
+</body></html>

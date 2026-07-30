@@ -1,0 +1,30 @@
+/* Android-överrides: Google Play tillåter max 2:1 → 1242×2484 (iOS var 1242×2688). */
+html, body {
+  height: 2484px;
+  font-family: 'Roboto', 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+.copy { padding: 110px 110px 0; }
+
+.phone-wrap { margin-top: 70px; }
+
+/* Android-telefon: rakare hörn, punkthålskamera i stället för dynamic island */
+.phone {
+  height: 1750px;
+  border-radius: 96px;
+}
+
+.screen { border-radius: 76px; }
+
+.island {
+  /* punkthålskamera */
+  top: 34px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+
+.statusbar {
+  height: 110px;
+  padding: 30px 76px 0;
+}
