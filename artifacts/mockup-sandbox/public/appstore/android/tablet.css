@@ -1,0 +1,23 @@
+/* 7-tums surfplatta för Google Play: 1440×2560 (9:16), centrerad layout som iPad-bilderna */
+html, body {
+  width: 1440px;
+  height: 2560px;
+}
+
+.copy {
+  padding: 130px 150px 0;
+  text-align: center;
+}
+
+.kicker { font-size: 40px; margin-bottom: 44px; }
+
+h1 { font-size: 118px; margin-bottom: 48px; }
+
+.sub { font-size: 48px; max-width: 1120px; margin: 0 auto; }
+
+.phone-wrap { margin-top: 90px; }
+
+.phone {
+  width: 860px;
+  height: 1780px;
+}
