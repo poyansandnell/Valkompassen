@@ -1,0 +1,68 @@
+Ja, jag tycker att vi ska lösa det **ordentligt**, inte bara genom att ändra metadata i Google Play.
+
+Google skriver uttryckligen att de vill se:
+1. En tydlig ansvarsfriskrivning.
+2. Länkar till de officiella källorna.
+3. Att detta framgår för användaren.
+
+### Jag skulle be Replit göra följande
+
+Skicka detta till Replit:
+
+---
+
+**Google Play rejected the app due to the Misleading Claims policy. We need to fully comply before the next submission.**
+
+Please implement the following:
+
+### 1. Add a visible disclaimer inside the app
+Create an "About" or "Information" page (or add it in Settings if one already exists) containing:
+
+> **Disclaimer**
+>
+> Valkompass is an independent application and is **not affiliated with, endorsed by, or representing** the Swedish Government, the Swedish Election Authority (Valmyndigheten), any municipality, region or other public authority.
+>
+> The app is intended solely as an independent tool to compare political positions.
+
+### 2. Add official sources
+Include a section called **Official Sources** with clickable links to:
+
+- https://www.val.se
+- https://www.riksdagen.se
+- https://skr.se
+
+If any municipality or region information comes from other official sources, include those as well.
+
+### 3. Add the same disclaimer to the website
+Add the same disclaimer to:
+- Home page
+- About page
+- Privacy Policy (optional but recommended)
+
+### 4. Update the Play Store description
+Add a visible disclaimer at the end of the description:
+
+> Valkompass is an independent application and does not represent or have any affiliation with the Swedish Government, the Swedish Election Authority, municipalities, regions or any other public authority.
+
+Then add:
+
+> **Official sources**
+> • https://www.val.se
+> • https://www.riksdagen.se
+> • https://skr.se
+
+### 5. Verify
+Verify that there are no statements anywhere in the app or website that could imply the app is official or government-operated.
+
+Please commit all changes to GitHub.
+
+---
+
+## Min rekommendation
+
+När du ändå gör detta skulle jag också be Replit att:
+- koppla **valkompassen.org**,
+- flytta integritetspolicyn dit,
+- lägga "Om Valkompass", kontaktuppgifter och ansvarsfriskrivningen på webbplatsen.
+
+Då får du en mycket mer professionell lösning som sannolikt uppfyller Googles krav och stärker användarnas förtroende.

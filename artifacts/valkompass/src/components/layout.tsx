@@ -34,7 +34,7 @@ export function Footer() {
             Valkompass
           </Link>
           <p className="mb-4">
-            Valkompass är en oberoende tjänst och är inte en del av Valmyndigheten eller någon mediekoncern.
+            Valkompass är en oberoende tjänst och är inte kopplad till, godkänd av eller representerar svenska staten, Valmyndigheten, någon kommun, region eller annan myndighet. Tjänsten är enbart ett fristående hjälpmedel för att jämföra politiska ståndpunkter.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
@@ -49,6 +49,12 @@ export function Footer() {
             <h4 className="font-semibold text-foreground mb-1">Juridiskt</h4>
             <Link href="/integritet" className="hover:text-foreground transition-colors">Integritetspolicy</Link>
             <Link href="/villkor" className="hover:text-foreground transition-colors">Användarvillkor</Link>
+          </div>
+          <div className="flex flex-col gap-2">
+            <h4 className="font-semibold text-foreground mb-1">Officiella källor</h4>
+            <a href="https://www.val.se" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Valmyndigheten (val.se)</a>
+            <a href="https://www.riksdagen.se" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Sveriges riksdag</a>
+            <a href="https://skr.se" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">SKR (skr.se)</a>
           </div>
         </div>
       </div>

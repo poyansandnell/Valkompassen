@@ -34,6 +34,14 @@ Varje partisvar är redaktionellt bedömt utifrån partiernas officiella program
 
 Ladda ner och ta reda på var du står inför valet 2026!
 
+ANSVARSFRISKRIVNING
+Valkompass är en oberoende app och representerar inte, och har ingen koppling till, svenska staten, Valmyndigheten, kommuner, regioner eller någon annan myndighet.
+
+OFFICIELLA KÄLLOR
+• https://www.val.se
+• https://www.riksdagen.se
+• https://skr.se
+
 ## Nyckelord (App Store, max 100 tecken)
 val,valet 2026,politik,parti,riksdag,kommun,region,valkompass,rösta,demokrati
 

@@ -68,6 +68,8 @@ function InfoPages({ type }: { type: 'metod' | 'integritet' | 'privacy' | 'kallo
             <button className="mt-8 px-6 py-3 bg-destructive text-destructive-foreground rounded-lg font-medium hover:bg-destructive/90 transition-colors" onClick={() => { localStorage.clear(); window.location.reload(); }}>
               Radera all min lokala data nu
             </button>
+            <h2>Ansvarsfriskrivning</h2>
+            <p>Valkompass är en oberoende tjänst och är inte kopplad till, godkänd av eller representerar svenska staten, Valmyndigheten, någon kommun, region eller annan myndighet. Tjänsten är enbart ett fristående hjälpmedel för att jämföra politiska ståndpunkter. För officiell information om valen, se <a href="https://www.val.se" target="_blank" rel="noopener noreferrer">val.se</a>, <a href="https://www.riksdagen.se" target="_blank" rel="noopener noreferrer">riksdagen.se</a> och <a href="https://skr.se" target="_blank" rel="noopener noreferrer">skr.se</a>.</p>
           </>
         )}
         

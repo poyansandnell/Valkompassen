@@ -451,6 +451,31 @@ export default function HowItWorks() {
           </Card>
         </section>
 
+        {/* Independence disclaimer + official sources */}
+        <section className="pt-8">
+          <Card className="bg-muted/50 border-none">
+            <CardContent className="p-8 flex gap-4">
+              <AlertCircle className="w-6 h-6 text-muted-foreground shrink-0 mt-1" />
+              <div className="space-y-2 text-sm text-muted-foreground">
+                <p className="font-semibold text-foreground">Ansvarsfriskrivning</p>
+                <p>
+                  Valkompass är en oberoende tjänst och är inte kopplad till, godkänd av eller representerar
+                  svenska staten, Valmyndigheten, någon kommun, region eller annan myndighet. Tjänsten är enbart
+                  ett fristående hjälpmedel för att jämföra politiska ståndpunkter.
+                </p>
+                <p className="font-semibold text-foreground pt-2">Officiella källor</p>
+                <p>
+                  För officiell information om valen, rösträtt och röstning, se{' '}
+                  <a href="https://www.val.se" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">Valmyndigheten (val.se)</a>,{' '}
+                  <a href="https://www.riksdagen.se" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">Sveriges riksdag (riksdagen.se)</a>{' '}
+                  och{' '}
+                  <a href="https://skr.se" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">Sveriges Kommuner och Regioner (skr.se)</a>.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+
       </div>
     </Layout>
   );
