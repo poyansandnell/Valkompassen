@@ -30,7 +30,7 @@ DIN INTEGRITET
 Dina svar sparas endast lokalt på din telefon och skickas aldrig till några servrar. Ingen inloggning, inga konton, ingen spårning. Politiska åsikter är privata – och det förblir de.
 
 SÅ FUNGERAR MATCHNINGEN
-Varje partisvar är redaktionellt bedömt utifrån partiernas officiella program och märkt med källa. Partier med bedömda svar på minst hälften av frågorna får en matchningsprocent; övriga visas med beskrivning och länk till sin webbplats.
+Varje partisvar är redaktionellt bedömt utifrån partiernas officiella program och märkt med källa. Partier med bedömda svar på minst 40 % av frågorna får en matchningsprocent; övriga visas med beskrivning och länk till sin webbplats.
 
 Ladda ner och ta reda på var du står inför valet 2026!
 

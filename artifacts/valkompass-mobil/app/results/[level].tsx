@@ -348,7 +348,7 @@ export default function ResultsScreen() {
             </Text>
             <Text style={{ color: c.mutedForeground, fontSize: 12, fontFamily: 'Inter_400Regular', marginTop: 4 }}>
               Dessa partier har inte tillräckligt många bedömda svar för att få en rättvis
-              matchningspoäng ({'\u2265'}50% av frågorna krävs).
+              matchningspoäng ({'\u2265'}40% av frågorna krävs).
             </Text>
             <View style={{ gap: 10, marginTop: 12 }}>
               {visibleNonQualified.map((m) => {

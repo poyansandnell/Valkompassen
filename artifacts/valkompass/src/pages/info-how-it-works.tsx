@@ -263,7 +263,7 @@ export default function HowItWorks() {
           <div className="space-y-4 text-muted-foreground">
             <p className="text-lg">
               Ett parti räknas som <strong className="text-foreground">kvalificerat</strong> när det har besvarat 
-              minst 50% av frågorna i valkompassen med verifierade svar.
+              minst 40% av frågorna i valkompassen med verifierade svar.
             </p>
             <p>
               Endast kvalificerade partier visas i den huvudsakliga topplistan på resultatsidan. Detta är ett kvalitetskrav 

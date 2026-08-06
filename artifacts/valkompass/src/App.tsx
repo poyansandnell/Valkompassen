@@ -158,7 +158,7 @@ function InfoPages({ type }: { type: 'om' | 'metod' | 'integritet' | 'privacy' |
             <h3>Vanliga frågor</h3>
             <ul>
               <li><strong>Mitt resultat försvann.</strong> Dina svar sparas endast lokalt på din enhet. Om du rensar appens data, avinstallerar appen eller byter enhet försvinner de.</li>
-              <li><strong>Varför saknar vissa partier matchningsprocent?</strong> Partier behöver bedömda svar på minst 50 % av frågorna för att få en rättvis matchning. Övriga visas med beskrivning och länk till sin webbplats.</li>
+              <li><strong>Varför saknar vissa partier matchningsprocent?</strong> Partier behöver bedömda svar på minst 40 % av frågorna för att få en rättvis matchning. Övriga visas med beskrivning och länk till sin webbplats.</li>
               <li><strong>Varifrån kommer partiernas svar?</strong> Se vår <Link href="/kallor">källförteckning</Link> och <Link href="/metod">metodsida</Link>.</li>
               <li><strong>Är ni politiskt oberoende?</strong> Ja. Tjänsten är oberoende, algoritmen är öppet redovisad och ingen matchning gynnar något parti.</li>
             </ul>

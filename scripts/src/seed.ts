@@ -253,6 +253,15 @@ const LOCAL_PARTIES: PartySeed[] = [
     website: "https://www.katrineholmframat.se",
   },
   {
+    id: "ett-battre-eskilstuna",
+    name: "Ett bättre Eskilstuna",
+    abbreviation: "EBE",
+    color: "#64748b",
+    description:
+      "Nystartat lokalt parti i Eskilstuna, registrerat hos Valmyndigheten 2026. Partiet har ännu inte publicerat något politiskt program att bedöma och har inte lämnat egna svar.",
+    website: null,
+  },
+  {
     id: "sormlandslistan",
     name: "Sörmlandslistan",
     abbreviation: "SL",
@@ -636,6 +645,13 @@ async function main() {
     level: "kommun",
     municipalityId: "katrineholm",
     inAssembly: true,
+  });
+  // Ett bättre Eskilstuna: nystartat 2026, sitter inte i fullmäktige.
+  participation.push({
+    partyId: "ett-battre-eskilstuna",
+    level: "kommun",
+    municipalityId: "eskilstuna",
+    inAssembly: false,
   });
 
   // Alla lokala partier med fullmäktigemandat (Valmyndighetens data).
