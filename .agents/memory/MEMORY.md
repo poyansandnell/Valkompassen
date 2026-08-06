@@ -10,4 +10,6 @@
 
 - [Mobile prod API domain failsafe](mobile-prod-api-domain.md) — app hardcodes fallback API-domän + visar fel-URL på skärm; TestFlight-buggen berodde på saknad EXPO_PUBLIC_DOMAIN vid bygget, inte backend.
 
+- [Partiernas självrapportering](party-self-report.md) — party_submissions överlever seed och återappliceras; domänmatch bara i riktningen mejl⊆webbdomän; Resend-nyckeln var ogiltig aug 2026.
+
 - [Fullmäktige mandate pipeline](mandate-data-pipeline.md) — inAssembly for all kommuner/regions comes from SCB; refresh after each election with update-mandates + seed; local parties stay manual.
