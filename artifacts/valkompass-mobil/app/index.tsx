@@ -174,6 +174,15 @@ export default function HomeScreen() {
         <Text style={[styles.infoLinkText, { color: c.mutedForeground }]}>Så fungerar det</Text>
       </Pressable>
 
+      <Pressable
+        testID="about-link"
+        onPress={() => router.push('/om')}
+        style={({ pressed }) => [styles.infoLink, { opacity: pressed ? 0.7 : 1 }]}
+      >
+        <Feather name="flag" size={16} color={c.mutedForeground} />
+        <Text style={[styles.infoLinkText, { color: c.mutedForeground }]}>Om Valkompass</Text>
+      </Pressable>
+
       <Text style={[styles.privacyNote, { color: c.mutedForeground }]}>
         Dina svar stannar på din enhet.
       </Text>

@@ -16,8 +16,9 @@ import HowItWorks from '@/pages/info-how-it-works';
 import { Layout } from '@/components/layout';
 import { SupportForm } from '@/components/support-form';
 
-function InfoPages({ type }: { type: 'metod' | 'integritet' | 'privacy' | 'kallor' | 'villkor' | 'support' }) {
+function InfoPages({ type }: { type: 'om' | 'metod' | 'integritet' | 'privacy' | 'kallor' | 'villkor' | 'support' }) {
   const titles = {
+    'om': 'Om Valkompass',
     'metod': 'Vår metod',
     'integritet': 'Integritetspolicy',
     'privacy': 'Privacy Policy',
@@ -29,12 +30,39 @@ function InfoPages({ type }: { type: 'metod' | 'integritet' | 'privacy' | 'kallo
     <Layout>
       <div className="container max-w-3xl mx-auto px-4 py-16 prose prose-slate dark:prose-invert">
         <h1>{titles[type]}</h1>
-        <p className="lead">{type === 'support'
+        <p className="lead">{type === 'om'
+          ? 'Vad Valkompass är – och vad tjänsten inte är.'
+          : type === 'support'
           ? 'Hjälp och kontaktuppgifter för Valkompass – webben och mobilappen.'
           : type === 'privacy'
           ? 'How Valkompass handles your data — for the website and the mobile app.'
           : 'Här förklarar vi hur Valkompass fungerar, vår inställning till integritet och den metod vi använder för att beräkna resultaten.'}</p>
         
+        {type === 'om' && (
+          <>
+            <h2>En oberoende tjänst</h2>
+            <p>Valkompass är en oberoende tjänst — som webbplats och mobilapp. Den är enbart ett fristående hjälpmedel för att jämföra politiska ståndpunkter inför valen 2026, aldrig en röstningsrekommendation.</p>
+            <h2>Ansvarsfriskrivning</h2>
+            <p>Valkompass är <strong>inte</strong> kopplad till, godkänd av eller representerar:</p>
+            <ul>
+              <li>Valmyndigheten</li>
+              <li>Sveriges riksdag</li>
+              <li>Någon kommun</li>
+              <li>Någon region</li>
+              <li>Någon annan svensk myndighet</li>
+            </ul>
+            <h2>Officiella källor</h2>
+            <p>För officiell information om valen, rösträtt och röstning hänvisar vi till myndigheternas egna webbplatser:</p>
+            <ul>
+              <li><a href="https://www.val.se" target="_blank" rel="noopener noreferrer">Valmyndigheten – val.se</a></li>
+              <li><a href="https://www.riksdagen.se" target="_blank" rel="noopener noreferrer">Sveriges riksdag – riksdagen.se</a></li>
+              <li><a href="https://skr.se" target="_blank" rel="noopener noreferrer">Sveriges Kommuner och Regioner – skr.se</a></li>
+            </ul>
+            <h2>Läs mer</h2>
+            <p>Hur matchningen räknas hittar du på <Link href="/sa-fungerar-det">Så fungerar det</Link> och <Link href="/metod">Vår metod</Link>. Frågor? Kontakta oss via <Link href="/support">supporten</Link>.</p>
+          </>
+        )}
+
         {type === 'metod' && (
           <>
             <h2>Matchningsalgoritm</h2>
@@ -161,6 +189,7 @@ function Router() {
       <Route path="/partier/:level/:slug" component={PartyProfile} />
       
       <Route path="/sa-fungerar-det" component={HowItWorks} />
+      <Route path="/om"><InfoPages type="om" /></Route>
       <Route path="/metod"><InfoPages type="metod" /></Route>
       <Route path="/integritet"><InfoPages type="integritet" /></Route>
       <Route path="/privacy"><InfoPages type="privacy" /></Route>

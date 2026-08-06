@@ -40,6 +40,7 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
           <div className="flex flex-col gap-2">
             <h4 className="font-semibold text-foreground mb-1">Information</h4>
+            <Link href="/om" className="hover:text-foreground transition-colors">Om Valkompass</Link>
             <Link href="/sa-fungerar-det" className="hover:text-foreground transition-colors">Så fungerar det</Link>
             <Link href="/metod" className="hover:text-foreground transition-colors">Vår metod</Link>
             <Link href="/kallor" className="hover:text-foreground transition-colors">Källförteckning</Link>
