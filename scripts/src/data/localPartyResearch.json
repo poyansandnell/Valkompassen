@@ -2802,6 +2802,37 @@
     "https://www.vt.se/nyheter/vastervik/artikel/westerwikspartiet-kritiserar-kommunala-bolag/jvd75yoj"
    ],
    "website": "https://www.vt.se/"
+  },
+  "ett-battre-eskilstuna": {
+   "website": "https://ebeskilstuna.se",
+   "description": "Nystartat lokalt parti i Eskilstuna inför valet 2026 med fokus på trygghet, skola, jobb och kommunens ekonomi.",
+   "answers": [
+    2,
+    null,
+    null,
+    2,
+    2,
+    1,
+    null,
+    null,
+    2,
+    null,
+    2,
+    null,
+    null,
+    2,
+    1,
+    2,
+    null,
+    2,
+    2,
+    2
+   ],
+   "sources": [
+    "https://ebeskilstuna.se/valplattform-2026/",
+    "https://ebeskilstuna.se/varat-lokala-handlingsprogram/",
+    "https://ebeskilstuna.se/valloften-2026/"
+   ]
   }
  }
 }

@@ -258,8 +258,8 @@ const LOCAL_PARTIES: PartySeed[] = [
     abbreviation: "EBE",
     color: "#64748b",
     description:
-      "Nystartat lokalt parti i Eskilstuna, registrerat hos Valmyndigheten 2026. Partiet har ännu inte publicerat något politiskt program att bedöma och har inte lämnat egna svar.",
-    website: null,
+      "Nystartat lokalt parti i Eskilstuna inför valet 2026. Svaren är redaktionellt bedömda utifrån partiets publicerade valplattform och handlingsprogram.",
+    website: "https://ebeskilstuna.se",
   },
   {
     id: "sormlandslistan",
@@ -804,6 +804,9 @@ async function main() {
   }
   let researchAnswerCount = 0;
   const dataLocalIds = new Set(dataLocalParties.map((p) => p.id));
+  // Manuellt inlagda lokalpartier (utan SCB-mandat) som ändå har
+  // redaktionell research från egen webbplats.
+  dataLocalIds.add("ett-battre-eskilstuna");
   for (const [partyId, research] of Object.entries(LOCAL_PARTY_RESEARCH.parties)) {
     if (!research.answers || !dataLocalIds.has(partyId)) continue;
     if (research.answers.length !== komQuestions.length) {
