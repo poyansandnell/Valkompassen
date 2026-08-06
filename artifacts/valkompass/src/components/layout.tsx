@@ -45,6 +45,7 @@ export function Footer() {
             <Link href="/metod" className="hover:text-foreground transition-colors">Vår metod</Link>
             <Link href="/kallor" className="hover:text-foreground transition-colors">Källförteckning</Link>
             <Link href="/support" className="hover:text-foreground transition-colors">Support & kontakt</Link>
+            <Link href="/partisvar" className="hover:text-foreground transition-colors">För partier: lämna era svar</Link>
           </div>
           <div className="flex flex-col gap-2">
             <h4 className="font-semibold text-foreground mb-1">Juridiskt</h4>

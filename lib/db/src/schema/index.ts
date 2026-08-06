@@ -4,3 +4,4 @@ export * from "./questions";
 export * from "./resultPages";
 export * from "./challenges";
 export * from "./support";
+export * from "./submissions";

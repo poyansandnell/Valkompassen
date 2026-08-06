@@ -19,9 +19,11 @@ import {
   partiesTable,
   partyAnswersTable,
   partyParticipationTable,
+  partySubmissionsTable,
   questionsTable,
   regionsTable,
 } from "@workspace/db";
+import { eq, inArray, and } from "drizzle-orm";
 
 function slugify(input: string): string {
   return input
@@ -856,6 +858,56 @@ async function main() {
   // Insert in chunks to stay under parameter limits.
   for (let i = 0; i < answerRows.length; i += 500) {
     await db.insert(partyAnswersTable).values(answerRows.slice(i, i + 500));
+  }
+
+  // Återapplicera godkända partisvar (självrapportering). Tabellen
+  // party_submissions töms inte av seedningen, så partiernas egna
+  // verifierade svar överlever och skriver över de redaktionella.
+  const approved = await db
+    .select()
+    .from(partySubmissionsTable)
+    .where(eq(partySubmissionsTable.status, "approved"));
+  let reapplied = 0;
+  const knownPartyIds = new Set(allParties.map((p) => p.id));
+  const knownQuestionIds = new Set(questionRows.map((q) => q.id!));
+  for (const sub of approved) {
+    if (!knownPartyIds.has(sub.partyId)) continue;
+    const entries = Object.entries(sub.answers).filter(([qid]) =>
+      knownQuestionIds.has(qid),
+    );
+    if (entries.length === 0) continue;
+    const party = allParties.find((p) => p.id === sub.partyId);
+    const sources = party?.website
+      ? [{ title: "Partiets webbplats", url: party.website }]
+      : [];
+    await db
+      .delete(partyAnswersTable)
+      .where(
+        and(
+          eq(partyAnswersTable.partyId, sub.partyId),
+          inArray(
+            partyAnswersTable.questionId,
+            entries.map(([qid]) => qid),
+          ),
+        ),
+      );
+    await db.insert(partyAnswersTable).values(
+      entries.map(([questionId, value]) => ({
+        partyId: sub.partyId,
+        questionId,
+        value,
+        answerOrigin: value == null ? "none" : "party",
+        justification:
+          value == null
+            ? null
+            : "Partiets eget svar, inskickat och verifierat via e-post.",
+        sources: value == null ? [] : sources,
+      })),
+    );
+    reapplied++;
+  }
+  if (reapplied > 0) {
+    console.log(`Återapplicerade partisvar från ${reapplied} godkända inskick.`);
   }
 
   console.log(

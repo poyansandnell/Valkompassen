@@ -7,6 +7,7 @@ import resultPagesRouter from "./resultPages";
 import challengesRouter from "./challenges";
 import statsRouter from "./stats";
 import supportRouter from "./support";
+import partySubmissionsRouter from "./partySubmissions";
 
 const router: IRouter = Router();
 
@@ -18,5 +19,6 @@ router.use(resultPagesRouter);
 router.use(challengesRouter);
 router.use(statsRouter);
 router.use(supportRouter);
+router.use(partySubmissionsRouter);
 
 export default router;

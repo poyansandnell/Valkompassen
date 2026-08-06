@@ -13,6 +13,7 @@ import ChallengeView from '@/pages/challenge-view';
 import PublicResult from '@/pages/public-result';
 import PartyProfile from '@/pages/party-profile';
 import HowItWorks from '@/pages/info-how-it-works';
+import PartySubmit, { PartySubmitVerify } from '@/pages/party-submit';
 import { Layout } from '@/components/layout';
 import { SupportForm } from '@/components/support-form';
 
@@ -189,6 +190,8 @@ function Router() {
       <Route path="/partier/:level/:slug" component={PartyProfile} />
       
       <Route path="/sa-fungerar-det" component={HowItWorks} />
+      <Route path="/partisvar" component={PartySubmit} />
+      <Route path="/partisvar/verifiera" component={PartySubmitVerify} />
       <Route path="/om"><InfoPages type="om" /></Route>
       <Route path="/metod"><InfoPages type="metod" /></Route>
       <Route path="/integritet"><InfoPages type="integritet" /></Route>
