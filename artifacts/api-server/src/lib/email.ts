@@ -9,16 +9,28 @@ export async function sendEmail(opts: {
   subject: string;
   html: string;
 }): Promise<void> {
-  const response = await connectors.proxy("resend", "/emails", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      from: FROM,
-      to: [opts.to],
-      subject: opts.subject,
-      html: opts.html,
-    }),
+  const body = JSON.stringify({
+    from: FROM,
+    to: [opts.to],
+    subject: opts.subject,
+    html: opts.html,
   });
+  // Använd egen Resend-nyckel om den finns, annars Replit-connectorn.
+  const apiKey = process.env.RESEND_API_KEY;
+  const response = apiKey
+    ? await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body,
+      })
+    : await connectors.proxy("resend", "/emails", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body,
+      });
   if (!response.ok) {
     const body = await response.text().catch(() => "");
     throw new Error(`E-postutskick misslyckades (${response.status}): ${body}`);
