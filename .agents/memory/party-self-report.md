@@ -7,5 +7,5 @@ Flöde: `/partisvar` (web) → POST `/api/party-submissions` → bekräftelsemej
 
 - Godkända svar skriver över party_answers med origin `party`; tabellen `party_submissions` saknar FK:er och töms INTE av seed — seed återapplicerar godkända inskick sist.
 - **Why:** seed tömmer alla svarstabeller; utan återapplicering försvinner partisvar vid varje seed-körning.
-- Resend-connectorn gav 401 "API key is invalid" (aug 2026) — användaren måste lägga in giltig Resend-nyckel i integrationen; utan verifierad egen domän i Resend kan mejl dessutom bara skickas till kontoägarens adress.
+- Mejl skickas med `RESEND_API_KEY`-secret (direkt mot api.resend.com; connectorn var trasig, 401). Domänen valkompassen.org är verifierad i Resend (aug 2026), avsändare via `EMAIL_FROM` = "Valkompassen <no-reply@valkompassen.org>". DNS hanteras i Replits domänpanel.
 - HTML-escapa alltid användarfält i mejl/HTML-sidor (XSS mot admins mejlklient).
