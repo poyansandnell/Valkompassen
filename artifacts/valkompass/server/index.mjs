@@ -187,12 +187,13 @@ app.use(
   }),
 );
 
-// SPA-fallback — endast för sidnavigeringar (GET/HEAD som accepterar HTML).
-// Saknade statiska filer (t.ex. gamla /assets/*.js) ska få 404, inte HTML.
+// SPA-fallback — för sidnavigeringar (GET/HEAD utan filändelse).
+// OBS: kräv INTE Accept: text/html — t.ex. Googles granskningsrobotar
+// skickar ingen sådan rubrik och ska ändå få sidan (inte 404).
+// Saknade statiska filer (t.ex. gamla /assets/*.js) ska däremot få 404.
 app.use((req, res) => {
-  const wantsHtml = (req.headers.accept ?? "").includes("text/html");
   const looksLikeFile = /\.[a-z0-9]+$/i.test(req.path);
-  if ((req.method !== "GET" && req.method !== "HEAD") || !wantsHtml || looksLikeFile) {
+  if ((req.method !== "GET" && req.method !== "HEAD") || looksLikeFile) {
     res.status(404).end();
     return;
   }
