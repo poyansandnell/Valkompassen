@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@workspace/db": "workspace:*",
-    "drizzle-orm": "catalog:"
+    "drizzle-orm": "catalog:",
+    "sharp": "^0.35.3"
   }
 }

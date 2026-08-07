@@ -14,13 +14,19 @@ localPort = 26109
 run = "pnpm --filter @workspace/valkompass run dev"
 
 [services.production]
-build = [ "pnpm", "--filter", "@workspace/valkompass", "run", "build" ]
-serve = "static"
-publicDir = "artifacts/valkompass/dist/public"
 
-[[services.production.rewrites]]
-from = "/*"
-to = "/index.html"
+[services.production.build]
+args = [ "pnpm", "--filter", "@workspace/valkompass", "run", "build" ]
+
+[services.production.build.env]
+NODE_ENV = "production"
+
+[services.production.run]
+args = [ "node", "artifacts/valkompass/server/index.mjs" ]
+
+[services.production.run.env]
+PORT = "26109"
+NODE_ENV = "production"
 
 [services.env]
 PORT = "26109"

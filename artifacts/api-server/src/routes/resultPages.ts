@@ -110,6 +110,29 @@ router.post("/result-pages", async (req, res): Promise<void> => {
     .json(CreateResultPageResponse.parse({ publicSlug, editToken, deleteToken }));
 });
 
+// Lista över indexerbara sidor för sitemap-generering (intern användning).
+router.get("/result-pages-sitemap", async (_req, res): Promise<void> => {
+  const rows = await db
+    .select({
+      publicSlug: resultPagesTable.publicSlug,
+      createdAt: resultPagesTable.createdAt,
+    })
+    .from(resultPagesTable)
+    .where(
+      and(
+        eq(resultPagesTable.isIndexable, true),
+        eq(resultPagesTable.isPublished, true),
+        isNull(resultPagesTable.deletedAt),
+      ),
+    );
+  res.json(
+    rows.map((r) => ({
+      slug: r.publicSlug,
+      lastmod: r.createdAt.toISOString(),
+    })),
+  );
+});
+
 router.get("/result-pages/:slug", async (req, res): Promise<void> => {
   const params = GetResultPageParams.safeParse(req.params);
   if (!params.success) {

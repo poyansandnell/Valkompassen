@@ -32,6 +32,7 @@ export default function PublicResult() {
   const deletePage = useDeleteResultPage();
   const reportPage = useReportResultPage();
 
+  const [copied, setCopied] = useState(false);
   const [reportReason, setReportReason] = useState<ResultPageReportReason>('annat');
   const [reportDetails, setReportDetails] = useState('');
   const [reported, setReported] = useState(false);
@@ -78,6 +79,25 @@ export default function PublicResult() {
         setLocation('/');
       }
     });
+  };
+
+  const pageUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const shareText = page.showBestParty && page.topMatches[0]
+    ? `Jag matchar ${page.topMatches[0].matchPercent}% med ${page.topMatches[0].partyName} i Valkompassen! Vad matchar du?`
+    : 'Jag har gjort Valkompassen inför valet 2026. Vad matchar du?';
+
+  const handleWebShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: 'Valkompassen', text: shareText, url: pageUrl });
+        return;
+      }
+    } catch { /* avbruten delning */ }
+    try {
+      await navigator.clipboard.writeText(pageUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch { /* ignore */ }
   };
 
   const handleReport = (e: React.FormEvent) => {
@@ -186,6 +206,44 @@ export default function PublicResult() {
               </div>
             </div>
           )}
+
+          {/* Delningsknappar */}
+          <div className="mt-12 text-center space-y-4">
+            <h2 className="text-xl font-bold">Dela den här sidan</h2>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <Button asChild variant="outline" className="rounded-full">
+                <a
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`}
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  Facebook
+                </a>
+              </Button>
+              <Button asChild variant="outline" className="rounded-full">
+                <a
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(pageUrl)}`}
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  X
+                </a>
+              </Button>
+              <Button asChild variant="outline" className="rounded-full">
+                <a
+                  href={`https://wa.me/?text=${encodeURIComponent(`${shareText} ${pageUrl}`)}`}
+                  target="_blank" rel="noopener noreferrer"
+                >
+                  WhatsApp
+                </a>
+              </Button>
+              <Button variant="outline" className="rounded-full" onClick={handleWebShare}>
+                <Share2 className="w-4 h-4 mr-2" />
+                {copied ? 'Länk kopierad!' : 'Dela / kopiera länk'}
+              </Button>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Tips för Instagram: kopiera länken och klistra in i din story eller bio.
+            </p>
+          </div>
 
           {/* CTA Banner */}
           <div className="mt-20 p-8 md:p-12 bg-primary text-primary-foreground rounded-2xl text-center shadow-xl">

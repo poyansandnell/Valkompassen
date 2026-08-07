@@ -27,3 +27,6 @@ channel = "stable-25_05"
 [userenv.shared]
 ADMIN_EMAIL = "poyan.sandnell@gmail.com"
 EMAIL_FROM = "Valkompassen <no-reply@valkompassen.org>"
+
+[userenv.production]
+PUBLIC_WEB_ORIGIN = "https://valkompassen.org"
