@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { useGetResultPage, useDeleteResultPage, useReportResultPage, ResultPageReportReason } from '@workspace/api-client-react';
 import { useAppStore } from '@/hooks/use-local-answers';
-import { shareOrCopy } from '@/lib/share';
+import { shareOrCopy, canonicalUrl } from '@/lib/share';
 import { AlertCircle, Calendar, Flag, Trash2, Edit2, Share2, AlertTriangle, ShieldCheck } from 'lucide-react';
 import { format } from 'date-fns';
 import { sv } from 'date-fns/locale';
@@ -82,7 +82,7 @@ export default function PublicResult() {
     });
   };
 
-  const pageUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const pageUrl = canonicalUrl(`/resultat/${slug}`);
   const shareText = page.showBestParty && page.topMatches[0]
     ? `Jag matchar ${page.topMatches[0].matchPercent}% med ${page.topMatches[0].partyName} i Valkompassen! Vad matchar du?`
     : 'Jag har gjort Valkompassen inför valet 2026. Vad matchar du?';

@@ -3,6 +3,19 @@
  * länken. Fungerar även i inbäddade förhandsvisningar där både
  * navigator.share och clipboard-API:t kan vara blockerade.
  */
+/**
+ * Kanonisk adress att dela: i produktion alltid valkompassen.org,
+ * oavsett vilken adress besökaren råkar använda (t.ex. *.replit.app).
+ */
+export function canonicalOrigin(): string {
+  return import.meta.env.PROD ? 'https://valkompassen.org' : window.location.origin;
+}
+
+/** Gör om nuvarande sida till en delbar länk på den kanoniska adressen. */
+export function canonicalUrl(pathname?: string): string {
+  return canonicalOrigin() + (pathname ?? window.location.pathname);
+}
+
 export async function copyText(text: string): Promise<boolean> {
   try {
     await navigator.clipboard.writeText(text);

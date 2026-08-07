@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { useCreateChallenge, QuizPayloadLevel } from '@workspace/api-client-react';
 import { useStoredQuiz, useAppStore } from '@/hooks/use-local-answers';
+import { canonicalUrl } from '@/lib/share';
 import { Users, Link as LinkIcon, Copy, ArrowRight, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -38,7 +39,7 @@ export default function CreateChallenge() {
       }
     }, {
       onSuccess: (data) => {
-        setChallengeUrl(`${window.location.origin}/utmaning/${data.code}`);
+        setChallengeUrl(canonicalUrl(`/utmaning/${data.code}`));
       }
     });
   };

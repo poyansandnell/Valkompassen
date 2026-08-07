@@ -12,6 +12,7 @@ import { AlertCircle, Globe, Link as LinkIcon, ExternalLink, Loader2 } from 'luc
 import { useCreateResultPage, QuizPayloadLevel, useGetQuiz } from '@workspace/api-client-react';
 import { useStoredQuiz, useAppStore } from '@/hooks/use-local-answers';
 import { calculateMatches, calculateTopicAgreements } from '@/lib/matching';
+import { canonicalUrl } from '@/lib/share';
 
 export default function PublishFlow() {
   const searchString = useSearch();
@@ -74,7 +75,7 @@ export default function PublishFlow() {
     }, {
       onSuccess: (data) => {
         addResultToken(data.publicSlug, { editToken: data.editToken, deleteToken: data.deleteToken });
-        setPublishedUrl(`${window.location.origin}/resultat/${data.publicSlug}`);
+        setPublishedUrl(canonicalUrl(`/resultat/${data.publicSlug}`));
       }
     });
   };

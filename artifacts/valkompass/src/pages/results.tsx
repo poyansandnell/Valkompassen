@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useGetQuiz, QuizPayloadLevel, useRecordCompletion, QuizParty } from '@workspace/api-client-react';
 import { useStoredQuiz, useAppStore } from '@/hooks/use-local-answers';
 import { calculateMatches, calculateTopicAgreements } from '@/lib/matching';
-import { shareOrCopy } from '@/lib/share';
+import { shareOrCopy, canonicalOrigin } from '@/lib/share';
 import { AlertCircle, RefreshCcw, Share2, Globe, Users, ChevronRight, Fingerprint, Search, ChevronDown, ChevronUp, EyeOff } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -318,7 +318,7 @@ export default function Results() {
     const outcome = await shareOrCopy({
       title: 'Valkompass 2026',
       text: 'Jag har gjort Valkompass för 2026 års val. Gör den du också och se vilka partier som tycker som du!',
-      url: window.location.origin,
+      url: canonicalOrigin(),
     });
     if (outcome === 'copied') {
       setShareCopied(true);
