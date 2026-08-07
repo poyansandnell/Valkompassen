@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { useGetResultPage, useDeleteResultPage, useReportResultPage, ResultPageReportReason } from '@workspace/api-client-react';
 import { useAppStore } from '@/hooks/use-local-answers';
+import { shareOrCopy } from '@/lib/share';
 import { AlertCircle, Calendar, Flag, Trash2, Edit2, Share2, AlertTriangle, ShieldCheck } from 'lucide-react';
 import { format } from 'date-fns';
 import { sv } from 'date-fns/locale';
@@ -87,17 +88,11 @@ export default function PublicResult() {
     : 'Jag har gjort Valkompassen inför valet 2026. Vad matchar du?';
 
   const handleWebShare = async () => {
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: 'Valkompassen', text: shareText, url: pageUrl });
-        return;
-      }
-    } catch { /* avbruten delning */ }
-    try {
-      await navigator.clipboard.writeText(pageUrl);
+    const outcome = await shareOrCopy({ title: 'Valkompassen', text: shareText, url: pageUrl });
+    if (outcome === 'copied') {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch { /* ignore */ }
+    }
   };
 
   const handleReport = (e: React.FormEvent) => {

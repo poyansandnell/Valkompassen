@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useGetQuiz, QuizPayloadLevel, useRecordCompletion, QuizParty } from '@workspace/api-client-react';
 import { useStoredQuiz, useAppStore } from '@/hooks/use-local-answers';
 import { calculateMatches, calculateTopicAgreements } from '@/lib/matching';
+import { shareOrCopy } from '@/lib/share';
 import { AlertCircle, RefreshCcw, Share2, Globe, Users, ChevronRight, Fingerprint, Search, ChevronDown, ChevronUp, EyeOff } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -196,7 +197,8 @@ export default function Results() {
   const searchParams = new URLSearchParams(searchString);
   const level = searchParams.get('level') as QuizPayloadLevel;
   const [, setLocation] = useLocation();
-  
+  const [shareCopied, setShareCopied] = useState(false);
+
   const { municipalityId } = useAppStore();
   const { answers, reset } = useStoredQuiz(level);
 
@@ -313,18 +315,14 @@ export default function Results() {
   const bestParty = displayedQualifiedMatches[0];
 
   const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'Valkompass 2026',
-          text: 'Jag har gjort Valkompass för 2026 års val. Gör den du också och se vilka partier som tycker som du!',
-          url: window.location.origin,
-        });
-      } catch (err) {
-        // user cancelled
-      }
-    } else {
-      navigator.clipboard.writeText(window.location.origin);
+    const outcome = await shareOrCopy({
+      title: 'Valkompass 2026',
+      text: 'Jag har gjort Valkompass för 2026 års val. Gör den du också och se vilka partier som tycker som du!',
+      url: window.location.origin,
+    });
+    if (outcome === 'copied') {
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2000);
     }
   };
 
@@ -389,7 +387,7 @@ export default function Results() {
                   </Link>
                 </Button>
                 <Button className="w-full sm:w-auto" variant="outline" onClick={handleShare}>
-                  <Share2 className="w-4 h-4 mr-2" /> Dela kompassen
+                  <Share2 className="w-4 h-4 mr-2" /> {shareCopied ? 'Länk kopierad!' : 'Dela kompassen'}
                 </Button>
               </CardFooter>
             </Card>
