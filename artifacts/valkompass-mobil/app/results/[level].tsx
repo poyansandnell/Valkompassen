@@ -6,6 +6,7 @@ import {
   Platform,
   Pressable,
   ScrollView,
+  Share,
   StyleSheet,
   Switch,
   Text,
@@ -419,6 +420,42 @@ export default function ResultsScreen() {
         )}
 
         <View style={{ marginTop: 24, gap: 10 }}>
+          <PrimaryButton
+            testID="publish-result"
+            label="Publicera & dela ditt resultat"
+            onPress={() =>
+              router.push({
+                pathname: '/results/publish',
+                params: {
+                  level,
+                  ...(municipalityId ? { municipalityId } : {}),
+                  ...(municipalityName ? { municipalityName } : {}),
+                },
+              })
+            }
+          />
+          <PrimaryButton
+            testID="share-app"
+            label="Tipsa en vän om Valkompassen"
+            variant="secondary"
+            onPress={() => {
+              const message =
+                'Jag har gjort Valkompassen inför valet 2026. Gör den du också och se vilka partier som tycker som du! https://valkompassen.org';
+              if (Platform.OS === 'web') {
+                if (navigator.share) {
+                  navigator.share({ title: 'Valkompassen', text: message, url: 'https://valkompassen.org' }).catch(() => {});
+                } else {
+                  navigator.clipboard?.writeText('https://valkompassen.org').catch(() => {});
+                }
+              } else {
+                Share.share(
+                  Platform.OS === 'ios'
+                    ? { message, url: 'https://valkompassen.org' }
+                    : { message },
+                ).catch(() => {});
+              }
+            }}
+          />
           <PrimaryButton
             testID="redo-quiz"
             label="Gör om"

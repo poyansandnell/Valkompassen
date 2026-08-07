@@ -34,6 +34,7 @@ function RootLayoutNav() {
       <Stack.Screen name="level/[level]" />
       <Stack.Screen name="quiz/[level]" />
       <Stack.Screen name="results/[level]" />
+      <Stack.Screen name="results/publish" />
       <Stack.Screen name="info" />
     </Stack>
   );
