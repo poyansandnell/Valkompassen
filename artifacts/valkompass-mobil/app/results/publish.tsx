@@ -13,12 +13,13 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { KeyboardAwareScrollViewCompat } from '@/components/KeyboardAwareScrollViewCompat';
 import { Feather } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
   getGetQuizQueryKey,
   useCreateResultPage,
+  useDeleteResultPage,
   useGetQuiz,
 } from '@workspace/api-client-react';
 import { useColors } from '@/hooks/useColors';
@@ -32,14 +33,34 @@ const PUBLIC_ORIGIN = 'https://valkompassen.org';
 /** Sparade nycklar till publicerade sidor (för ev. framtida radering). */
 const TOKENS_KEY = 'result-page-tokens-v1';
 
-async function saveTokens(slug: string, editToken: string, deleteToken: string) {
+type StoredTokens = { editToken: string; deleteToken: string };
+
+async function readTokenMap(): Promise<Record<string, StoredTokens>> {
   try {
     const raw = await AsyncStorage.getItem(TOKENS_KEY);
-    const map = raw ? (JSON.parse(raw) as Record<string, unknown>) : {};
+    return raw ? (JSON.parse(raw) as Record<string, StoredTokens>) : {};
+  } catch {
+    return {};
+  }
+}
+
+async function saveTokens(slug: string, editToken: string, deleteToken: string) {
+  try {
+    const map = await readTokenMap();
     map[slug] = { editToken, deleteToken };
     await AsyncStorage.setItem(TOKENS_KEY, JSON.stringify(map));
   } catch {
     // Sparande av nycklar är bekvämlighet — får inte stoppa publiceringen.
+  }
+}
+
+async function removeTokens(slug: string) {
+  try {
+    const map = await readTokenMap();
+    delete map[slug];
+    await AsyncStorage.setItem(TOKENS_KEY, JSON.stringify(map));
+  } catch {
+    // ignorera
   }
 }
 
@@ -78,8 +99,34 @@ export default function PublishResultScreen() {
   const [confirmPublic, setConfirmPublic] = useState(false);
 
   const createPage = useCreateResultPage();
+  const deletePage = useDeleteResultPage();
   const [publishedSlug, setPublishedSlug] = useState<string | null>(null);
   const [shareFeedback, setShareFeedback] = useState<string | null>(null);
+  const [deleted, setDeleted] = useState(false);
+
+  // Tidigare publicerade sidor från den här enheten (för radering).
+  const [previousPages, setPreviousPages] = useState<Record<string, StoredTokens>>({});
+  React.useEffect(() => {
+    readTokenMap().then(setPreviousPages);
+  }, []);
+
+  const handleDelete = (slug: string, deleteToken: string) => {
+    if (deletePage.isPending) return;
+    deletePage.mutate(
+      { slug, params: { token: deleteToken } },
+      {
+        onSuccess: () => {
+          removeTokens(slug);
+          setPreviousPages((prev) => {
+            const next = { ...prev };
+            delete next[slug];
+            return next;
+          });
+          if (slug === publishedSlug) setDeleted(true);
+        },
+      },
+    );
+  };
 
   const topInset = Platform.OS === 'web' ? 67 : insets.top;
   const bottomInset = Platform.OS === 'web' ? 34 : insets.bottom;
@@ -115,6 +162,10 @@ export default function PublishResultScreen() {
       {
         onSuccess: (data) => {
           setPublishedSlug(data.publicSlug);
+          setPreviousPages((prev) => ({
+            ...prev,
+            [data.publicSlug]: { editToken: data.editToken, deleteToken: data.deleteToken },
+          }));
           saveTokens(data.publicSlug, data.editToken, data.deleteToken);
         },
       },
@@ -177,39 +228,59 @@ export default function PublishResultScreen() {
         >
           <Card>
             <View style={{ alignItems: 'center', gap: 12 }}>
-              <Feather name="check-circle" size={40} color={c.primary} />
+              <Feather
+                name={deleted ? 'trash-2' : 'check-circle'}
+                size={40}
+                color={deleted ? c.mutedForeground : c.primary}
+              />
               <Text style={[styles.successTitle, { color: c.foreground }]}>
-                Din resultatsida är live
+                {deleted ? 'Sidan är raderad' : 'Din resultatsida är live'}
               </Text>
-              <Text selectable style={[styles.urlText, { color: c.primary }]}>
-                {publicUrl}
-              </Text>
-              <Text style={[styles.help, { color: c.mutedForeground, textAlign: 'center' }]}>
-                {isIndexable
-                  ? 'Du har valt att sidan får hittas av Google och andra sökmotorer.'
-                  : 'Sidan syns bara för den som har länken — den indexeras inte av Google.'}
-              </Text>
+              {!deleted && (
+                <>
+                  <Text selectable style={[styles.urlText, { color: c.primary }]}>
+                    {publicUrl}
+                  </Text>
+                  <Text style={[styles.help, { color: c.mutedForeground, textAlign: 'center' }]}>
+                    {isIndexable
+                      ? 'Du har valt att sidan får hittas av Google och andra sökmotorer.'
+                      : 'Sidan syns bara för den som har länken — den indexeras inte av Google.'}
+                  </Text>
+                </>
+              )}
             </View>
           </Card>
           <View style={{ marginTop: 16, gap: 10 }}>
-            <PrimaryButton
-              testID="publish-share"
-              label={shareFeedback ?? 'Dela länken'}
-              onPress={handleShare}
-            />
+            {!deleted && (
+              <PrimaryButton
+                testID="publish-share"
+                label={shareFeedback ?? 'Dela länken'}
+                onPress={handleShare}
+              />
+            )}
             <PrimaryButton
               variant="secondary"
               label="Klart"
               onPress={() => router.back()}
             />
+            {!deleted && publishedSlug && previousPages[publishedSlug] && (
+              <PrimaryButton
+                testID="publish-delete"
+                variant="ghost"
+                label={deletePage.isPending ? 'Raderar…' : 'Radera sidan'}
+                onPress={() => handleDelete(publishedSlug, previousPages[publishedSlug].deleteToken)}
+              />
+            )}
           </View>
-          <Text style={[styles.help, { color: c.mutedForeground, marginTop: 16 }]}>
-            Tips för Instagram: dela länken och klistra in i din story eller bio. Du kan
-            när som helst radera sidan genom att öppna länken på den här enheten.
-          </Text>
+          {!deleted && (
+            <Text style={[styles.help, { color: c.mutedForeground, marginTop: 16 }]}>
+              Tips för Instagram: dela länken och klistra in i din story eller bio. Du kan
+              radera sidan när som helst genom att komma tillbaka hit på den här enheten.
+            </Text>
+          )}
         </ScrollView>
       ) : (
-        <KeyboardAwareScrollView
+        <KeyboardAwareScrollViewCompat
           style={{ flex: 1 }}
           bottomOffset={24}
           keyboardShouldPersistTaps="handled"
@@ -275,6 +346,10 @@ export default function PublishResultScreen() {
           </Card>
 
           <Card>
+            <Text style={[styles.help, { color: c.mutedForeground, marginBottom: 4 }]}>
+              Tänk på att ditt resultat kan visa dina politiska åsikter. Dela bara det du
+              är bekväm med att andra ser.
+            </Text>
             <ToggleRow
               testID="toggle-confirm"
               label="Jag förstår att sidan blir offentlig"
@@ -284,6 +359,33 @@ export default function PublishResultScreen() {
               last
             />
           </Card>
+
+          {Object.keys(previousPages).length > 0 && (
+            <Card>
+              <Text style={[styles.label, { color: c.foreground }]}>
+                Dina publicerade sidor
+              </Text>
+              {Object.entries(previousPages).map(([slug, tokens]) => (
+                <View key={slug} style={styles.prevRow}>
+                  <Text
+                    selectable
+                    numberOfLines={1}
+                    style={[styles.help, { color: c.foreground, flex: 1, paddingRight: 8 }]}
+                  >
+                    {`${PUBLIC_ORIGIN}/resultat/${slug}`}
+                  </Text>
+                  <Pressable
+                    testID={`delete-${slug}`}
+                    onPress={() => handleDelete(slug, tokens.deleteToken)}
+                    disabled={deletePage.isPending}
+                    style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, padding: 6 })}
+                  >
+                    <Feather name="trash-2" size={18} color={c.destructive} />
+                  </Pressable>
+                </View>
+              ))}
+            </Card>
+          )}
 
           {createPage.isError && (
             <Text style={{ color: c.destructive, fontSize: 13, fontFamily: 'Inter_500Medium' }}>
@@ -298,7 +400,7 @@ export default function PublishResultScreen() {
             disabled={!confirmPublic || !quiz || matches.length === 0}
             loading={createPage.isPending}
           />
-        </KeyboardAwareScrollView>
+        </KeyboardAwareScrollViewCompat>
       )}
     </View>
   );
@@ -359,6 +461,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter_400Regular',
   },
   toggleRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12 },
+  prevRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 6 },
   help: { fontSize: 13, fontFamily: 'Inter_400Regular', lineHeight: 18 },
   successTitle: { fontSize: 18, fontFamily: 'Inter_700Bold' },
   urlText: { fontSize: 14, fontFamily: 'Inter_600SemiBold', textAlign: 'center' },
