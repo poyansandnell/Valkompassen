@@ -185,6 +185,14 @@ function UnqualifiedParties({ parties, level, municipalityId }: { parties: QuizP
                 </div>
               )}
             </div>
+
+            <div className="border-t pt-4 text-sm text-muted-foreground" data-testid="party-submit-cta">
+              Representerar du något av partierna?{' '}
+              <Link href="/partisvar" className="text-primary font-medium hover:underline">
+                Lämna ert partis svar här
+              </Link>
+              {' '}så att partiet kan få en matchningspoäng i kompassen.
+            </div>
           </div>
         </CollapsibleContent>
       </Collapsible>
