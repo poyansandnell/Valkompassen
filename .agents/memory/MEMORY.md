@@ -1,5 +1,7 @@
 # Memory index
 
+- [SEO för resultatsidor](seo-result-pages.md) — webben servas i prod av egen Express-server som injicerar per-sida meta + sitemap; isIndexable är opt-in; Express 5: använd app.use som fallback, inte "*".
+
 - [Party answer data](party-answer-data.md) — riksdag answers are real editorial assessments with sources; region/kommun still test data, flagged per level in the quiz API.
 
 - [Neutrality wording policy](neutrality-wording.md) — describe the service as oberoende, never claim the people behind it are politically inactive.
