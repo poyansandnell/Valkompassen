@@ -1,0 +1,200 @@
+Kopiera detta till Replit. Jag har gjort den som en tydlig utvecklarinstruktion:
+
+---
+
+# Uppgift: Kvalitetssäkra och neutralisera lokala kommunfrågor i Valkompass
+
+Vi behöver uppdatera den lokala kommunala frågebanken för att säkerställa att Valkompass uppfattas som en **oberoende och neutral valkompass för alla Sveriges kommuner**.
+
+Målet är:
+- Samma frågor ska kunna användas i alla kommuner.
+- Inga frågor ska vara skrivna för en specifik kommun.
+- Frågorna ska spegla verkliga politiska skiljelinjer men inte gynna ett specifikt parti.
+- Behåll kategorier, svarsalternativ och poänglogik om möjligt.
+- Ändra endast formuleringarna.
+
+---
+
+# 1. Ta bort alla kommunnamn ur frågorna
+
+Alla lokala frågor ska vara kommunoberoende.
+
+Sök igenom hela frågebanken och ta bort:
+- Katrineholm
+- andra ortsnamn
+- specifika platser
+
+Frågorna ska använda generella begrepp:
+
+Använd:
+- "kommunen"
+- "kommunens centrum"
+- "centrala delar"
+- "mindre orter"
+- "landsbygden"
+- "kommunens verksamheter"
+
+Exempel:
+
+❌ Före:
+> Kommunalskatten i Katrineholm bör sänkas, även om det innebär minskad kommunal service.
+
+✅ Efter:
+> Kommunalskatten i kommunen bör sänkas, även om det innebär minskad kommunal service.
+
+
+❌ Före:
+> Parkering i Katrineholms centrum bör vara avgiftsfria de första två timmarna.
+
+✅ Efter:
+> Parkering i kommunens centrum bör vara avgiftsfri de första två timmarna.
+
+
+❌ Före:
+> Fler gator i centrala Katrineholm bör bli gågator eller gångfartsområden.
+
+✅ Efter:
+> Fler gator i kommunens centrala delar bör bli gågator eller gångfartsområden.
+
+---
+
+# 2. Justera följande frågor för mer neutral formulering
+
+## Skola
+
+Nuvarande:
+> Kommunen bör öka grundbemanningen i skolan, även om det kräver besparingar på annat.
+
+Ändra till:
+
+> Kommunen bör prioritera ökade resurser till skolan även om det innebär mindre pengar till andra verksamheter.
+
+
+---
+
+## Landsbygdsskolor
+
+Nuvarande:
+> Landsbygdsskolorna i kommunen bör bevaras, även om elevunderlaget minskar.
+
+Ändra till:
+
+> Kommunen bör behålla mindre skolor på landsbygden även om kostnaden per elev blir högre.
+
+---
+
+## Trygghet / ordningsvakter
+
+Nuvarande:
+> Kommunen bör anlita ordningsvakter i kommunens centrum.
+
+Ändra till:
+
+> Kommunen bör lägga mer resurser på trygghetsskapande åtgärder i offentliga miljöer, även om det innebär mindre resurser till annat.
+
+---
+
+## Parkering
+
+Nuvarande:
+> Parkering i kommunens centrum bör vara avgiftsfri de första två timmarna.
+
+Ändra till:
+
+> Kommunen bör prioritera god tillgänglighet till centrum även om det innebär mindre utrymme för andra trafiklösningar.
+
+---
+
+## Kransorter / mindre orter
+
+Nuvarande:
+> Kommunal service, som bibliotek och medborgarkontor, bör finnas kvar i kransorterna.
+
+Ändra till:
+
+> Kommunen bör prioritera att behålla service i mindre orter även om det kostar mer än att samla verksamheter centralt.
+
+---
+
+## Kommunal organisation
+
+Nuvarande:
+> Antalet chefer och administratörer i kommunen bör minskas till förmån för personal i välfärdens kärna.
+
+Ändra till:
+
+> Kommunen bör prioritera resurser till personal nära invånarna framför fler administrativa funktioner.
+
+---
+
+## Integration
+
+Nuvarande:
+> Kommunen bör ta emot färre nyanlända för bosättning än idag.
+
+Ändra till:
+
+> Kommunen bör ha ett mer begränsat mottagande av nyanlända om det innebär att kommunen lättare kan prioritera befintlig kommunal service.
+
+---
+
+## Upphandling
+
+Nuvarande:
+> Kommunens upphandlingar bör prioritera lokala leverantörer och svenska råvaror, även om det blir dyrare.
+
+Ändra till:
+
+> Kommunen bör väga in lokala leverantörer och andra kvalitetskrav även om det kan innebära högre kostnader.
+
+---
+
+# 3. Lägg inte till eller ta bort politiska områden
+
+Behåll bredden:
+- skola
+- äldreomsorg
+- trygghet
+- bostäder
+- skatt
+- företagande
+- miljö
+- demokrati
+- kultur
+- fritid
+- integration
+- organisation
+
+Syftet är fortsatt att mäta lokala politiska skillnader.
+
+---
+
+# 4. Slutkontroll innan publicering
+
+Efter ändringarna:
+
+1. Sök genom hela projektet efter:
+```
+Katrineholm
+```
+
+Kontrollera att inga kommunfrågor innehåller ortsnamnet.
+
+2. Kontrollera att frågorna fungerar lika bra för:
+- Katrineholm
+- Stockholm
+- Kiruna
+- Malmö
+- mindre landsbygdskommuner
+
+3. Commit och pusha ändringarna.
+
+---
+
+Målet är att Valkompass ska kunna kommuniceras som:
+
+**"En oberoende lokal valkompass där alla lokala partier får svara på samma kommunfrågor, oavsett vilken kommun väljaren bor i."**
+
+---
+
+Det här gör också att när du kontaktar organisationen för lokala partier blir argumentet mycket starkare: ingen kan säga att frågorna är skapade för ett specifikt lokalt parti eller en specifik kommun.
