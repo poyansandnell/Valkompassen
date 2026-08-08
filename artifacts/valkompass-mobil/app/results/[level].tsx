@@ -274,6 +274,23 @@ export default function ResultsScreen() {
           </FadeInUp>
         )}
 
+        <View style={{ marginTop: 16 }}>
+          <PrimaryButton
+            testID="publish-result"
+            label="Publicera & dela ditt resultat"
+            onPress={() =>
+              router.push({
+                pathname: '/results/publish',
+                params: {
+                  level,
+                  ...(municipalityId ? { municipalityId } : {}),
+                  ...(municipalityName ? { municipalityName } : {}),
+                },
+              })
+            }
+          />
+        </View>
+
         <View style={{ gap: 12, marginTop: 16 }}>
           {runnersUp.map((m) => {
             const expanded = expandedParty === m.partyId;
@@ -416,24 +433,21 @@ export default function ResultsScreen() {
                 );
               })}
             </View>
+            <Text style={{ color: c.mutedForeground, fontSize: 13, fontFamily: 'Inter_400Regular', lineHeight: 19, marginTop: 12 }}>
+              Representerar du något av partierna?{' '}
+              <Text
+                testID="party-submit-link"
+                onPress={() => Linking.openURL('https://valkompassen.org/partisvar')}
+                style={{ color: c.primary, fontFamily: 'Inter_600SemiBold' }}
+              >
+                Lämna ert partis svar här
+              </Text>{' '}
+              så att partiet kan få en matchningspoäng i kompassen.
+            </Text>
           </View>
         )}
 
         <View style={{ marginTop: 24, gap: 10 }}>
-          <PrimaryButton
-            testID="publish-result"
-            label="Publicera & dela ditt resultat"
-            onPress={() =>
-              router.push({
-                pathname: '/results/publish',
-                params: {
-                  level,
-                  ...(municipalityId ? { municipalityId } : {}),
-                  ...(municipalityName ? { municipalityName } : {}),
-                },
-              })
-            }
-          />
           <PrimaryButton
             testID="share-app"
             label="Tipsa en vän om Valkompassen"
